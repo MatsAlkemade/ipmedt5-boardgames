@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             VlotteGeestTableSeeder::class,
             GanzenbordTableSeeder::class,
             TrivialPursuitTableSeeder::class,
+            ThirtySecondsQuestionsTableSeeder::class,
             ThirtySecondsTableSeeder::class,
             GamesTableSeeder::class,
             GameSessionTableSeeder::class,
