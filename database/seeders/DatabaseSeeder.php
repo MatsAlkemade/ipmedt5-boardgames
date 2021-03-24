@@ -13,6 +13,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            UsersTableSeeder::class,
+            VierOpEenRijTableSeeder::class,
+            VlotteGeestTableSeeder::class,
+            GanzenbordTableSeeder::class,
+            TrivialPursuitTableSeeder::class,
+            ThirtySecondsTableSeeder::class,
+            GameSessionTableSeeder::class,
+            UserInGameSessionTableSeeder::class,
+        ]);
     }
 }
