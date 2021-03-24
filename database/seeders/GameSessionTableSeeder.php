@@ -15,7 +15,7 @@ class GameSessionTableSeeder extends Seeder
     public function run()
     {
         DB::table('game_session')->insert([
-            'game_name' => 'Ganzenbord',
+            'game_id' => 1,
         ]);
     }
 }
