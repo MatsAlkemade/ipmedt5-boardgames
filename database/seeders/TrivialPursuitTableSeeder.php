@@ -16,6 +16,7 @@ class TrivialPursuitTableSeeder extends Seeder
     {
         DB::table('trivial_pursuit')->insert([
             'name' => 'Trivial Pursuit',
+            'description' => "Een trivia spel waar je kennis op de proef wordt gesteld",
         ]);
     }
 }
