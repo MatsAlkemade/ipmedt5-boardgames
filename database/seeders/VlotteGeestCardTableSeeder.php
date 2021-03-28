@@ -13,11 +13,11 @@ class VlotteGeestCardTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('vlotte_geest_object')->insert([
-            'userId' => '',
+        DB::table('vlotte_geest_card')->insert([
+            // 'userId' => '',
             'correctObject' => 'ghost',
-            'image' => '',
+            // 'image' => '',
         ]);
-        
+
     }
 }

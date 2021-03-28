@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             GameSessionTableSeeder::class,
             UserInGameSessionTableSeeder::class,
             VlotteGeestObjectTableSeeder::class,
+            VlotteGeestCardTableSeeder::class,
         ]);
     }
 }
