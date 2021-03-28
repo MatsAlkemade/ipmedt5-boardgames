@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVlotteGeestTable extends Migration
+class CreateVlotteGeestObjectTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateVlotteGeestTable extends Migration
      */
     public function up()
     {
-        Schema::create('vlotte_geest', function (Blueprint $table) {
-            $table->string('name')->primary();
+        Schema::create('vlotte_geest_object', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
-            $table->integer('amountOfCards');
-            $table->longText('description');
+            $table->string('color');
+            $table->string('shape');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateVlotteGeestTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vlotte_geest');
+        Schema::dropIfExists('vlotte_geest_object');
     }
 }
