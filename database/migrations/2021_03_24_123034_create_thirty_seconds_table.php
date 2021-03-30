@@ -15,6 +15,8 @@ class CreateThirtySecondsTable extends Migration
     {
         Schema::create('thirty_seconds', function (Blueprint $table) {
             $table->string('name')->primary();
+            $table->integer('steps');
+            $table->longText('description');
             $table->timestamps();
         });
     }
