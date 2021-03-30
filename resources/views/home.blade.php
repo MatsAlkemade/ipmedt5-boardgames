@@ -8,9 +8,17 @@
     <main class="home">
         <header class="home__title">
             <h1 class="home__title__text">Ultimate Boardgames</h1>
-            <button class="home__title__button">
-                <i class="fal fa-user-circle"></i>
-            </button>
+            <section class="home__nav" id="js--nav">
+                <button class="home__nav__button" id="js--navButton">
+                    <i class="fal fa-user-circle js--nc" id="js--navIcon"></i>
+                </button>
+                <div class="home__nav__dropdown" id="js--navDropdown">
+                    <a class="js--nc" href="">Profile</a>
+                    <a class="js--nc" href="">Settings</a>
+                    <a class="js--nc" href="">Help</a>
+                    <a class="js--nc" href="/logout">Log out</a>
+                </div>
+            </section>
         </header>
         <article class="home__main">
             <h2>Spellen</h2>
