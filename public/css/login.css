@@ -1,0 +1,23 @@
+.bg-ubg-gray {
+    background-color: #353535;
+}
+
+.bg-ubg-lgray {
+    background-color: rgba(255, 255, 255, .16);
+}
+
+a > svg #b1KqW5RHJv > use {
+    fill: #11f3a2;
+}
+
+a > svg #c24NDWivg {
+    stroke: #11f3a2;
+}
+
+.text-gray-700, .text-gray-600 {
+	color: white;
+}
+
+input {
+	background-color: #e5e5e5!important;
+}
