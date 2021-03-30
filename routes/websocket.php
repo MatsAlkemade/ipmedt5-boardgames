@@ -3,6 +3,7 @@
 
 use Illuminate\Http\Request;
 use SwooleTW\Http\Websocket\Facades\Websocket;
+use App\Http\Controllers\GameStateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,5 +23,10 @@ Websocket::on('disconnect', function ($websocket) {
 });
 
 Websocket::on('example', function ($websocket, $data) {
-    $websocket->emit('message', $data);
+	app(GameStateController::class)->setTest($data);
+    $websocket->emit('message', true);
+});
+
+Websocket::on('gettest', function($websocket, $data) {
+	$websocket->emit('message', app(GameStateController::class)->getTest());
 });

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use App\Http\Controllers\GameStateController;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->gsc = new GameStateController("Hier moet iets in");
+        $this->app->singleton(GameStateController::class, function ($app) {
+            return $app->gsc;
+        });
     }
 
     /**
