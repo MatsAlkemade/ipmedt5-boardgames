@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             VlotteGeestTableSeeder::class,
             GanzenbordTableSeeder::class,
             TrivialPursuitTableSeeder::class,
+            ThirtySecondsQuestionsTableSeeder::class,
             ThirtySecondsTableSeeder::class,
             GamesTableSeeder::class,
             GameSessionTableSeeder::class,
@@ -29,6 +30,8 @@ class DatabaseSeeder extends Seeder
             TrivialPursuitKunstLiteratuur::class,
             TrivialPursuitAardrijkskunde::class,
             TrivialPursuitAmusement::class,
+            VlotteGeestObjectTableSeeder::class,
+            VlotteGeestCardTableSeeder::class,
         ]);
     }
 }

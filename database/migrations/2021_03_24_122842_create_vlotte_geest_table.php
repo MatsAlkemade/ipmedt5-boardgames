@@ -16,6 +16,8 @@ class CreateVlotteGeestTable extends Migration
         Schema::create('vlotte_geest', function (Blueprint $table) {
             $table->string('name')->primary();
             $table->timestamps();
+            $table->integer('amountOfCards');
+            $table->longText('description');
         });
     }
 
