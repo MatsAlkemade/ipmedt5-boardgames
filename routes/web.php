@@ -18,3 +18,6 @@ Route::get('/games', [\App\Http\Controllers\GamesController::class, 'index']);
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/ganzenbord',  [\App\Http\Controllers\GanzenbordController::class, 'index']);
+    
