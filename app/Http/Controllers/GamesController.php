@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 class GamesController extends Controller
 {
     public function index(){
-        return \App\Models\Games::all();
+        return view('home',[
+            'games' => \App\Models\Games::all()
+        ]);
     }
 }

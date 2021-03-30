@@ -13,12 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/games', [\App\Http\Controllers\GamesController::class, 'index']);
+Route::get('/', [\App\Http\Controllers\GamesController::class, 'index']);
 Route::get('/vlottegeest', [\App\Http\Controllers\VlotteGeestController::class, 'index']);
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
