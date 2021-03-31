@@ -29,14 +29,14 @@ class GamesController extends Controller
         ]);
     }
 
-    public function show($game, $gamesessionId){
+    public function show($game){
         switch($game){
             case 'vierOpEenRij':
 
                 break;
 
             case 'thirtySeconds':
-
+                    return \App\Models\ThirtySeconds::all();
                 break;
 
             case 'trivialPursuit':

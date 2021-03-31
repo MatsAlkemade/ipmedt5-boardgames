@@ -18,7 +18,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/logout', [\App\Http\Controllers\GamesController::class, 'logout']);
     Route::get('/vlottegeest', [\App\Http\Controllers\VlotteGeestController::class, 'index']);
     Route::get('/games/create/{id}', [\App\Http\Controllers\GamesController::class, 'create']);
-    Route::get('/games/{game}/{gamesessionId}', [\App\Http\Controllers\GamesController::class, 'show']);
+    Route::get('/games/{game}', [\App\Http\Controllers\GamesController::class, 'show']);
 });
 
 // Route::get('/dashboard', function () {
