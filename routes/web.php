@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\GamesController::class, 'index']);
+Route::middleware(['auth'])->group(function(){
+    Route::get('/', [\App\Http\Controllers\GamesController::class, 'index']);
+    Route::get('/logout', [\App\Http\Controllers\GamesController::class, 'logout']);
+});
 
 
 Route::get('/ganzenbord',  [\App\Http\Controllers\GanzenbordController::class, 'index']);

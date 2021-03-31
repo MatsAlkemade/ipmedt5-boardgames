@@ -49,17 +49,49 @@ body {
     transform: scale(1.05);
 }
 
-.home__title__button {
+.home__nav__button {
     background-color: transparent;
     border: none;
     color: var(--primary);
     font-size: 5rem;
-    transition: all .5s;
+    transition: text-shadow .5s;
 }
 
-.home__title__button:hover {
+.home__nav__button:hover {
     cursor: pointer;
     text-shadow: 0 0 5rem rgba(17,243,162, .8);
+}
+
+.home__nav__button:active {
+    color: var(--secondary);
+}
+
+.home__nav__button:focus {
+    outline: none;
+}
+
+.home__nav__dropdown {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    transform: translateX(-10rem);
+}
+
+.home__nav__dropdown a {
+    float: none;
+    color: var(--bg);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.home__nav__dropdown a:hover {
+    cursor: pointer;
+    background-color: var(--primary);
 }
 
 .home__main {
