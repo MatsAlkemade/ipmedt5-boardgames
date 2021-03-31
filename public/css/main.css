@@ -119,6 +119,43 @@ body {
     color: red;
     margin-bottom: .2rem;
 }
+/* ganzenbord */
+
+.gb__players {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(10rem, 1fr));
+    list-style: none;
+    column-gap: 2rem;
+    justify-content: center;  
+    max-width: 100%;
+
+    
+}
+.gb__player {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+
+}
+.gb__players__figure> figcaption {
+    position: relative;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 2rem;
+    display:grid;
+}
+
+.gb__players__figure > img {
+    position: relative;
+    border-radius: 1rem;
+    box-shadow: .5rem .5rem .3rem rgba(17,243,162, .8);
+    width: 100%;
+}
+
+
+
+
 
 /* Utility classes */
 
