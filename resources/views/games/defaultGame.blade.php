@@ -1,4 +1,4 @@
-@extends('games.defaultGame')
+@extends('default')
 
 @section('content')
     <main class="defaultGame">
