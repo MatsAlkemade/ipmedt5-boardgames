@@ -1,1 +1,1 @@
-@extends('defaultGame')
+@extends('games.defaultGame')

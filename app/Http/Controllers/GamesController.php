@@ -36,7 +36,9 @@ class GamesController extends Controller
                 break;
 
             case 'thirtySeconds':
-                    return \App\Models\ThirtySeconds::all();
+                    return view('games.thirtySeconds',[
+                        'ts' => \App\Models\ThirtySeconds::all(),
+                    ]);
                 break;
 
             case 'trivialPursuit':

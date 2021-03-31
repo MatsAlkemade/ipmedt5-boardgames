@@ -152,6 +152,73 @@ body {
     margin-bottom: .2rem;
 }
 
+.defaultGame {
+    width: 100%;
+    height: 100vh;
+}
+
+.defaultGame__title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 10%;
+}
+
+.defaultGame__title__button {
+    background-color: transparent;
+    border: none;
+}
+
+.defaultGame__title__button > i {
+    position: fixed;
+    color: var(--primary);
+    font-size: 3rem;
+    top: 2rem;
+    left: 2rem;
+}
+
+.defaultGame__title__text{
+    width: 100%;
+    text-align: center;
+}
+
+.defaultGame__main {
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.defaultGame__footer {
+    height: 10%;
+}
+
+.defaultGame__footer__list {
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.defaultGame__footer__list__item {
+    height: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary);
+}
+
+.defaultGame__footer__list__item:nth-of-type(2) {
+    border-left: solid .2rem var(--bg);
+    border-right: solid .2rem var(--bg);
+}
+
+.defaultGame__footer__list__item > i {
+    color: var(--bg);
+    font-size: 3rem;
+}
+
+
 /* Utility classes */
 
 .u-button-style {
