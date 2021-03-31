@@ -6,7 +6,14 @@ use Illuminate\Http\Request;
 
 class VlotteGeestController extends Controller
 {
-    function index(){
+    public function index(){
         return view('games.vlotteGeest');
     }
+
+    // public function index(){
+    //     return view('games.vlotteGeest',[
+    //         'sushi' => \App\Models\Sushi::all()
+    //     ]);
+
+    // }
 }

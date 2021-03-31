@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class VlotteGeest extends Model
 {
-    
+    protected $table = "vlotte_geest";
     use HasFactory;
 }

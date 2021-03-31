@@ -1,7 +1,7 @@
 @extends('default')
 
 @section('title')
-    {{$}}
+   
 @endsection
 
 @section('content')
