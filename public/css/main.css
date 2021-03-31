@@ -6,7 +6,7 @@
     --font: white;
 }
 
-* {
+*,*::before,*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -104,6 +104,10 @@ body {
     margin-top: 2rem;
 }
 
+.home__game__button:active{
+    transform: translate(-50%, .3rem) !important; /*Deze overwrite de u-button-style omdat de center voor deze buttons gedaan is via position absolute */
+}
+
 .home__footer {
     width: 100%;
     height: 5%;
@@ -118,6 +122,147 @@ body {
 .home__footer__icon {
     color: red;
     margin-bottom: .2rem;
+}
+
+/* TRIVIAL PURSUIT */
+
+.trivialpursuit__header{
+    width: 100%;
+    height: 20%;
+    padding: 2rem;
+    color: var(--primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.trivialpursuit__title{
+    text-align: center;
+    font-weight: 400;
+    font-size: 300%;
+    text-shadow: 0 0 5rem rgb(17 243 162 / 80%);
+    transition: 1s all;
+}
+
+.trivialpursuit__title:hover{
+    transform: scale(1.05);
+}
+
+.trivialpursuit__desc{
+    font-weight: 400;
+    font-style: italic;
+    font-size: 150%;
+    text-align: center;
+}
+
+.trivialpursuit__home{
+    font-weight: 400;
+    font-size: 200%;
+    position: absolute;
+    top: 3%;
+    left: 3%;
+}
+
+.trivialpursuit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.trivialpursuit__section{
+    background-color: var(--primary);
+    width: 60rem;
+    margin: 2rem;
+    padding: 1rem;
+    border-radius: 0.8rem;
+}
+
+.trivialpursuit__section--flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.trivialpursuit__section__title{
+    font-weight: 400;
+    font-size: 175%;
+    margin-bottom: 1rem;
+}
+
+.trivialpursuit__section__text{
+    margin-bottom: 1rem;
+}
+
+.trivialpursuit__section__categorie-text{
+    margin-left: 2rem;
+    margin-top: -0.5rem;
+}
+
+.trivialpursuit__categorie{
+    margin: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.trivialpursuit__btn{
+    font-size: 120%;
+    width: 25rem;
+    height: 5rem;
+    color: var(--secondary) i !important;
+}
+
+.trivialpursuit__btn[data-categorie="WetenschapNatuur"]{
+    background-color: lightblue;
+}
+
+.trivialpursuit__btn[data-categorie="Sport"]{
+    background-color: orange;
+}
+
+.trivialpursuit__btn[data-categorie="KunstLiteratuur"]{
+    background-color: plum;
+}
+
+.trivialpursuit__btn[data-categorie="Geschiedenis"]{
+    background-color: red;
+}
+
+.trivialpursuit__btn[data-categorie="Amusument"]{
+    background-color: hotpink;
+}
+
+.trivialpursuit__btn[data-categorie="Aardrijkskunde"]{
+    background-color: green;
+}
+
+@media only screen and (max-width: 25rem){
+    .trivialpursuit__categories{
+        width: 100%;
+    }
+
+    .trivialpursuit__categorie{
+        width: 90%;
+    }
+
+    .trivialpursuit__btn{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 40.625rem){
+    .trivialpursuit__header{
+        padding: 0.5rem;
+    }
+
+    .trivialpursuit__home{
+        position: fixed;
+        top: 90%;
+        background-color: rgba(53, 53, 53, 0.8);
+        border-radius: 0.8rem;
+        padding: 1rem;
+        z-index: 3;
+    }
 }
 
 /* Utility classes */
@@ -141,10 +286,14 @@ body {
 .u-button-style:active {
     cursor: pointer;
     box-shadow: 0 0 0 white, 0 0 4rem rgba(17,243,162, .8);
-    transform: translate(-50%, .3rem);
+    transform: translateY(.3rem);
     outline: none;
 }
 
 .u-button-style:focus {
     outline: none;
+}
+
+.u-ul-style{
+    list-style: none;
 }

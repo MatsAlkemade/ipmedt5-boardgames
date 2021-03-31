@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\GamesController::class, 'index']);
+Route::get('/trivialpursuit', [\App\Http\Controllers\TrivialPursuitController::class, 'index']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
