@@ -22,4 +22,34 @@ class GamesController extends Controller
 
         return redirect('/login');
     }
+
+    public function create($id){
+        return view('games.create.' . \App\Models\Games::find($id)->name . 'Create',[
+            'game' => \App\Models\Games::find($id),
+        ]);
+    }
+
+    public function show($game){
+        switch($game){
+            case 'vierOpEenRij':
+
+                break;
+
+            case 'thirtySeconds':
+                    return \App\Models\ThirtySeconds::all();
+                break;
+
+            case 'trivialPursuit':
+
+                break;
+
+            case 'vlotteGeest':
+
+                break;
+
+            case 'ganzenbord':
+
+                break;
+        }
+    }
 }
