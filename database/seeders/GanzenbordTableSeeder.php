@@ -15,8 +15,7 @@ class GanzenbordTableSeeder extends Seeder
     public function run()
     {
         DB::table('ganzenbord')->insert([
-            'name' => 'Stap 0',
-            'steps'=> 0,
+            'name' => 'ganzenbord',
         ]);
     }
 }

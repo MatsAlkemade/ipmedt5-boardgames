@@ -15,7 +15,7 @@ class TrivialPursuitTableSeeder extends Seeder
     public function run()
     {
         DB::table('trivial_pursuit')->insert([
-            'name' => 'Trivial Pursuit',
+            'name' => 'trivialPursuit',
         ]);
     }
 }
