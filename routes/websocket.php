@@ -23,10 +23,49 @@ Websocket::on('disconnect', function ($websocket) {
 });
 
 Websocket::on('example', function ($websocket, $data) {
-	app(GameStateController::class)->setTest($data);
+	// app(GameStateController::class)->setTest($data);
+	// GameStateController::setTest($data);
     $websocket->emit('message', true);
 });
 
 Websocket::on('gettest', function($websocket, $data) {
-	$websocket->emit('message', app(GameStateController::class)->getTest());
+	// $websocket->emit('message', app(GameStateController::class)->getTest());
+	$websocket->emit('message', );
 });
+
+Websocket::on('turn', function($websocket, $data) {
+	$websocket->emit('message', "oitjaetiat");
+});
+
+Websocket::on('vlottegeesten_grab', function($websocket, $data) {
+	$websocket->emit('grab', [
+		"object" => $data["object"],
+		"sessionId" => $data["sessionId"]
+	]);
+});
+// Websocket::on('vieropeenrij_piece', function($websocket, $data) {
+// 	$websocket->emit('message', app(GameStateController::class)->getTest());
+// 	$websocket->broadcast()->emit('message', $data);
+// 	app(GameStateController::class)->setTest([
+// 		"sessions" => [
+// 			"1234" => [
+// 				"data" => [
+// 					"players" => [
+// 						"abcdeijatoiaejt" => [
+// 							"name" => "test",
+// 						]
+// 					]
+// 				]
+// 			]
+// 		]
+// 	]);
+
+// });
+
+// Websocket::on('createGame', function($websocket, $data) {
+// 	app(GameStateController::class)->createSession(generateSessionId());
+// });
+
+// Websocket::on('getplayers', function($websocket, $data) {
+// 	app(GameStateController::class)->getTest()["1234"]["data"]["players"];
+// });

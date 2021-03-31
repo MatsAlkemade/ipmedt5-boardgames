@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use App\Http\Controllers\GameStateController;
+use \Symfony\Component\Console\Output\ConsoleOutput;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,10 +16,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->gsc = new GameStateController("Hier moet iets in");
-        $this->app->singleton(GameStateController::class, function ($app) {
-            return $app->gsc;
-        });
+        // $this->app->gsc = new GameStateController("Hier moet iets in");
+        // (new ConsoleOutput())->writeln("GameStateController singleton");
+        // (new ConsoleOutput())->writeln("test");
+        // $this->app->singleton(GameStateController::class, function ($app) {
+            // return $app->gsc;
+        // });
     }
 
     /**
