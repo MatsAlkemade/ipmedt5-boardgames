@@ -1,9 +1,5 @@
 @extends('default')
 
-@section('title')
-    {{$}}
-@endsection
-
 @section('content')
     <main class="home">
         <header class="default_title">
@@ -11,7 +7,7 @@
         </header>
 
         <article class="default__main">
-            <p>Content goes here</p>
+            @yield('gamecontent')
         </article>
 
         <footer class="default__footer">

@@ -14,7 +14,7 @@ class GamesTableSeeder extends Seeder
      */
     public function run()
     {
-        $games_array = ["Vier Op Een Rij", "Vlotte Geest", "Ganzenbord", "Trivial Pursuit", "Thirty Seconds"];
+        $games_array = ["vierOpEenRij", "vlotteGeest", "ganzenbord", "trivialPursuit", "thirtySeconds"];
 
         foreach($games_array as $game){
             DB::table('games')->insert([
