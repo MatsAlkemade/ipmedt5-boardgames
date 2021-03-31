@@ -4,65 +4,43 @@
     Vlotte Geest
 @endsection
 
-@section('content')
-<header class="vg__header">
+@section('gamecontent')
+<article class="vg__article">
 
-</header>
+    <section class="vg__objects">
+        <ul class="vg__object__list">
+            <li class="vg__object__list__item">
+                <figure class="vg__object__list__item__image">
+                    <img src="/img/games/bad.png" alt="">
+                </figure>
+            </li>
 
-<main class="vg__main">
+            <li class="vg__section__list__item">
+                <figure class="vg__section__list__item__image">
+                    <img src="/img/games/Spook.png" alt="">
+                </figure>
+            </li>
 
-    <article class="vg__article">
+            <li class="vg__section__list__item">
+                <figure class="vg__section__list__item__image">
+                    <img src="/img/games/Borstel.png" alt="">
+                </figure>
+            </li>
 
-        <section class="vg__section">
-            
-        </section>
+            <li class="vg__section__list__item">
+                <figure class="vg__section__list__item__image">
+                    <img src="/img/games/frogie.png" alt="">
+                </figure>
+            </li>
 
-        <section class="vg__objects">
-            <ul class="vg__object__list">
-                <li class="vg__object__list__item">
-                    <figure class="vg__object__list__item__image">
-                        <img src="/img/games/bad.png" alt="">
-                    </figure>
-                </li>
-
-                <li class="vg__section__list__item">
-                    <figure class="vg__section__list__item__image">
-                        <img src="/img/games/Spook.png" alt="">
-                    </figure>
-                </li>
-
-                <li class="vg__section__list__item">
-                    <figure class="vg__section__list__item__image">
-                        <img src="/img/games/Borstel.png" alt="">
-                    </figure>
-                </li>
-
-                <li class="vg__section__list__item">
-                    <figure class="vg__section__list__item__image">
-                        <img src="/img/games/frogie.png" alt="">
-                    </figure>
-                </li>
-
-                <li class="vg__section__list__item">
-                    <figure class="vg__section__list__item__image">
-                        <img src="/img/games/doekie.png" alt="">
-                    </figure>
-                </li>
-            </ul>
-        
-        </section>
-
-        <section class="vg__section">
-            
-        </section>
-
-        <footer class="vg__footer">
-            
-        </footer>
-    
-    </article>
-
-</main>
+            <li class="vg__section__list__item">
+                <figure class="vg__section__list__item__image">
+                    <img src="/img/games/doekie.png" alt="">
+                </figure>
+            </li>
+        </ul>
+    </section>
+</article>
 @endsection
 
 

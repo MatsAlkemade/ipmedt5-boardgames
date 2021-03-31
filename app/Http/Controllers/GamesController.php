@@ -46,7 +46,9 @@ class GamesController extends Controller
                 break;
 
             case 'vlotteGeest':
-
+                return view('games.vlotteGeest',[
+                    'vg' => \App\Models\VlotteGeest::all(),
+                ]);
                 break;
 
             case 'ganzenbord':
