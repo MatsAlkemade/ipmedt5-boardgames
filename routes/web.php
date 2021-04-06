@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\VierOpEenRijController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +21,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/vlottegeest', [\App\Http\Controllers\VlotteGeestController::class, 'index']);
     Route::get('/games/create/{id}', [\App\Http\Controllers\GamesController::class, 'create']);
     Route::get('/games/{game}', [\App\Http\Controllers\GamesController::class, 'show']);
+
+    Route::get('/vieropeenrij', [VierOpEenRijController::class, 'index']);
+    Route::get('/vieropeenrij/create', [VierOpEenRijController::class, 'create']);
+    Route::get('/vieropeenrij/{id}', [VierOpEenRijController::class, 'play']);
 });
 
 // Route::get('/dashboard', function () {
