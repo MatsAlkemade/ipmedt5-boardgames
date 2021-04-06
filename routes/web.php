@@ -19,6 +19,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/vlottegeest', [\App\Http\Controllers\VlotteGeestController::class, 'index']);
     Route::get('/games/create/{id}', [\App\Http\Controllers\GamesController::class, 'create']);
     Route::get('/games/{game}', [\App\Http\Controllers\GamesController::class, 'show']);
+
+    Route::get('/trivialpursuit', [\App\Http\Controllers\TrivialPursuitController::class, 'index']);
+    Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'index']);
 });
 
 

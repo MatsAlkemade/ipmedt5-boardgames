@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VlotteGeest extends Model
+class TrivialPursuitQuestions extends Model
 {
-    protected $table = "vlotte_geest";
-    use HasFactory;
+    protected $table = "trivial_pursuit_questions";
 }
