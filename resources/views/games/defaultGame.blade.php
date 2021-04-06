@@ -8,21 +8,21 @@
         </section>
         @yield('gamecontent')
         <section class="defaultGame__popups">
-            <div class="defaultGame__popups__popup" id="js--liveChat">
+            <section class="defaultGame__popups__popup" id="js--liveChat">
                 <button class="popup__closeBtn" onclick="showPopup(liveChat)"><i class="fal fa-times"></i></button>
                 <h2>Live Chat</h2>
                 @yield('livechat')
-            </div>
-            <div class="defaultGame__popups__popup" id="js--rules">
+            </section>
+            <section class="defaultGame__popups__popup" id="js--rules">
                 <button class="popup__closeBtn" onclick="showPopup(rules)"><i class="fal fa-times"></i></button>
                 <h2>Spelregels</h2>
                 @yield('rules')
-            </div>
-            <div class="defaultGame__popups__popup" id="js--position">
+            </section>
+            <section class="defaultGame__popups__popup" id="js--position">
                 <button class="popup__closeBtn" onclick="showPopup(position)"><i class="fal fa-times"></i></button>
                 <h2>Positie</h2>
                 @yield('position')
-            </div>
+            </section>
         </section>
         <section class="defaultGame__footer">
             <ul class="defaultGame__footer__list" id="js--popupBtns">

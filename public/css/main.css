@@ -192,6 +192,9 @@ body {
 
 .defaultGame__footer {
     height: 10%;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
 
 .defaultGame__footer__list {
@@ -314,6 +317,40 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.tsPos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.tsPos__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tsPos__team__title {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+}
+
+.tsPos__team__img {
+    margin-bottom: 2rem;
+}
+
+.tsPos__team__pos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 10rem;
+    height: 10rem;
+    font-size: 4rem;
+    border: solid .2rem black;
+    border-radius: 1.5rem;
 }
 
 /* Utility classes */
