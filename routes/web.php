@@ -22,6 +22,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/games/create/{id}', [\App\Http\Controllers\GamesController::class, 'create']);
     Route::get('/games/{game}', [\App\Http\Controllers\GamesController::class, 'show']);
 
+    Route::get('/trivialpursuit', [\App\Http\Controllers\TrivialPursuitController::class, 'index']);
+    Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'index']);
+
     Route::get('/vieropeenrij', [VierOpEenRijController::class, 'index']);
     Route::get('/vieropeenrij/create', [VierOpEenRijController::class, 'create']);
     Route::get('/vieropeenrij/{id}', [VierOpEenRijController::class, 'play']);
