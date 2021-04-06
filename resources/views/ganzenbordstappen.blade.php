@@ -1,5 +1,21 @@
-@extends('default')
+@extends('games.defaultGame')
+@section('title')
+    Ganzenbord
+@endsection
 
+@section('gamecontent')
+    <article class="thirtySeconds">
+        <h1>Content</h1>
+    </article>
+@endsection
+
+@section('livechat')
+
+@endsection
+
+@section('rules')
+    <p>regels</p>
+@endsection
 @section('content')
 <h2 class="gb__title" >Ganzenbord</h2>
 <ul class="gb__players">
@@ -51,16 +67,5 @@
 
                 </li>
             </ul>
-
-
-
-
-
-
-
-
-
-
-
 
 @endsection

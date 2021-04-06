@@ -653,7 +653,10 @@ body {
     outline: none;
 }
 
-<<<<<<< HEAD
+.u-ul-style{
+    list-style: none;
+}
+
 /* Media queries */
 
 @media(min-width: 37.5rem){
