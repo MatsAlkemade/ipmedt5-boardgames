@@ -25,6 +25,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/vieropeenrij', [VierOpEenRijController::class, 'index']);
     Route::get('/vieropeenrij/create', [VierOpEenRijController::class, 'create']);
     Route::get('/vieropeenrij/{id}', [VierOpEenRijController::class, 'play']);
+
+    Route::get('/test', function() {
+    	return 'test';
+    });
 });
 
 // Route::get('/dashboard', function () {

@@ -3,6 +3,7 @@
 
 use Illuminate\Http\Request;
 use SwooleTW\Http\Websocket\Facades\Websocket;
+use SwooleTW\Http\Websocket\Facades\Room;
 use App\Http\Controllers\VierOpEenRijController;
 use App\Http\Controllers\GameStateController;
 
@@ -40,6 +41,17 @@ Websocket::on('create_game', function($websocket, $data) {
 
 Websocket::on('session', function($websocket) {
 	$websocket->emit('session', GameStateController::fc());
+});
+
+
+Websocket::on('join_session', function($websocket, $data) {
+	$websocket->join($data['game'] . '.' . $data['id']);
+	var_dump($data['game'] . '.' . $data['id']);
+	var_dump(Room::getClients($data['game'] . '.' . $data['id']));
+});
+
+Websocket::on('leave_session', function($websocket, $data) {
+	$websocket->leave($data['game'] . '.' . $data['id']);
 });
 
 /*
