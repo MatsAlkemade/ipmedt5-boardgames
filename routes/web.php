@@ -20,6 +20,9 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/thirtyseconds', [\App\Http\Controllers\ThirtySecondsController::class, 'store']);
     Route::get('/games/create/{id}', [\App\Http\Controllers\GamesController::class, 'create']);
     Route::get('/games/{game}', [\App\Http\Controllers\GamesController::class, 'show']);
+
+    Route::get('/trivialpursuit', [\App\Http\Controllers\TrivialPursuitController::class, 'index']);
+    Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'index']);
 });
 
 // Route::get('/dashboard', function () {
