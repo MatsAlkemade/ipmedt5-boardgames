@@ -1,7 +1,6 @@
 @extends('default')
 
 @section('content')
-<i class="fas fa-home gb__home"></i>
 <h2 class="gb__title" >Ganzenbord</h2>
 <ul class="gb__players">
                 <li class="gb__players__goose">
