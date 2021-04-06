@@ -21,7 +21,7 @@ class TrivialPursuitAmusement extends Seeder
 
         for($x = 0; $x < $count; $x++){ #x < count moet niet <= zijn omdat de db bij 0 begint en niet bij 1
             DB::table('trivial_pursuit_questions')->insert([
-                'category' => "Amusement",
+                'category' => "amusement",
                 'question' => $question_array[$x],
                 'answer' => $answer_array[$x],
                 'game' => 'Trivial Pursuit',

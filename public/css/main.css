@@ -236,17 +236,53 @@ body {
     background-color: green;
 }
 
-@media only screen and (max-width: 25rem){
-    .trivialpursuit__categories{
-        width: 100%;
+.trivialpursuit__article{
+    width: 40vw;
+    height: 60vh;
+    background-color: var(--primary);
+    color: var(--secondary) i;
+    padding: 2rem;
+    margin: 4rem;
+    border-radius: 0.8rem;
+    text-align: center;
+}
+
+.trivialpursuit__question{
+    font-weight: 400;
+    font-size: 200%;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.trivialpursuit__answer{
+    height: 6rem;
+    width: 60%;
+    padding: 1rem;
+    font-size: 150%;
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+}
+
+.trivialpursuit__send{
+    height: 6rem;
+    width: 50%;
+    padding: 1rem;
+    font-size: 120%;
+    color: var(--secondary) i !important;
+    background-color: var(--bg) !important;
+}
+
+@media only screen and (max-width: 62.5rem){
+    .trivialpursuit__article{
+        width: 60vw;
     }
 
-    .trivialpursuit__categorie{
-        width: 90%;
+    .trivialpursuit__answer{
+        width: 80%;
     }
 
-    .trivialpursuit__btn{
-        width: 100%;
+    .trivialpursuit__send{
+        width: 60%;
     }
 }
 
@@ -263,7 +299,39 @@ body {
         padding: 1rem;
         z-index: 3;
     }
+
+    .trivialpursuit__article{
+        width: 80vw;
+    }
+
+    .trivialpursuit__send{
+        width: 85%;
+    }
 }
+
+@media only screen and (max-width: 25rem){
+    .trivialpursuit__categories{
+        width: 100%;
+    }
+
+    .trivialpursuit__categorie{
+        width: 90%;
+    }
+
+    .trivialpursuit__btn{
+        width: 100%;
+    }
+
+    .trivialpursuit__article{
+        width: 95vw;
+        margin: 2rem;
+    }
+
+    .trivialpursuit__answer{
+        width: 90%;
+    }
+}
+
 
 /* Utility classes */
 
