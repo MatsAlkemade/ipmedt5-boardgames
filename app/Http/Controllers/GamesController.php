@@ -37,9 +37,10 @@ class GamesController extends Controller
                 break;
 
             case 'thirtySeconds':
-                    return view('games.thirtySeconds',[
-                        'ts' => \App\Models\ThirtySeconds::all(),
-                    ]);
+                return view('games.thirtySeconds',[
+                    'ts' => \App\Models\ThirtySeconds::first(),
+                ]);
+
                 break;
 
             case 'trivialPursuit':
@@ -47,7 +48,9 @@ class GamesController extends Controller
                 break;
 
             case 'vlotteGeest':
-
+                return view('games.vlotteGeest',[
+                    'vg' => \App\Models\VlotteGeest::all(),
+                ]);
                 break;
 
             case 'ganzenbord':

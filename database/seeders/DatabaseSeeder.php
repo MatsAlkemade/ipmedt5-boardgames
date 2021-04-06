@@ -24,6 +24,12 @@ class DatabaseSeeder extends Seeder
             GamesTableSeeder::class,
             GameSessionTableSeeder::class,
             UserInGameSessionTableSeeder::class,
+            TrivialPursuitWetenschapNatuur::class,
+            TrivialPursuitSportOntspanning::class,
+            TrivialPursuitGeschiedenis::class,
+            TrivialPursuitKunstLiteratuur::class,
+            TrivialPursuitAardrijkskunde::class,
+            TrivialPursuitAmusement::class,
             VlotteGeestObjectTableSeeder::class,
             VlotteGeestCardTableSeeder::class,
         ]);
