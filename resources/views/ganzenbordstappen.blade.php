@@ -13,19 +13,19 @@
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                      <img src="/img/gb_vakjes/gb_paars.png" alt="gans">
-                     <figcaption>Speler 1</figcaption>
+                     <figcaption>Speler 2</figcaption>
                     </figure>
                 </li>
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                       <img src="/img/gb_vakjes/gb_geel.png" alt="gans">
-                      <figcaption>Speler 1</figcaption>
+                      <figcaption>Speler 3</figcaption>
                     </figure>
                 </li>
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                         <img src="/img/gb_vakjes/gb_blauw.png" alt="gans">
-                        <figcaption>Speler 1</figcaption>
+                        <figcaption>Speler 4</figcaption>
                     </figure>
                 </li>  
 
