@@ -165,28 +165,29 @@ body {
 }
 
 .defaultGame__title__button {
+    position: fixed;
     background-color: transparent;
     border: none;
-}
-
-.defaultGame__title__button > i {
-    position: fixed;
-    color: var(--primary);
     font-size: 3rem;
+    color: var(--primary);
     top: 2rem;
     left: 2rem;
+    transition: text-shadow .5s;
+}
+
+.defaultGame__title__button:hover {
+    cursor: pointer;
+    text-shadow: 0 0 5rem rgba(17,243,162, .8);
+}
+
+.defaultGame__title__button:active {
+    color: var(--secondary);
 }
 
 .defaultGame__title__text{
     width: 100%;
     text-align: center;
-}
-
-.defaultGame__main {
-    height: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-top: 1rem;
 }
 
 .defaultGame__footer {
@@ -206,6 +207,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: var(--primary);
+    z-index: 1;
 }
 
 .defaultGame__footer__list__item:nth-of-type(2) {
@@ -213,11 +215,106 @@ body {
     border-right: solid .2rem var(--bg);
 }
 
-.defaultGame__footer__list__item > i {
+.defaultGame__footer__list__item:hover {
+    cursor: pointer;
+    background-color: var(--secondary);
+}
+
+.defaultGame__footer__list__item:active {
+    box-shadow: inset .2rem .2rem .3rem rgba(0, 0, 0, .5);
+}
+
+.defaultGame__footer__list__item:active i{
+    transform: translate(.1rem, .1rem);
+}
+
+.defaultGame__footer__list__item > button {
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+.defaultGame__footer__list__item > button:hover {
+    cursor: pointer;
+}
+
+.defaultGame__footer__list__item > button > i {
     color: var(--bg);
     font-size: 3rem;
 }
 
+.defaultGame__popups {
+    position: fixed;
+    width: 100%;
+    height: 60%;
+    bottom: 10%;
+}
+
+.defaultGame__popups__popup {
+    display: none;
+    position: absolute;
+    background-color: var(--secondary);
+    color: black;
+    bottom: 0;
+    width: 100%;
+    height: 0;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    animation-name: popup;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    border: solid .1rem var(--primary);
+    padding: 0 2rem;
+}
+
+.defaultGame__popups__popup > h2{
+    text-align: center;
+    font-size: 2.4rem;
+    margin: 1rem;
+}
+
+.popup__closeBtn {
+    position: inherit;
+    top: 1rem;
+    right: 1rem;
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem;
+}
+
+.popup__closeBtn:hover {
+    cursor: pointer;
+}
+
+@keyframes popup {
+    from {
+        height: 0;
+    }
+    to {
+        height: 100%;
+    }
+}
+
+@keyframes popdown {
+    from {
+        height: 100%;
+    }
+    to {
+        height: 0;
+    }
+}
+
+.thirtySeconds {
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /* Utility classes */
 
