@@ -15,7 +15,7 @@ class CreateTrivialPursuitTable extends Migration
     {
         Schema::create('trivial_pursuit', function (Blueprint $table) {
             $table->string('name')->primary();
-            $table->timestamps();
+            $table->text('description');
         });
     }
 
