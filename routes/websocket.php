@@ -3,6 +3,9 @@
 
 use Illuminate\Http\Request;
 use SwooleTW\Http\Websocket\Facades\Websocket;
+use SwooleTW\Http\Websocket\Facades\Room;
+use App\Http\Controllers\VierOpEenRijController;
+use App\Http\Controllers\GameStateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +27,35 @@ Websocket::on('disconnect', function ($websocket) {
 Websocket::on('example', function ($websocket, $data) {
     $websocket->emit('message', $data);
 });
+
+/*
+	Game setup
+*/
+Websocket::on('create_game', function($websocket, $data) {
+	$websocket->emit('test', []);
+	$id = GameStateController::createSession($data["gameType"], []);
+	$websocket->join($id);
+	$websocket->emit('game_id', ["id" => $id, "gameType" => $data["gameType"]]);
+	$websocket->emit('user_join', ["user" => "__username__"]); // TODO: add auth()->user()->name;
+});
+
+Websocket::on('session', function($websocket) {
+	$websocket->emit('session', GameStateController::fc());
+});
+
+
+Websocket::on('join_session', function($websocket, $data) {
+	$websocket->join($data['game'] . '.' . $data['id']);
+	var_dump($data['game'] . '.' . $data['id']);
+	var_dump(Room::getClients($data['game'] . '.' . $data['id']));
+});
+
+Websocket::on('leave_session', function($websocket, $data) {
+	$websocket->leave($data['game'] . '.' . $data['id']);
+});
+
+/*
+	Four in a Row (fiar)
+*/
+
+Websocket::on('fiar_place', [VierOpEenRijController::class, 'place']);
