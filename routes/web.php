@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
+use App\Http\Controllers\VierOpEenRijController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +26,14 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/trivialpursuit', [\App\Http\Controllers\TrivialPursuitController::class, 'index']);
     Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'index']);
+
+    Route::get('/vieropeenrij', [VierOpEenRijController::class, 'index']);
+    Route::get('/vieropeenrij/create', [VierOpEenRijController::class, 'create']);
+    Route::get('/vieropeenrij/{id}', [VierOpEenRijController::class, 'play']);
+
+    Route::get('/test', function(Request $req) {
+    	return ["session" => session()->all()];
+    });
 });
 
 // Route::get('/dashboard', function () {

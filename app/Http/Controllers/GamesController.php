@@ -31,7 +31,9 @@ class GamesController extends Controller
 
     public function show($game){
         switch($game){
-            case 'vieropeenrij':
+
+            case 'vierOpEenRij':
+                return redirect('/vieropeenrij');
 
                 break;
 
