@@ -1,6 +1,10 @@
 @extends('games.defaultGame')
 @section('head-extra')
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<script type="text/javascript">
+	let __u__ = "{{ auth()->user()->email }}";
+	let __p__ = "{{ auth()->user()->password }}";
+</script>
 <script src="/js/fourinarow.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/fourinarow.css">
 @endsection

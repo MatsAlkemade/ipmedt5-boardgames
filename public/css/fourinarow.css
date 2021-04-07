@@ -63,7 +63,6 @@ html {
 	grid-template-columns: repeat(8, 1fr);
 	margin: 0 auto;
 	margin-bottom: 1rem;
-	margin-top: 5rem;
 }
 
 .fourinarow__buttons > .fourinarow__button {
@@ -78,6 +77,7 @@ html {
 	width: 0;
 	height: 0;
 	padding: calc((100% - 4px) / 2);
+	margin: 0 auto;
 }
 
 .fourinarow__buttons > .fourinarow__button > i {

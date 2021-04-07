@@ -1,4 +1,8 @@
-const socket = io(window.location.protocol + '//' + window.location.host, { transports: ['websocket'] });
+const l = "email=" + __u__ + "&password=" + __p__;
+
+const socket = io(window.location.protocol + '//' + window.location.host, { transports: ['websocket'], query: l });
+let players = 2;
+let gameBuilt = false;
 
 window.addEventListener('load', function() {
 	const fiar = document.querySelector('.fourinarow');
@@ -13,6 +17,10 @@ socket.on('connect', function() {
 	socket.emit('join_session', { game: split[1], id: split[2] });
 });
 
+socket.on('login', function(data) {
+	console.log("LOGGED IN", data);
+});
+
 socket.on('disconnect', function() {
 	console.log("Disconnected from socketio server!");
 });
@@ -20,7 +28,7 @@ socket.on('disconnect', function() {
 socket.on('users', function(data) {
 	console.log("update users", data);
 
-	document.querySelector('.js--users').innerText = JSON.stringify(data);
+	// document.querySelector('.js--users').innerText = JSON.stringify(data);
 });
 
 socket.on('game_start', function(data) {
@@ -29,8 +37,13 @@ socket.on('game_start', function(data) {
 	fiarBuilder();
 });
 
-let players = 2;
+socket.on('fiar_place', function(data) {
+	console.log("PLACE", data);
+});
+
 function fiarBuilder() {
+	if (gameBuilt == true) return;
+	gameBuilt = true;
 	const fiar = document.querySelector('.fourinarow__pieces');
 	let r = -1;
 	for (let i = 0; i < 8*8; i++) {
@@ -57,6 +70,7 @@ function setButtons() {
 
 function place(column, player=0) {
 	const lic = getLastInColumn(column);
+	socket.emit('fiar_place', lic);
 	lic.classList.add("piece");
 	if (player == -1) {
 		// Player is this user
