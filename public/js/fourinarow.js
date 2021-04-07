@@ -4,6 +4,10 @@ const socket = io(window.location.protocol + '//' + window.location.host, { tran
 let players = 2;
 let gameBuilt = false;
 
+let split = window.location.pathname.split('/');
+let game = split[1];
+let id = split[2];
+
 window.addEventListener('load', function() {
 	const fiar = document.querySelector('.fourinarow');
 	fiar.style.display = "none";
@@ -14,7 +18,8 @@ socket.on('connect', function() {
 
 	let split = window.location.pathname.split('/');
 
-	socket.emit('join_session', { game: split[1], id: split[2] });
+	socket.emit('join_session', { game: game, id: id });
+	socket.emit('fiar_state', { game: game, id: id });
 });
 
 socket.on('login', function(data) {
@@ -32,13 +37,39 @@ socket.on('users', function(data) {
 });
 
 socket.on('game_start', function(data) {
-	const fiar = document.querySelector('.fourinarow');
-	fiar.style.display = "block";
-	fiarBuilder();
+	gameStart(data);
 });
 
+function gameStart(data) {
+	console.log("START THE GAME", data);
+	if (data.start == true) {
+		const fiar = document.querySelector('.fourinarow');
+		fiar.style.display = "block";
+		fiarBuilder();
+	}
+}
+
 socket.on('fiar_place', function(data) {
-	console.log("PLACE", data);
+	if (!data.column) return;
+	place(data.column, 2);
+});
+
+socket.on('fiar_state', function(data) {
+	console.log("fiar_state", data);
+	if (typeof data == "object" && data.length > 0) {
+		data.forEach(function (value) {
+			console.log(value);
+			switch (value.action) {
+				case 'game_start':
+					gameStart({ start: true });
+					break;
+				case 'fiar_place':
+					console.log("FIAR_PLACE", value);
+					place(value.column, value.player != user_id ? 2 : 1);
+					break;
+			}
+		});
+	}
 });
 
 function fiarBuilder() {
@@ -70,7 +101,9 @@ function setButtons() {
 
 function place(column, player=0) {
 	const lic = getLastInColumn(column);
-	socket.emit('fiar_place', lic);
+	if (player == -1) {
+		socket.emit('fiar_place', { column: column, game: game, id: id });
+	}
 	lic.classList.add("piece");
 	if (player == -1) {
 		// Player is this user

@@ -133,7 +133,7 @@ class GameStateController extends Controller {
     	return $data;
     }
 
-    static function getData($sessionId, $data) {
+    static function getData($sessionId) {
     	if (!self::sessionExists($sessionId)) return null;
     	self::$sessions = Cache::get('sessions');
     	return self::$sessions[$sessionId]["data"];

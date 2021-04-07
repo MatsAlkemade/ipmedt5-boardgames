@@ -27,6 +27,10 @@ function notLoggedInMsg($websocket) {
 	$websocket->emit('login', [ 'loggedIn' => false ]);
 }
 
+function sessionExists($id) {
+	return GameStateController::sessionExists($id);
+}
+
 Websocket::on('connect', function ($websocket, Request $request) {
     Websocket::loginUsing($request->user());
 	if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
@@ -43,6 +47,10 @@ Websocket::on('example', function ($websocket, $data) {
 
     $websocket->emit('message', $data);
 });
+
+// Websocket::on('game_start', );
+
+Websocket::on('game_start', [VierOpEenRijController::class, 'gameStart']);
 
 /*
 	Game setup
@@ -85,4 +93,5 @@ Websocket::on('leave_session', function($websocket, $data) {
 	Four in a Row (fiar)
 */
 
-// Websocket::on('fiar_place', [VierOpEenRijController::class, 'place']);
+Websocket::on('fiar_place', [VierOpEenRijController::class, 'place']);
+Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);

@@ -15,9 +15,62 @@ class VierOpEenRijController extends Controller
 		return 'index';
 	}
 
-    public function place($websocket, $data) {
-    	// $websocket->emit('')
+    static public function place($websocket, $data) {
+    	$gameData = GameStateController::getData($data["id"]);
+    	if (!array_key_exists("actions", $gameData)) {
+    		$gameData["actions"] = [];
+    	}
+
+    	array_push($gameData["actions"], ["action" => 'fiar_place',"player" => $websocket->getUserId(), "column" => $data["column"]]);
+
+    	GameStateController::setData($data["id"], $gameData);
+
+    	$websocket->broadcast()->to('vieropeenrij.' . $data["id"])->emit('fiar_place', [ "user" => $websocket->getUserId(), "column" => $data["column"] ]);
     }
+
+    static public function getState($websocket, $data) {
+
+    	$users = GameStateController::session($data["id"])["users"];
+
+    	if (in_array($websocket->getUserId(), $users)) {
+    		$gameData = GameStateController::getData($data["id"]);
+    		$websocket->emit('fiar_state', $gameData["actions"]);
+    	}
+
+    	// var_dump("GAME_DATA");
+    	// var_dump($gameData);
+    	// foreach($gameData["actions"] as $action) {
+    	// 	$websocket->emit($action["action"], $action);
+    	// }
+
+    }
+
+    static public function gameStart($websocket, $data) {
+		if (!$data) return;
+		if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
+
+		if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
+
+		$gameData = GameStateController::getData($data["id"]);
+    	if (!array_key_exists("actions", $gameData)) {
+    		$gameData["actions"] = [];
+    	}
+
+
+
+		$gameUsers = GameStateController::session($data["id"])["users"];
+		$isCreator = $gameUsers[0] == $websocket->getUserId();
+
+		if ($isCreator && sizeof($gameUsers) > 1) {
+    		array_push($gameData["actions"], ["action" => 'game_start',"player" => $websocket->getUserId()]);
+			$websocket->to($data['game'] . '.' . $data['id'])->emit('game_start', [ 'start' => true ]);
+    		GameStateController::setData($data["id"], $gameData);
+		} else if (sizeof($gameUsers) <= 1) {
+			$websocket->emit('game_start', [ "error" => "Not enough players in the game." ]);
+		} else if (sizeof($gameUsers) > 2) {
+			$websocket->emit('game_start', [ "error" => "Too many players in the game." ]);
+		}
+	}
 
     public function play($id) {
     	if (GameStateController::sessionExists($id) && GameStateController::session($id)["game"] == 'fourinarow') {
