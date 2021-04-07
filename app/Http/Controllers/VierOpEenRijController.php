@@ -34,7 +34,9 @@ class VierOpEenRijController extends Controller
 
     	if (in_array($websocket->getUserId(), $users)) {
     		$gameData = GameStateController::getData($data["id"]);
-    		$websocket->emit('fiar_state', $gameData["actions"]);
+    		if (array_key_exists("actions", $gameData)) {
+    			$websocket->emit('fiar_state', $gameData["actions"]);
+	    	}
     	}
 
     	// var_dump("GAME_DATA");
