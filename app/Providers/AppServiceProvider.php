@@ -37,5 +37,8 @@ class AppServiceProvider extends ServiceProvider
 
             return $output;
         });
+        if (env("APP_SSL")) {
+            $this->app['request']->server->set('HTTPS','on');
+        }
     }
 }
