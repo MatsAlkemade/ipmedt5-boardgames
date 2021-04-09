@@ -156,7 +156,7 @@ class GameStateController extends Controller {
     	if (self::$sessions[$sessionId]["turn"] === null) {
     		self::$sessions[$sessionId]["turn"] = 0; // TODO: random player??
     		Cache::put('sessions', self::$sessions);
-    		return self::$sessions[$sessionId]["turn"];
+    		return self::$sessions[$sessionId]["users"][self::$sessions[$sessionId]["turn"]];
     	}
 
     	self::$sessions[$sessionId]["turn"] += 1;
@@ -167,7 +167,7 @@ class GameStateController extends Controller {
 
 		Cache::put('sessions', self::$sessions);
 
-    	return self::$sessions[$sessionId]["turn"];
+    	return self::$sessions[$sessionId]["users"][self::$sessions[$sessionId]["turn"]];
     }
 
     private static function nextTurnTeam($sessionId) {
@@ -176,7 +176,7 @@ class GameStateController extends Controller {
     	if (self::$sessions[$sessionId]["turn"] === null) {
     		self::$sessions[$sessionId]["turn"] = self::getNextTeam($sessionId, self::$sessions[$sessionId]["turn"]);
     		Cache::put('sessions', self::$sessions);
-    		return self::$sessions[$sessionId]["turn"];
+    		return self::$sessions[$sessionId]["teams"][self::$sessions[$sessionId]["turn"]];
     	}
 
     	self::$sessions[$sessionId]["turn"] = self::getNextTeam($sessionId, self::$sessions[$sessionId]["turn"]);
@@ -187,7 +187,7 @@ class GameStateController extends Controller {
 
 		Cache::put('sessions', self::$sessions);
 
-    	return self::$sessions[$sessionId]["turn"];
+    	return self::$sessions[$sessionId]["teams"][self::$sessions[$sessionId]["turn"]];
     }
 
     private static function getNextTeam($sessionId, $teamId) {
@@ -208,6 +208,15 @@ class GameStateController extends Controller {
     static function getTurn($sessionId) {
     	if (!self::sessionExists($sessionId)) return null;
     	self::$sessions = Cache::get('sessions');
+
+        if (self::$sessions[$sessionId]["turn"] === null) return null;
+
+        if (self::$sessions[$sessionId]["turnMode"] == 0) {
+            return self::$sessions[$sessionId]["users"][self::$sessions[$sessionId]["turn"]];
+        } else if (self::$sessions[$sessionId]["turnMode"] == 1) {
+            return self::$sessions[$sessionId]["teams"][self::$sessions[$sessionId]["turn"]];
+        }
+
     	return self::$sessions[$sessionId]["turn"];
     }
 

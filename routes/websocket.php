@@ -95,3 +95,60 @@ Websocket::on('leave_session', function($websocket, $data) {
 
 Websocket::on('fiar_place', [VierOpEenRijController::class, 'place']);
 Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
+
+
+
+
+/* CHAT */
+Websocket::on('chat_msg', function($websocket, $data) {
+	var_dump("CHAT_MSG");
+	if (!array_key_exists("game", $data) || !array_key_exists("id", $data)) {
+		return; // No game or id given
+	}
+	var_dump($data);
+
+	if (!array_key_exists("message", $data)) return; // No message given
+
+	$msgData = [
+		"username" => User::where('id', $websocket->getUserId())->first()->name,
+		"message" => $data["message"],
+	];
+
+	$gameData = GameStateController::getData($data["id"]);
+
+	if (!array_key_exists("chat", $gameData)) {
+		$gameData["chat"] = [];
+	}
+
+	array_push($gameData["chat"], [
+		"user" => $websocket->getUserId(),
+		"username" => User::where('id', $websocket->getUserId())->first()->name,
+		"message" => $data["message"],
+		"order" => count($gameData["chat"])+1
+	]);
+
+	GameStateController::setData($data["id"], $gameData);
+
+	$websocket->broadcast()->to($data["game"] . '.' . $data["id"])->emit('chat_msg', $msgData);
+});
+
+Websocket::on('chat_state', function($websocket, $data) {
+	if (!array_key_exists("game", $data) || !array_key_exists("id", $data)) {
+		return; // No game or id given
+	}
+
+	$gameData = GameStateController::getData($data["id"]);
+
+	if (!array_key_exists("chat", $gameData)) {
+		$gameData["chat"] = [];
+	}
+
+	foreach ($gameData["chat"] as $message) {
+		if ($websocket->getUserId() == $message["user"]) {
+			$websocket->emit('chat_msg', [ "username" => "You", "message" => $message["message"], "order" => $message["order"] ]);
+		} else {
+			$websocket->emit('chat_msg', [ "username" => $message["username"], "message" => $message["message"], "order" => $message["order"] ]);
+		}
+	}
+
+});

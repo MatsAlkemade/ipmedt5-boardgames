@@ -21,11 +21,18 @@ class VierOpEenRijController extends Controller
     		$gameData["actions"] = [];
     	}
 
+        if (GameStateController::getTurn($data["id"]) != $websocket->getUserId()) {
+            self::getState($websocket, $data);
+            return;
+        }
+
     	array_push($gameData["actions"], ["action" => 'fiar_place',"player" => $websocket->getUserId(), "column" => $data["column"]]);
 
     	GameStateController::setData($data["id"], $gameData);
 
     	$websocket->broadcast()->to('vieropeenrij.' . $data["id"])->emit('fiar_place', [ "user" => $websocket->getUserId(), "column" => $data["column"] ]);
+
+        $websocket->to('vieropeenrij.' . $data["id"])->emit('turn', ["turn" => GameStateController::nextTurn($data["id"])]);
     }
 
     static public function getState($websocket, $data) {
@@ -38,6 +45,8 @@ class VierOpEenRijController extends Controller
     			$websocket->emit('fiar_state', $gameData["actions"]);
 	    	}
     	}
+
+        $websocket->emit('turn', ["turn" => GameStateController::getTurn($data["id"])]);
 
     	// var_dump("GAME_DATA");
     	// var_dump($gameData);
@@ -58,6 +67,10 @@ class VierOpEenRijController extends Controller
     		$gameData["actions"] = [];
     	}
 
+        if (array_key_exists("started", $gameData) && $gameData["started"] == true) {
+            return;
+        }
+
 
 
 		$gameUsers = GameStateController::session($data["id"])["users"];
@@ -66,7 +79,10 @@ class VierOpEenRijController extends Controller
 		if ($isCreator && sizeof($gameUsers) > 1) {
     		array_push($gameData["actions"], ["action" => 'game_start',"player" => $websocket->getUserId()]);
 			$websocket->to($data['game'] . '.' . $data['id'])->emit('game_start', [ 'start' => true ]);
+            $gameData["started"] = true;
     		GameStateController::setData($data["id"], $gameData);
+
+            $websocket->to('vieropeenrij.' . $data["id"])->emit('turn', ["turn" => GameStateController::nextTurn($data["id"])]);
 		} else if (sizeof($gameUsers) <= 1) {
 			$websocket->emit('game_start', [ "error" => "Not enough players in the game." ]);
 		} else if (sizeof($gameUsers) > 2) {
@@ -82,6 +98,7 @@ class VierOpEenRijController extends Controller
     		$users = User::select('name')->whereIn('id', $userIds)->get();
 
     		Websocket::broadcast()->to('vieropeenrij.' . $id)->emit('users', $users);
+            // Websocket::broadcast()->to('vieropeenrij.' . $id)->emit('turn', ["turn" => GameStateController::nextTurn($id)]);
 
     		return view('games.fourinarow', [ 'gameCode' => $id, 'users' => $users ]);
     	}

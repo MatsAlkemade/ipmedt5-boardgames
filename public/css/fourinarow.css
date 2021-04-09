@@ -123,3 +123,16 @@ html {
     transform: translateY(.3rem);
     outline: none;
 }
+
+.fourinarow__header {
+	margin-bottom: 2rem;
+	text-align: center;
+}
+
+.js--fiar-other {
+	color: cornflowerblue;
+}
+
+.js--fiar-me {
+	color: orangered;
+}
