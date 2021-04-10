@@ -79,8 +79,6 @@ Websocket::on('join_session', function($websocket, $data) {
 		$websocket->join($data['game'] . '.' . $data['id']);
 		$websocket->to($data['game'] . '.' . $data['id'])->emit('users', ["more"]);
 	}
-	var_dump($data['game'] . '.' . $data['id']);
-	var_dump(Room::getClients($data['game'] . '.' . $data['id']));
 });
 
 Websocket::on('leave_session', function($websocket, $data) {
@@ -101,11 +99,9 @@ Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
 
 /* CHAT */
 Websocket::on('chat_msg', function($websocket, $data) {
-	var_dump("CHAT_MSG");
 	if (!array_key_exists("game", $data) || !array_key_exists("id", $data)) {
 		return; // No game or id given
 	}
-	var_dump($data);
 
 	if (!array_key_exists("message", $data)) return; // No message given
 

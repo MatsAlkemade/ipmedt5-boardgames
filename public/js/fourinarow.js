@@ -4,14 +4,23 @@ const socket = io(window.location.protocol + '//' + window.location.host, { tran
 let players = 2;
 let gameBuilt = false;
 let myTurn = false;
+let winner = false;
+let winnerId = -1;
+let winningPieces = undefined;
+let pageLoaded = false;
 
 let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
 
 window.addEventListener('load', function() {
+	pageLoaded = true;
 	const fiar = document.querySelector('.fourinarow');
 	fiar.style.display = "none";
+
+	if (winner !== false) {
+		winnerText();
+	}
 
 	setupChat();
 });
@@ -145,13 +154,17 @@ socket.on('turn', function(data) {
 	myTurn = false;
 	if (data.turn == user_id) myTurn = true;
 	const turnText = document.querySelector('.js--fiar-turn');
+	if (winner !== false) {
+		winnerText();
+		return;
+	}
 	if (!myTurn) {
-		turnText.classList.remove('js--fiar-other');
-		turnText.classList.add('js--fiar-me');
-		turnText.innerText = "(Other players turn)";
-	} else {
 		turnText.classList.add('js--fiar-other');
 		turnText.classList.remove('js--fiar-me');
+		turnText.innerText = "(Other players turn)";
+	} else {
+		turnText.classList.remove('js--fiar-other');
+		turnText.classList.add('js--fiar-me');
 		turnText.innerText = "(Your turn)";
 	}
 });
@@ -181,6 +194,65 @@ socket.on('fiar_state', function(data) {
 	}
 });
 
+socket.on('fiar_winner', function(data) {
+	console.log("GOT A WINNER!", data);
+	myTurn = false;
+	winner = data.username;
+	winnerId = data.winner;
+	winningPieces = data.winningPieces;
+	
+	if (winner !== false) {
+		winnerText();
+		return;
+	}
+});
+
+let timeout = true;
+function winnerText() {
+	if (!pageLoaded) return;
+	const turnText = document.querySelector('.js--fiar-turn');
+	turnText.innerText = winner + " won the game!";
+	if (winnerId == user_id) {
+		turnText.classList.remove('js--fiar-other');
+		turnText.classList.add('js--fiar-me');
+	} else {
+		turnText.classList.add('js--fiar-other');
+		turnText.classList.remove('js--fiar-me');
+	}
+
+	if (winningPieces !== undefined) {
+		console.log("WINNINGPIECES");
+		if (winningPieces.vertical) {
+			console.log("WINNINGPIECES VERTICAL", winningPieces.vertical);
+			for (let i = winningPieces.vertical.end[1]; i < winningPieces.vertical.begin[1]+1; i++) {
+				const piece = getPiecePlace(winningPieces.vertical.begin[0], i);
+				console.log("WIN", i, piece);
+				if (!piece && timeout == true) {
+					timeout = false;
+					return setTimeout(winnerText, 25);
+				}
+				piece.classList.add("js--piece-win");
+			}
+		}
+		if (winningPieces.horizontal) {
+			console.log("WINNINGPIECES HORIZONTAL");
+			for (let i = winningPieces.horizontal.begin[0]; i < winningPieces.horizontal.end[0]+1; i++) {
+				const piece = getPiecePlace(i, winningPieces.horizontal.begin[1]);
+				if (!piece && timeout == true) {
+					timeout = false;
+					return setTimeout(winnerText, 25);
+				}
+				console.log(piece, i, winningPieces.horizontal.begin[1]);
+				piece.classList.add("js--piece-win");
+				console.log("WIN", i);
+			}
+		}
+		if (winningPieces.diagonals) {
+			// TODO
+		}
+	}
+}
+
 function resetBoard() {
 	console.log("RESETBOARD", gameBuilt);
 	if (!gameBuilt) return;
@@ -198,6 +270,11 @@ function resetBoard() {
 		piece.classList.remove('p2');
 	});
 
+}
+
+function getPiecePlace(column, row) {
+	const fiar = document.querySelector('.fourinarow__pieces');
+	return fiar.querySelector('div:nth-child(' + (column + (8 * row) + 1) + ')');
 }
 
 function fiarBuilder() {
@@ -228,6 +305,7 @@ function setButtons() {
 }
 
 function place(column, player=0) {
+	if (winner !== false && player == -1) return;
 	if (!myTurn && player == -1) return;
 	const lic = getLastInColumn(column);
 	if (!lic) return;
