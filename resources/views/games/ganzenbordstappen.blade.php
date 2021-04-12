@@ -40,24 +40,23 @@
                 </li>  
 
 
-                <li class="gb__player">
+                <li class="gb__player js--player1">
                     <figure class="gb__players__figure">
-                        <img id="speler_1" name="canvas" src="/img/gb_vakjes/gb_start.png" alt="Start vakje">
+                        <img id="speler_1" src="/img/gb_vakjes/gb_start.png" alt="Start vakje">
                     </figure>
                 </li>
             
-
-                <li class="gb__player">
+                <li class="gb__player js--player2">
                     <figure class="gb__players__figure">
                      <img src="/img/gb_vakjes/gb_start.png" alt="Start vakje">
                     </figure>
                 </li>
-                <li class="gb__player">
+                <li class="gb__player js--player3">
                     <figure class="gb__players__figure">
                       <img src="/img/gb_vakjes/gb_start.png" alt="Start vakje">
                     </figure>
                 </li>
-                <li class="gb__player">
+                <li class="gb__player js--player4">
                     <figure class="gb__players__figure">
                         <img src="/img/gb_vakjes/gb_start.png" alt="Start vakje">
                     </figure>
