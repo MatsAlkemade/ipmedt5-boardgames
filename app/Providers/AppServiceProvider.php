@@ -37,5 +37,8 @@ class AppServiceProvider extends ServiceProvider
 
             return $output;
         });
+        if (env("APP_SSL")) {
+            \URL::forceScheme('https');
+        }
     }
 }
