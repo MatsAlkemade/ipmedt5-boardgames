@@ -4,14 +4,39 @@ let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
 
+//Set the extracted part of the time to variables. 
+// If you dont have the second part then set it to 0.
+
+let startHour = 10;
+let startMinute = 30;
+let startSecond = 30;
+
+let endHour = 9;
+let endMinute = 35;
+let endSecond = 30;
+
+//Create date object and set the time to that
+let startTimeObject = new Date();
+startTimeObject.setHours(startHour, startMinute, startSecond);
+
+//Create date object and set the time to that
+let endTimeObject = new Date(startTimeObject);
+endTimeObject.setHours(endHour, endMinute, endSecond);
+
+//Now we are ready to compare both the dates
+if(startTimeObject > endTimeObject)
+{
+    console.log('End time should be after start time.');
+}
+else
+{
+    console.log('Entries are perfect.');
+}
+
 
 window.addEventListener('load', function() {
- 
     setupChat();
-    
 });
-
-
 
 function setupChat() {
     if (!liveChat) return;
@@ -78,3 +103,4 @@ function setupChat() {
         return msg;
     }
 }
+
