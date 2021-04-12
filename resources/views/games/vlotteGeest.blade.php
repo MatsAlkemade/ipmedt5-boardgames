@@ -3,41 +3,39 @@
     Vlotte Geest
 @endsection
 @section('gamecontent')
-    <article class="vg__article">
+    <article class="vlotte-geest">
 
-        <section class="vg__objects">
-            <ul class="vg__object__list circle-container">
-                <li class="vg__object__list__item deg0">
-                    <figure class="vg__section__list__item__image">
-                        <img src="/img/games/bad.png" alt="">
-                    </figure>
-                </li>
+        <main>
+            <section class="grid-template">
 
-                <li class="vg__section__list__item deg45">
-                    <figure class="vg__section__list__item__image">
-                        <img src="/img/games/Spook.png" alt="">
-                    </figure>
-                </li>
+                <!-- eerste sectie -->
+                <section class="top__wrapper">
+                    <section class="top__left">
+                    <p class="cardCount">Aantal kaarten:</p>
+                    <button class="button">kaart draaien</button>
+                    </section>
 
-                <li class="vg__section__list__item deg135">
-                    <figure class="vg__section__list__item__image">
-                        <img src="/img/games/Borstel.png" alt="">
+                    <section class="top__right card">
+                    <figure>
+                        <img src="/img/games/Card.png" alt="...">
                     </figure>
-                </li>
+                    </section>
+                </section>
 
-                <li class="vg__section__list__item deg180">
-                    <figure class="vg__section__list__item__image">
-                        <img src="/img/games/frogie.png" alt="">
-                    </figure>
-                </li>
+                <!-- tweede sectie -->
+                <section class="objects">
+                    <ul class="objects__list">
+                        <li class="objects__item image__one"><img src='/img/games/bad.png' alt="..." /></li>
+                        <li class="objects__item image__two"><img src='/img/games/Borstel.png' alt="..." /></li>
+                        <li class="objects__item image__three"><img src='/img/games/doekie.png' alt="..." /></li>
+                        <li class="objects__item image__four"><img src='/img/games/frogie.png' alt="..." /></li>
+                        <li class="objects__item image__five"><img src='/img/games/Spook.png' alt="..." /></li>
+                    </ul>
+                </section>
 
-                <li class="vg__section__list__item deg225">
-                    <figure class="vg__section__list__item__image">
-                        <img src="/img/games/doekie.png" alt="">
-                    </figure>
-                </li>
-            </ul>
-        </section>
+            </section>
+            
+        </main>
     </article>
 @endsection
 

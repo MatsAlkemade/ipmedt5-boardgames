@@ -30,6 +30,7 @@ class GamesController extends Controller
     }
 
     public function show($game){
+     
         switch($game){
             case 'vierOpEenRij':
 
