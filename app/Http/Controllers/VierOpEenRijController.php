@@ -16,6 +16,10 @@ class VierOpEenRijController extends Controller
 	}
 
     static public function place($websocket, $data) {
+        if (!$data) return;
+        if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
+        if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
+
     	$gameData = GameStateController::getData($data["id"]);
     	if (!array_key_exists("actions", $gameData)) {
     		$gameData["actions"] = [];
@@ -239,6 +243,11 @@ class VierOpEenRijController extends Controller
 
     public function play($id) {
     	if (GameStateController::sessionExists($id) && GameStateController::session($id)["game"] == 'fourinarow') {
+            $gameData = GameStateController::getData($id);
+            if (array_key_exists("started", $gameData)) {
+                // return view(); // RETURN LOBBY VIEW
+            }
+
     		GameStateController::addUser($id, auth()->user());
 
     		$userIds = GameStateController::session($id)["users"];
