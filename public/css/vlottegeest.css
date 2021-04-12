@@ -2,6 +2,15 @@ ul{
     list-style: none;
 }
 
+.rules{
+  overflow-y: auto;
+}
+
+.format{
+  height: 100%;
+  width: 100%;
+}
+
 .top__wrapper{
   width: 95%;
   display: grid;
@@ -85,7 +94,6 @@ ul{
 .image__one{
   grid-column: 3;
   grid-row: 2;
-  
   
 }
 
