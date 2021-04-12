@@ -20,12 +20,14 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/games/create/{id}', [\App\Http\Controllers\GamesController::class, 'create']);
     Route::get('/games/{game}', [\App\Http\Controllers\GamesController::class, 'show']);
 
+    Route::get('/ganzenbord',  [\App\Http\Controllers\GanzenbordController::class, 'index']);
+
     Route::get('/trivialpursuit', [\App\Http\Controllers\TrivialPursuitController::class, 'index']);
     Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'index']);
 });
 
 
-Route::get('/ganzenbord',  [\App\Http\Controllers\GanzenbordController::class, 'index']);
+
     
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -4,20 +4,6 @@
 @endsection
 
 @section('gamecontent')
-    <article class="thirtySeconds">
-        <h1>Content</h1>
-    </article>
-@endsection
-
-@section('livechat')
-
-@endsection
-
-@section('rules')
-    <p>regels</p>
-@endsection
-@section('content')
-<h2 class="gb__title" >Ganzenbord</h2>
 <ul class="gb__players">
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
@@ -47,9 +33,11 @@
 
                 <li class="gb__player">
                     <figure class="gb__players__figure">
-                        <img src="/img/gb_vakjes/gb_start.png" alt="Start vakje">
+                        <img id="speler_1" name="canvas" src="/img/gb_vakjes/gb_start.png" alt="Start vakje">
                     </figure>
                 </li>
+            
+
                 <li class="gb__player">
                     <figure class="gb__players__figure">
                      <img src="/img/gb_vakjes/gb_start.png" alt="Start vakje">
@@ -67,5 +55,6 @@
 
                 </li>
             </ul>
+            <script src="/js/ganzenbord.js" defer></script>
 
 @endsection
