@@ -7,7 +7,7 @@
             <h1 class="defaultGame__title__text">@yield('title')</h1>
         </section>
         @yield('gamecontent')
-        <section class="defaultGame__popups">
+        <section class="defaultGame__popups" id="js--popups">
             <section class="defaultGame__popups__popup" id="js--liveChat">
                 <button class="popup__closeBtn" onclick="showPopup(liveChat)"><i class="fal fa-times"></i></button>
                 <h2>Live Chat</h2>

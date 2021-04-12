@@ -1,9 +1,5 @@
 const navButton = document.getElementById('js--navButton');
 const navDropdown = document.getElementById('js--navDropdown');
-const popupBtns = document.getElementById('js--popupBtns');
-const liveChat = document.getElementById('js--liveChat');
-const rules = document.getElementById('js--rules');
-const position = document.getElementById('js--position');
 
 if(navButton){
     navButton.addEventListener('click', function(){
@@ -25,6 +21,12 @@ if(navDropdown){
     });
 }
 
+const popupBtns = document.getElementById('js--popupBtns');
+const popups = document.getElementById('js--popups');
+const liveChat = document.getElementById('js--liveChat');
+const rules = document.getElementById('js--rules');
+const position = document.getElementById('js--position');
+
 function showPopup(popup){
     popupBtns.style.pointerEvents = 'none';
     setTimeout(function() {
@@ -36,10 +38,12 @@ function showPopup(popup){
         popup.style.height = "0";
         setTimeout(function() {
             popup.style.display = "none";
+            popups.style.display = "none";
         }, 1000);
     }else{
         popup.style.animationName = "popup";
         popup.style.display = "block";
+        popups.style.display = "block";
         popup.style.height = "100%";
     }
 
@@ -66,4 +70,45 @@ function showPopup(popup){
             position.style.display = "none";
         }, 1000);
     }
+}
+
+const tsCard = document.getElementById('js--tsCard');
+const tsCardBack = document.getElementById("js--tsCardBack");
+const tsCardTurnBtn = document.getElementById("js--tsCardTurnBtn");
+const tsCardSubmitBtn = document.getElementById("js--tsCardSubmitBtn");
+const tsCardForm = document.getElementById("js--tsCardForm");
+const tsTimer = document.getElementById("js--tsTimer");
+const tsTimerBar = document.getElementById("js--tsTimerBar");
+
+function turnCard(){
+    tsStartTimer();
+    tsCard.style.transform = "rotateY(180deg)";
+    tsCardSubmitBtn.removeAttribute("disabled");
+    tsCardTurnBtn.setAttribute("disabled", "");
+    setTimeout(function() {
+        tsCardBack.style.zIndex = "1";
+    }, 600);
+}
+
+function tsSubmitForm(){
+    tsCardForm.submit();
+}
+
+function tsStartTimer() {
+    let counter = 30;
+    let barWidth = tsTimerBar.offsetWidth;
+    let barStep = tsTimerBar.offsetWidth / counter;
+    function next() {
+        if (counter <= 1) {
+            tsTimerBar.style.width = 0;
+            tsTimer.innerText = 0;
+            return;
+        }
+        counter--;
+        barWidth = barWidth - barStep;
+        tsTimerBar.style.width = barWidth + "px";
+        tsTimer.innerText = counter;
+        setTimeout(next, 1000);
+    }
+    setTimeout(next, 1000);
 }
