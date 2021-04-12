@@ -31,22 +31,25 @@ class GamesController extends Controller
 
     public function show($game){
         switch($game){
+
             case 'vierOpEenRij':
+                return redirect('/vieropeenrij');
 
                 break;
 
-            case 'thirtySeconds':
-                return view('games.thirtySeconds',[
+            case 'thirtyseconds':
+                return view('games.thirtyseconds',[
                     'ts' => \App\Models\ThirtySeconds::first(),
+                    'tsq' => \App\Models\ThirtySecondsQuestion::get(),
                 ]);
 
                 break;
 
-            case 'trivialPursuit':
+            case 'trivialpursuit':
 
                 break;
 
-            case 'vlotteGeest':
+            case 'vlottegeest':
                 return view('games.vlotteGeest',[
                     'vg' => \App\Models\VlotteGeest::all(),
                 ]);
