@@ -19,7 +19,6 @@ use App\Http\Controllers\VierOpEenRijController;
 Route::middleware(['auth'])->group(function(){
     Route::get('/', [\App\Http\Controllers\GamesController::class, 'index']);
     Route::get('/logout', [\App\Http\Controllers\GamesController::class, 'logout']);
-    Route::get('/vlottegeest', [\App\Http\Controllers\VlotteGeestController::class, 'index']);
     Route::post('/thirtyseconds', [\App\Http\Controllers\ThirtySecondsController::class, 'store']);
     Route::get('/games/create/{id}', [\App\Http\Controllers\GamesController::class, 'create']);
     Route::get('/games/{game}', [\App\Http\Controllers\GamesController::class, 'show']);
@@ -30,6 +29,12 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/vieropeenrij', [VierOpEenRijController::class, 'index']);
     Route::get('/vieropeenrij/create', [VierOpEenRijController::class, 'create']);
     Route::get('/vieropeenrij/{id}', [VierOpEenRijController::class, 'play']);
+
+    Route::get('/vlottegeest', [\App\Http\Controllers\VlotteGeestController::class, 'index']);
+    Route::get('/vlottegeest/create', [\App\Http\Controllers\VlotteGeestController::class, 'create']);
+    Route::get('/vlottegeest/{id}', [\App\Http\Controllers\VlotteGeestController::class, 'play']);
+   
+    
 
     Route::get('/test', function(Request $req) {
     	return ["session" => session()->all()];
