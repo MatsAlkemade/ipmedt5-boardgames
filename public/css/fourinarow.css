@@ -1,0 +1,175 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	width: 100vw;
+	height: 100vh;
+	background-color: #353535;
+	overflow-x: hidden;
+}
+
+.fourinarow {
+	max-width: 600px;
+	margin: 0 auto;
+	width: 100%;
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.fourinarow__pieces {
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: repeat(8, 1fr);
+	grid-gap: 4px;
+	/*width: 500px;*/
+	/*height: 500px;*/
+	margin: 0 auto;
+	width: 100%;
+}
+
+.fourinarow__pieces > .fourinarow__piece {
+	position: relative;
+	background-color: darkgrey;
+	border-radius: 50%;
+	padding: 50%;
+	width: 0;
+	height: 0;
+}
+
+.fourinarow__pieces > .fourinarow__piece::after {
+	content: '';
+	position: absolute;
+	top: calc((-100% * var(--piece-row)) - (4px * var(--piece-row)));
+	left: 0;
+	height: 100%;
+	width: 100%;
+	border-radius: 50%;
+	transition: 1s top;
+}
+
+.fourinarow__buttons {
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	margin: 0 auto;
+	margin-bottom: 1rem;
+}
+
+.fourinarow__buttons > .fourinarow__button {
+	position: relative;
+	padding: 0;
+	margin: 0;
+	/*width: calc((100% - 28px) / 8);*/
+	border: 0;
+	/*background-color: grey;*/
+	padding-top: calc(100% / 8);
+	cursor: pointer;
+	width: 0;
+	height: 0;
+	padding: calc((100% - 4px) / 2);
+	margin: 0 auto;
+}
+
+.fourinarow__buttons > .fourinarow__button > i {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 3rem;
+}
+
+.fourinarow__buttons .fourinarow__button:hover {
+	/*background-color: lightgrey;*/
+}
+
+.fourinarow__button {
+    background-color: #11f3a2;
+    font-family: 'Roboto', sans-serif;
+    color: #353535;
+    border: none;
+    box-shadow: 0 0.3rem 0 white, 0 0 2rem rgb(17 243 162 / 80%);
+    padding: 1rem 2rem;
+    border-radius: .5rem;
+    transition: all .2s;
+    outline: none;
+}
+
+.fourinarow__button:hover {
+    cursor: pointer;
+    box-shadow: 0 0.3rem 0 white, 0 0 4rem rgb(17 243 162 / 80%);
+}
+
+.fourinarow__button:active {
+    cursor: pointer;
+    box-shadow: 0 0 0 white, 0 0 4rem rgb(17 243 162 / 80%);
+    transform: translateY(.3rem);
+    outline: none;
+}
+
+.fourinarow__button:disabled, .fourinarow__button[disabled] {
+	background-color: rgba(17, 243, 162, .6);
+	cursor: default !important;
+	box-shadow: 0 0 0 white, 0 0 4rem rgb(17 243 162 / 80%);
+    transform: translateY(.3rem);
+    outline: none;
+}
+
+.fourinarow__header {
+	margin-bottom: 2rem;
+	text-align: center;
+}
+
+.fourinarow__pieces > .fourinarow__piece.p1::after {
+	background-color: cornflowerblue;
+}
+
+.fourinarow__pieces > .fourinarow__piece.p2::after {
+	background-color: orangered;
+}
+
+.js--fiar-other {
+	color: orangered;
+}
+
+.js--fiar-me {
+	color: cornflowerblue;
+}
+
+.p2.js--piece-win {
+	animation: winPieceOther 1s infinite;
+}
+.p1.js--piece-win {
+	animation: winPieceMe 1s infinite;
+}
+
+@keyframes winPieceOther {
+	0% {
+		box-shadow: 0 0 2rem orangered;
+		/*transform: scale(1.05);*/
+	}
+	50% {
+		box-shadow: none;
+		/*transform: scale(1);*/
+	}
+	100% {
+		box-shadow: 0 0 2rem orangered;
+		/*transform: scale(1.05);*/
+	}
+}
+
+@keyframes winPieceMe {
+	0% {
+		box-shadow: 0 0 2rem cornflowerblue;
+		/*transform: scale(1.025);*/
+	}
+	50% {
+		box-shadow: none;
+		/*transform: scale(1);*/
+	}
+	100% {
+		box-shadow: 0 0 2rem cornflowerblue;
+		/*transform: scale(1.025);*/
+	}
+}
