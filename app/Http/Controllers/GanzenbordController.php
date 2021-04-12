@@ -14,4 +14,18 @@ class GanzenbordController extends Controller
             
         ]);
     }
+
+    public function create(Request $request) {
+    	// dd($request->session());
+
+    	// if ($request->session()->error) {
+    	// 	return $request->session()->error;
+    	// }
+
+    	$id = GameStateController::createSession('ganzenbord', auth()->user());
+
+    	return redirect('/ganzenbord/' . $id);
+
+    	// return view('games.');
+    }
 }
