@@ -1,0 +1,113 @@
+.tsPos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.tsPos__team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tsPos__team__title {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+}
+
+.tsPos__team__img {
+    margin-bottom: 2rem;
+}
+
+.tsPos__team__pos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 10rem;
+    height: 10rem;
+    font-size: 4rem;
+    border: solid .2rem black;
+    border-radius: 1.5rem;
+}
+
+.ts {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ts__cardWrapper {
+    margin-top: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    transition: all 2s;
+}
+
+.ts__card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30rem;
+    height: 20rem;
+    background-color: var(--secondary);
+    border-radius: 1.5rem;
+    position: absolute;
+}
+
+.ts__card__form {
+    list-style: none;
+}
+
+.ts__card__form__item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    color: black;
+    margin-bottom: 1.5rem;
+}
+
+.ts__card__form__item > input {
+    margin-left: 10rem;
+}
+
+.ts__card__form__item:last-of-type{
+    margin-bottom: 0;
+}
+
+.ts__back {
+    z-index: -1;
+    transform: rotateY(180deg);
+}
+
+.ts__timer {
+    margin-top: 12rem;
+    width: 30rem;
+    text-align: center;
+}
+
+.ts__timer__line {
+    width: 100%;
+    height: 1.5rem;
+    border: solid .1rem var(--primary);
+}
+
+.ts__timer__line > section {
+    background-color: var(--primary);
+    width: 100%;
+    height: 100%;
+}
+
+.ts__timer__time {
+    margin-top: 1rem;
+}
+
+.ts__btns {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 6rem;
+}
