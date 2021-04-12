@@ -1,128 +1,175 @@
-ul{
-    list-style: none;
+.vs{
+  height: 80%;
+  width: 100%; 
 }
 
-.rules{
-  overflow-y: auto;
-}
-
-.format{
-  height: 100%;
-  width: 100%;
-}
-
-.top__wrapper{
-  width: 95%;
+.vs__devider{
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
-  margin: 0 auto;
-  padding-left: 4rem;
-  max-width: 50rem;
+  height: 50%;
+  width: 100%;
 }
 
-.top__right{
+/* Counter & buttons section */
+.vs__section{
+  height: 100%;
+  width: 100%;
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-items: center;
+}
+
+.vs__counter{
+  color: #eeeeee;
+  display: flex;
+  justify-content: center;
+}
+
+.vs__section button{
+  background-color: var(--primary);
+  font-family: 'Roboto', sans-serif;
+  color: var(--bg);
+  border: none;
+  box-shadow: 0 0.3rem 0 white, 0 0 2rem rgb(17 243 162 / 80%);
+  padding: 1rem 2rem;
+  border-radius: .5rem;
+  transition: all .2s;
+
+}
+
+.vs__section button{
+  cursor: pointer;
+}
+
+.vs__button--turn{
+  height: 5rem;
+  width: 10rem;
+  margin: 0 auto;
+ 
+}
+
+.vs__button--turnBack{
+  height: 5rem;
+  width: 10rem;
+  margin: 0 auto;
+
+}
+
+/* Card section */
+.vs__card {
+  height: 100%;
+  width: 100%;
+  grid-column: 2;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.top__right > figure > img{
-  height: 20rem;
-  width: 10rem;
+.vs__card__inner{
+  height: 80%;
+  width: 80%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  position: relative;
 }
 
-
-.button {
-    
-  background-color:  #11F3A2;
-  font-family: 'Roboto', sans-serif;
-  color:  black;
-  border: none;
-  box-shadow: 0 .3rem 0 white, 0 0 2rem rgba(17,243,162, .8);
-  padding: 1rem 2rem;
-  border-radius: .5rem;
-  transition: all .2s;
+.vs__card__inner .is-flipped{
+  transform: rotateY(180deg);
 }
 
-.cardCount{
-  color: white;
-  padding-bottom: 4rem;
-}
-
-.cardCount{
-  color: white
-   
-}
-
-/* Object section */
-.wrapper{
-    padding-top: 2rem;
-    padding-top: 2rem;
-    width: 95%;
-    height: 20.3rem;
-    margin: 0 auto;
-}
-
-.objects{
+.vs__card__face{
+  position: absolute;
   width: 100%;
-  height: 20.3%;
-  max-width: 50rem;
-  margin: 0 auto;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: hidden;
+  border-radius: 1.6rem;
+  box-shadow: 0rem .3rem 1.8rem .3rem rgb(0 0 0 0.2);
+  
 }
 
-.objects__list{
+.vs__card__face--front{
+  background-image: linear-gradient(to bottom right, teal, black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vs__card__face--back{
+  background-color: lightgrey;
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+
+/* Objects section */
+.vs__objects{
+  height: 50%;
+  width: 100%;
+  overflow: none;
+}
+
+.vs__list{
+  height: 100%;
+  width: 100%;
+  padding: 2rem;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  padding: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  
+}
+.vs__list li{
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  color:black;
+  border: none;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.5) .4rem .4rem .8rem;
 }
 
-.objects__item > img{
-
-  height:6rem;
-  width: 6rem;
-  outline: none;
-  margin-left: 50%;
-  transform: translateX(-50%);
- 
-}
-
-.image__one{
+.vs__list li:nth-child(1){
   grid-column: 3;
-  grid-row: 2;
-  
+  grid-row: 1;
+  background-color: white;
 }
 
-.image__two{
+.vs__list li:nth-child(2){
   grid-column: 1;
   grid-row: 3;
-  
+  background-color: green;
 }
 
-.image__three{
+.vs__list li:nth-child(3){
   grid-column: 2;
   grid-row: 5;
-  
+  background-color: lightblue;
 }
 
-.image__four{
+.vs__list li:nth-child(4){
   grid-column: 4;
   grid-row: 5;
-  
+  background-color: blue;
 }
 
-.image__five{
+.vs__list li:nth-child(5){
   grid-column: 5;
-  grid-row: 3;  
+  grid-row: 3;
+  background-color: red;
 }
 
-@media(max-width: 100rem){
-    .objects__item > img{
-        height: 10rem;
-        width: 10rem;
-    }
+@media (min-width: 50rem){
+
+  .vs{
+    max-width: 33.3%;
+    margin: 0 auto;
+  }
+
 }

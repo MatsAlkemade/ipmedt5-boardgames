@@ -3,6 +3,14 @@ const socket = io(window.location.protocol + '//' + window.location.host, { tran
 let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
+const card = document.querySelector('.vs__card__inner');
+console.log('working');
+
+card.addEventListener('click', function (){
+    console.log('working');
+    card.classList.toggle('.is-flipped');
+});
+
 
 //Set the extracted part of the time to variables. 
 // If you dont have the second part then set it to 0.

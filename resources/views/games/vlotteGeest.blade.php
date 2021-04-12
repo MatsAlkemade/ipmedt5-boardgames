@@ -15,57 +15,46 @@
 @endsection
 
 @section('gamecontent')
-    <article class="vs">
+    <main class="vs">
 
-        <main>
-            <article class="vs__card">
+        <section class="vs__devider">
+            <section class="vs__section">
+                <p class="vs__counter">Aantal kaarten: 0</p>
+                <button class="vs__button--turn">kaaart draaien</button>
+                <button class="vs__button--turnBack">volgende kaart</button>
+            </section>
 
-                <section class="vs__card--front">
-                    <figure class="vs__image--front">
-                        <img src="" alt="">
-                    </figure>
-                </section>
-
-                <section class="vs__card--back">
-                    <figure class="vs__image--back">
-                        <img src="" alt="">
-                    </figure>
-                </section>
-
-            </article>
-                <!-- <section class="grid-template">
-
+            <section class="vs__card">
+                <div class="vs__card__inner">
+                    <div class="vs__card__face vs__card__face--front">
+                        <!-- <figure>
+                            <img src="" alt="empty">
+                        </figure> -->
+                        <p>vlotte geest</p>
+                    </div>
                     
-                    <section class="top__wrapper">
-                        <section class="top__left">
-                        <p class="cardCount">Aantal kaarten:</p>
-                        <button class="button">kaart draaien</button>
-                        </section>
+                    <div class="vs__card__face vs__card__face--back">
+                        <!-- <figure>
+                            <img src="" alt="empty">
+                        </figure> -->
+                        <p>spook</p>
+                    </div>
+                </div>
+                
+            </section>
+        </section>
+        
+        <article class="vs__objects">
+            <ul class="vs__list">
+                <li class="vs__list__item">Geest</li>
+                <li class="vs__list__item">Kikker</li>
+                <li class="vs__list__item">Badkuip</li>
+                <li class="vs__list__item">Borstel</li>
+                <li class="vs__list__item">Kleed</li>
+            </ul>
+        </article>
 
-                        <section class="top__right card">
-                        <figure>
-                            <img src="/img/games/Card.png" alt="...">
-                        </figure>
-                        </section>
-                    </section>
-
-                  
-                    <section class="objects">
-                        <ul class="objects__list">
-                            <li class="objects__item image__one"><img src='/img/games/bad.png' alt="..." /></li>
-                            <li class="objects__item image__two"><img src='/img/games/Borstel.png' alt="..." /></li>
-                            <li class="objects__item image__three"><img src='/img/games/doekie.png' alt="..." /></li>
-                            <li class="objects__item image__four"><img src='/img/games/frogie.png' alt="..." /></li>
-                            <li class="objects__item image__five"><img src='/img/games/Spook.png' alt="..." /></li>
-                        </ul>
-                    </section>
-
-                </section> -->
-
-            
-            
-        </main>
-    </article>
+    </main>
 @endsection
 
 @section('rules')
