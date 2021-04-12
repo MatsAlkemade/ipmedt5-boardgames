@@ -11,6 +11,16 @@
             <section class="defaultGame__popups__popup" id="js--liveChat">
                 <button class="popup__closeBtn" onclick="showPopup(liveChat)"><i class="fal fa-times"></i></button>
                 <h2>Live Chat</h2>
+                <ul class="livechat js--livechat--list">
+                    <li class="livechat__item livechat__item--console">
+                        <p class="livechat__item__username">Vier op een rij</p>
+                        <p class="livechat__item__message">Welkom bij vier op een rij! Dit is de chat.</p>
+                    </li>
+                </ul>
+                <form class="livechat__form js--livechat-form">
+                    <input class="livechat__form__input" type="text" name="message">
+                    <input class="livechat__form__input livechat__form__input--submit" type="submit" name="submit" value="Send">
+                </form>
                 @yield('livechat')
             </section>
             <section class="defaultGame__popups__popup" id="js--rules">
@@ -26,9 +36,9 @@
         </section>
         <section class="defaultGame__footer">
             <ul class="defaultGame__footer__list" id="js--popupBtns">
-                <li class="defaultGame__footer__list__item">
+                <li class="defaultGame__footer__list__item defaultGame__footer__list__item--badge js--chat-button">
                     <button onclick="showPopup(liveChat)">
-                        <i class="fas fa-comment-alt"></i>
+                        <i class="fas fa-comment-alt js--chat-icon"></i>
                     </button>
                 </li>
                 <li class="defaultGame__footer__list__item">

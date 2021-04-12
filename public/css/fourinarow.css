@@ -50,14 +50,6 @@ html {
 	transition: 1s top;
 }
 
-.fourinarow__pieces > .fourinarow__piece.p1::after {
-	background-color: red;
-}
-
-.fourinarow__pieces > .fourinarow__piece.p2::after {
-	background-color: blue;
-}
-
 .fourinarow__buttons {
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
@@ -122,4 +114,62 @@ html {
 	box-shadow: 0 0 0 white, 0 0 4rem rgb(17 243 162 / 80%);
     transform: translateY(.3rem);
     outline: none;
+}
+
+.fourinarow__header {
+	margin-bottom: 2rem;
+	text-align: center;
+}
+
+.fourinarow__pieces > .fourinarow__piece.p1::after {
+	background-color: cornflowerblue;
+}
+
+.fourinarow__pieces > .fourinarow__piece.p2::after {
+	background-color: orangered;
+}
+
+.js--fiar-other {
+	color: orangered;
+}
+
+.js--fiar-me {
+	color: cornflowerblue;
+}
+
+.p2.js--piece-win {
+	animation: winPieceOther 1s infinite;
+}
+.p1.js--piece-win {
+	animation: winPieceMe 1s infinite;
+}
+
+@keyframes winPieceOther {
+	0% {
+		box-shadow: 0 0 2rem orangered;
+		/*transform: scale(1.05);*/
+	}
+	50% {
+		box-shadow: none;
+		/*transform: scale(1);*/
+	}
+	100% {
+		box-shadow: 0 0 2rem orangered;
+		/*transform: scale(1.05);*/
+	}
+}
+
+@keyframes winPieceMe {
+	0% {
+		box-shadow: 0 0 2rem cornflowerblue;
+		/*transform: scale(1.025);*/
+	}
+	50% {
+		box-shadow: none;
+		/*transform: scale(1);*/
+	}
+	100% {
+		box-shadow: 0 0 2rem cornflowerblue;
+		/*transform: scale(1.025);*/
+	}
 }
