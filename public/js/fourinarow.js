@@ -125,6 +125,18 @@ socket.on('login', function(data) {
 	console.log("LOGGED IN", data);
 });
 
+socket.on('game', function(data) {
+	if (data.game == false) {
+		socket.emit('game', { game: game, id: id });
+	} else {
+		console.log("Redirect to other game??", data);
+	}
+});
+
+socket.on('hardware', function(data) {
+	console.log("HARDWARE", data);
+});
+
 socket.on('disconnect', function() {
 	console.log("Disconnected from socketio server!");
 });
@@ -172,7 +184,7 @@ socket.on('turn', function(data) {
 socket.on('fiar_place', function(data) {
 	console.log("RECEIVE", data);
 	if (!data.column && data.column != 0) return;
-	place(data.column, 2);
+	place(data.column, data.user == user_id ? -1 : 2);
 });
 
 socket.on('fiar_state', function(data) {

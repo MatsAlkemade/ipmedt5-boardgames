@@ -42,6 +42,7 @@ class SwooleAuthenticate {
      */
     public function handle($request, Closure $next) {
         $user = NULL;
+        if (!array_key_exists("email", $request->query()) && !array_key_exists("password", $request->query())) return next($request);
         $email = $request->query()["email"];
         $password = $request->query()["password"];
         if (Authenticate::attempt(['email' => $email, 'password' => $password])) {

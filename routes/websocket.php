@@ -32,14 +32,26 @@ function sessionExists($id) {
 }
 
 Websocket::on('connect', function ($websocket, Request $request) {
-    Websocket::loginUsing($request->user());
+	if ($request->user() !== null) Websocket::loginUsing($request->user());
 	if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
 
-    $websocket->emit('login', [ 'loggedIn' => true ]);
+    $websocket->emit('login', [ 'loggedIn' => true, 'userId' => $websocket->getUserId() ]);
+    $websocket->toUserId($websocket->getUserId())->emit('game', [ 'game' => false ]);
+});
+
+Websocket::on('user_id', function ($websocket, $data) {
+	if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
+	$websocket->emit('user_id', [ "user_id" => $websocket->getUserId() ]);
+});
+
+Websocket::on('game', function ($websocket, $data) {
+	if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
+	$websocket->toUserId($websocket->getUserId())->emit('game', $data);
 });
 
 Websocket::on('disconnect', function ($websocket) {
     // called while socket on disconnect
+    $websocket->toUserId($websocket->getUserId())->emit('hardware', [ 'hardware' => false ]);
 });
 
 Websocket::on('example', function ($websocket, $data) {
@@ -78,13 +90,19 @@ Websocket::on('join_session', function($websocket, $data) {
 	if (GameStateController::sessionExists($data['id'])) {
 		$websocket->join($data['game'] . '.' . $data['id']);
 		$websocket->to($data['game'] . '.' . $data['id'])->emit('users', ["more"]);
+		$websocket->toUserId($websocket->getUserId())->emit('game', ['game' => $data['game'], 'id' => $data['id'] ]);
 	}
+});
+
+Websocket::on('hardware', function($websocket, $data) {
+	$websocket->toUserId($websocket->getUserId())->emit('hardware', [ 'hardware' => true ]);
 });
 
 Websocket::on('leave_session', function($websocket, $data) {
 	if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
 
 	$websocket->leave($data['game'] . '.' . $data['id']);
+	$websocket->toUserId($websocket->getUserId())->emit('game', [ 'game' => false ]);
 });
 
 /*
