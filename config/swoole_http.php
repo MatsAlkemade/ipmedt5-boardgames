@@ -99,6 +99,8 @@ return [
     |--------------------------------------------------------------------------
     */
     'providers' => [
+        Illuminate\Auth\AuthServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
     ],
 

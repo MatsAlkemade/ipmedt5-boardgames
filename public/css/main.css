@@ -111,8 +111,11 @@ body {
 }
 
 .home__game {
-    margin-bottom: 10rem;
+    margin-bottom: 5rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .home__game__figure > figcaption {
@@ -127,9 +130,9 @@ body {
 }
 
 .home__game__button {
-    position: absolute;
+    /* position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%); */
     margin-top: 1rem;
 }
 
@@ -311,6 +314,7 @@ body {
 }
 
 .defaultGame__popups {
+    display: none;
     position: fixed;
     width: 100%;
     height: 60%;
@@ -375,13 +379,6 @@ body {
     }
 }
 
-.thirtySeconds {
-    height: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .tsPos {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -414,6 +411,86 @@ body {
     font-size: 4rem;
     border: solid .2rem black;
     border-radius: 1.5rem;
+}
+
+.ts {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ts__cardWrapper {
+    margin-top: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    transition: all 2s;
+}
+
+.ts__card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30rem;
+    height: 20rem;
+    background-color: var(--secondary);
+    border-radius: 1.5rem;
+    position: absolute;
+}
+
+.ts__card__form {
+    list-style: none;
+}
+
+.ts__card__form__item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    color: black;
+    margin-bottom: 1.5rem;
+}
+
+.ts__card__form__item > input {
+    margin-left: 10rem;
+}
+
+.ts__card__form__item:last-of-type{
+    margin-bottom: 0;
+}
+
+.ts__back {
+    z-index: -1;
+    transform: rotateY(180deg);
+}
+
+.ts__timer {
+    margin-top: 12rem;
+    width: 30rem;
+    text-align: center;
+}
+
+.ts__timer__line {
+    width: 100%;
+    height: 1.5rem;
+    border: solid .1rem var(--primary);
+}
+
+.ts__timer__line > section {
+    background-color: var(--primary);
+    width: 100%;
+    height: 100%;
+}
+
+.ts__timer__time {
+    margin-top: 1rem;
+}
+
+.ts__btns {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 6rem;
 }
 
 /* TRIVIAL PURSUIT */
@@ -658,6 +735,15 @@ body {
     list-style: none;
 }
 
+.u-button-style:disabled {
+    background-color: rgba(17,243,162, .5);
+    cursor: default;
+    box-shadow: 0 0 0 white, 0 0 0 rgba(17,243,162, .8);
+    transform: translateY(.3rem);
+    outline: none;
+}
+
+
 /* Media queries */
 
 @media(min-width: 37.5rem){
@@ -733,4 +819,81 @@ body {
     max-width: 2rem;
     height: 2rem;
     width: 100%;
+}
+
+.fa-comment-alt.icon__badge {
+    position: relative;
+}
+
+.fa-comment-alt.icon__badge::after {
+    content: '';
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    top: -1rem;
+    right: -1rem;
+    background: red;
+}
+
+.livechat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: calc(100% - 10rem);
+    overflow-y: auto;
+}
+
+.livechat__item {
+    padding: 2rem;
+    border-radius: .375rem;
+    background-color: white;
+    align-self: flex-end;
+    margin: 1rem;
+    text-align: right;
+    max-width: 80%;
+}
+
+.livechat__item__username {
+    font-weight: bold;
+}
+
+.livechat__item--me {
+    align-self: flex-start;
+    text-align: left;
+}
+
+.livechat__item--console {
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+    background-color: transparent;
+}
+
+.livechat__item--console .livechat__item__username {
+    color: orangered;
+}
+
+.livechat__form {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    margin: 1rem;
+}
+
+.livechat__form__input {
+    border: none;
+    width: calc(100% - 10rem);
+    box-sizing: border-box;
+    padding: 1rem;
+}
+
+.livechat__form__input--submit {
+    box-sizing: border-box;
+    width: 8.5rem;
+    margin-right: 1rem;
 }
