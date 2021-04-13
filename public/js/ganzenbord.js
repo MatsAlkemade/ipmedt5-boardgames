@@ -6,6 +6,16 @@ let id = split[2];
 
 let waitTurn = false;
 
+
+socket.on('getUsers', function(data) {
+    console.log('kaas');
+    console.log("GETUSERS", data);
+});
+
+socket.emit('getUsers', "");
+
+ 
+
 let testPlayers = [
     1,
     4,
@@ -44,8 +54,14 @@ const beurtOverslaanVakjes = [
     //     } 
 
 function getPlayer(user_id) {
+
     return testPlayers.indexOf(user_id) + 1;
+
+    
 }
+
+
+
 
 
 function setupChat() {
@@ -181,7 +197,8 @@ var imagesArray = [
     '/img/gb_vakjes/gb_63.png',
 ];
 
-window.addEventListener('load', function() {    
+window.addEventListener('load', function() {   
+
     setupChat();
 
     document.getElementById('gb_button').addEventListener('click', function(){

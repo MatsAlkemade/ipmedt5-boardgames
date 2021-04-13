@@ -18,10 +18,8 @@ class GanzenbordController extends Controller
 		
 	}
 
-	// public function 
 	
-	// $players = GameStateController::session($data["id"])["users"];
- 	// $websocket->to('ganzenbord.' . $data["id"])->emit("players", $players);
+	
 
 	public function play($id) {
 		if (GameStateController::sessionExists($id) && GameStateController::session($id)["game"] == 'ganzenbord') {
@@ -39,4 +37,11 @@ class GanzenbordController extends Controller
 		$id = GameStateController::createSession('ganzenbord', auth()->user());
 		return redirect('/ganzenbord/' . $id);
 	}
+
+
+	function getUsers($websocket, $data) {
+        $websocket->emit('getUsers', GameStateController::session($data["id"])["users"]);
+
+	
+}
 }
