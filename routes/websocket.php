@@ -32,6 +32,7 @@ function sessionExists($id) {
 }
 
 Websocket::on('connect', function ($websocket, Request $request) {
+	if (!$request) return;
 	if ($request->user() !== null) Websocket::loginUsing($request->user());
 	if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
 
