@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGanzenbordTable extends Migration
+class CreateGanzenbordTableStepsConsequences extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateGanzenbordTable extends Migration
      */
     public function up()
     {
-        Schema::create('ganzenbord', function (Blueprint $table) {
-            $table->string('name')->primary();
-            $table->integer('steps')->default(0);
-            $table->string('description')->default("Stap 0");
+        Schema::create('ganzenbord_table_steps_consequences', function (Blueprint $table) {
+            $table->integer('stappen')->default(0);
+            $table->string('description')->default('Start');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateGanzenbordTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ganzenbord');
+        Schema::dropIfExists('ganzenbord_table_steps_consequences');
     }
 }
