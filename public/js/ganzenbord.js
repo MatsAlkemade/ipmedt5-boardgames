@@ -15,7 +15,20 @@ socket.on('getUsers', function(data) {
     console.log("GETUSERS", data);
     players = data;
     socket.emit('ganzenbord_state', { game: game, id: id });
+    
 });
+
+socket.on('ganzenbord_playernames', function(data){
+    console.log(data);
+    playernames = data;
+});
+
+let playernames =[];
+function getPlayerName(player_id){
+    return playernames[getPlayer(player_id)-1];
+
+}
+
 socket.on('game_start', function(data) {
 	gameStart(data);
 });
@@ -26,6 +39,22 @@ socket.on('connect', function() {
 socket.on('dobbel', function(data) {
 	console.log("IK HEB EEN RANDOM NUMMER", data);
 	// counter += Number(data.getal)
+    if (data.position >= 63){
+        data.position = 63;
+        console.log('gewonnen')
+    }
+    if (data.position == 58){
+        data.position = 0;
+        console.log('dood')
+    }
+    if (data.position == 6){
+        data.position = 12;
+        console.log('brug')
+    }
+    if (data.position == 42){
+        data.position = 39;
+        console.log('door')
+    }
     goto(getPlayer(data.playerId), data.position);
 
 });

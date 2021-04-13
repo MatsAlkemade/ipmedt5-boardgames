@@ -56,6 +56,7 @@ class GanzenbordController extends Controller
 		if (GameStateController::getTurn($data["id"]) != $websocket->getUserId()) {
             return;
         }
+		
 
 
 
@@ -69,8 +70,24 @@ class GanzenbordController extends Controller
 		}
 
 		$position = $gameData["playerPositions"][$userId];
+		if ($position >= 63) {
+			console.log('kaas');
+		}
+	
+
+		// if ($position >= 63) {
+		// 	console.log('gwnonnen');
+        //     $gameData["winner"] = ["position" => $position, "winner" => $websocket->getUserId(), "username" => User::where('id', $websocket->getUserId())->first()->name];
+		// 	console.log('gwnonne2n');
+            
+        //     var_dump("GOT A WINNER!");
+        //     var_dump($gameData["winner"]);
+
+        //     $websocket->to('vieropeenrij.' . $data["id"])->emit('fiar_winner', $gameData["winner"]);
+        // }
+
 		$gameData["playerPositions"][$userId] = $position + $random;
-		// $gameData["playerPositions"][$userId] = 13;
+
 
     	$playerTurn = GameStateController::nextTurn($data["id"]);
     	var_dump([
@@ -82,6 +99,9 @@ class GanzenbordController extends Controller
     	$websocket->to('ganzenbord.' . $data["id"])->emit('dobbel', ["getal" => $random, 'position' => $position + $random, 'playerId' => $websocket->getUserId()]);
 
         GameStateController::setData($data["id"], $gameData);
+
+
+		
 	}
 
 	static public function getState($websocket, $data) {
@@ -107,6 +127,14 @@ class GanzenbordController extends Controller
         if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
 
         $websocket->emit('getUsers', GameStateController::session($data["id"])["users"]);
+
+
+		$players = GameStateController::session($data['id'])["users"];
+		$playerNames = [];
+		foreach ($players as $player){
+			array_push($playerNames, User::where('id', $player)->first()->name);
+		}
+		$websocket->emit('ganzenbord_playernames', $playerNames);
 	}
 
 
