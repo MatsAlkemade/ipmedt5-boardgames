@@ -9,7 +9,7 @@
         let __p__ = "{{ auth()->user()->password }}";
         let user_id = {{ auth()->user()->id }};
     </script>
-    <script src="/js/thirtyseconds.js"></script>
+    <script src="/js/thirtyseconds.js" defer></script>
     <link rel="stylesheet" type="text/css" href="/css/thirtyseconds.css">
 @endsection
 

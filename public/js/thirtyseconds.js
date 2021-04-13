@@ -3,12 +3,12 @@ const socket = io(window.location.protocol + '//' + window.location.host, { tran
 let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
+const turnButton = document.getElementById("js--tsCardTurnBtn");
 
-window.addEventListener('load', function(){
-    setupChat();
-});
+turnButton.setAttribute("disabled", true);
 
 function setupChat() {
+    const liveChat = document.getElementById('js--liveChat');
     if (!liveChat) return;
     let orderCount = 1;
     const chatIcon = document.querySelector('.js--chat-icon');
@@ -73,3 +73,5 @@ function setupChat() {
         return msg;
     }
 }
+
+setupChat();

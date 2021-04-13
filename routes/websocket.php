@@ -6,6 +6,7 @@ use SwooleTW\Http\Websocket\Facades\Websocket;
 use SwooleTW\Http\Websocket\Facades\Room;
 use App\Http\Controllers\VierOpEenRijController;
 use App\Http\Controllers\GanzenbordController;
+use App\Http\Controllers\ThirtySecondsController;
 use App\Http\Controllers\GameStateController;
 
 use App\Models\User;
@@ -64,6 +65,7 @@ Websocket::on('example', function ($websocket, $data) {
 // Websocket::on('game_start', );
 
 Websocket::on('game_start', [VierOpEenRijController::class, 'gameStart']);
+Websocket::on('ts_start', [ThirtySecondsController::class, 'gameStart']);
 
 /*
 	Game setup
@@ -117,9 +119,12 @@ Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
 	Thirty Seconds (ts)
 */
 
+// Websocket::on('ts_state', [ThirtySecondsController::class, 'getState']);
+
 /*
 	Ganzenbord (gb)
 */
+
 Websocket::on('getUsers', [GanzenbordController::class, 'getUsers']);
 
 

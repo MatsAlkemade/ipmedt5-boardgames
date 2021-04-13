@@ -62,5 +62,45 @@ class ThirtySecondsController extends Controller
         }
 
         return "Game does not exist!";
-      }
+    }
+
+    static public function gameStart($websocket, $data) {
+        if (!$data) return;
+        if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
+        if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
+
+        var_dump($data);
+        return;
+
+        foreach ($data["teams"] as $team) {
+            foreach ($team["users"] as $userId) {
+                GameStateController::joinTeam($data["id"], $userId, $team["team"]);
+            }
+        }
+
+        $gameData = GameStateController::getData($data["id"]);
+        if (!array_key_exists("actions", $gameData)) {
+            $gameData["actions"] = [];
+        }
+
+        if (array_key_exists("started", $gameData) && $gameData["started"] == true) {
+            return;
+        }
+
+        $gameUsers = GameStateController::session($data["id"])["users"];
+        $isCreator = $gameUsers[0] == $websocket->getUserId();
+
+        if ($isCreator && sizeof($gameUsers) > 1) {
+            array_push($gameData["actions"], ["action" => 'game_start',"player" => $websocket->getUserId()]);
+            $websocket->to($data['game'] . '.' . $data['id'])->emit('game_start', [ 'start' => true ]);
+            $gameData["started"] = true;
+            GameStateController::setData($data["id"], $gameData);
+            GameStateController::setTurnMode($data["id"], 1);
+            $websocket->to('thirtyseconds.' . $data["id"])->emit('turn', ["turn" => GameStateController::nextTurn($data["id"])]);
+        } else if (sizeof($gameUsers) <= 1) {
+            $websocket->emit('game_start', [ "error" => "Not enough players in the game." ]);
+        } else if (sizeof($gameUsers) > 2) {
+            $websocket->emit('game_start', [ "error" => "Too many players in the game." ]);
+        }
+    }
 }

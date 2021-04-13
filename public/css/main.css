@@ -462,6 +462,7 @@ body {
 
 .lobby__error > p {
     opacity: 0;
+    pointer-events: none;
 }
 
 .lobby__button {

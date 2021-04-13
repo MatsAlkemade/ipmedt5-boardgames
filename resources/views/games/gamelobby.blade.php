@@ -21,7 +21,7 @@
                 @foreach($users as $user)
                     <li class="lobby__users__list__item">
                         <i class="fas fa-trash-alt"></i>
-                        <p>{{$user->name}}</p>
+                        <p data-id="{{$user->id}}">{{$user->name}}</p>
                         <i class="fas fa-flag redFlag"></i>
                         <i class="fas fa-flag blueFlag"></i>
                     </li>
@@ -32,7 +32,7 @@
             <p id="js--error">Errors</p>
         </section>
         <section class="lobby__button">
-            <button class="u-button-style">Start het spel</button>
+            <button class="u-button-style" id="js--startGameBtn">Start het spel</button>
         </section>
     </section>
 @endsection
