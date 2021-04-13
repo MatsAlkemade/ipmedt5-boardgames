@@ -13,6 +13,7 @@
 @endsection
 
 @section('gamecontent')
+<section class="ganzenbord">
 <ul class="gb__players">
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
@@ -64,5 +65,6 @@
                 </li>
             </ul>
             <input id="gb_button" type="submit" name="button" value="Dobbelen"/>
+        </section>
 
 @endsection
