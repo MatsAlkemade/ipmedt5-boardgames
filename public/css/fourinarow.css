@@ -19,8 +19,6 @@ html {
 	padding-right: 2rem;
 }
 
-@media 
-
 .fourinarow__pieces {
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
