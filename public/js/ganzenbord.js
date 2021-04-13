@@ -12,6 +12,7 @@ socket.on('getUsers', function(data) {
     console.log("GETUSERS", data);
 });
 
+
 socket.emit('getUsers', "");
 
  
