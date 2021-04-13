@@ -112,6 +112,10 @@ Websocket::on('leave_session', function($websocket, $data) {
 Websocket::on('fiar_place', [VierOpEenRijController::class, 'place']);
 Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
 
+/*
+	Thirty Seconds (ts)
+*/
+
 
 
 

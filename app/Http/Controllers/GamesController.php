@@ -28,36 +28,4 @@ class GamesController extends Controller
             'game' => \App\Models\Games::find($id),
         ]);
     }
-
-    public function show($game){
-        switch($game){
-
-            case 'vierOpEenRij':
-                return redirect('/vieropeenrij');
-
-                break;
-
-            case 'thirtyseconds':
-                return view('games.thirtyseconds',[
-                    'ts' => \App\Models\ThirtySeconds::first(),
-                    'tsq' => \App\Models\ThirtySecondsQuestion::get(),
-                ]);
-
-                break;
-
-            case 'trivialpursuit':
-
-                break;
-
-            case 'vlottegeest':
-                return view('games.vlotteGeest',[
-                    'vg' => \App\Models\VlotteGeest::all(),
-                ]);
-                break;
-
-            case 'ganzenbord':
-
-                break;
-        }
-    }
 }
