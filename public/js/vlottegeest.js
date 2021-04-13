@@ -3,44 +3,48 @@ const socket = io(window.location.protocol + '//' + window.location.host, { tran
 let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
-const card = document.querySelector('.vs__card__inner');
-console.log('working');
+let totalCardsBound = 0;
+let totalCards = 60;
+let active;
 
-card.addEventListener('click', function (){
-    console.log('working');
-    card.classList.toggle('.is-flipped');
-});
+cardCount = document.getElementById('cardCount');
+flipButton = document.getElementById('turn--180');
+flipButtonBack = document.getElementById('turn--360');
 
-
-//Set the extracted part of the time to variables. 
-// If you dont have the second part then set it to 0.
-
-let startHour = 10;
-let startMinute = 30;
-let startSecond = 30;
-
-let endHour = 9;
-let endMinute = 35;
-let endSecond = 30;
-
-//Create date object and set the time to that
-let startTimeObject = new Date();
-startTimeObject.setHours(startHour, startMinute, startSecond);
-
-//Create date object and set the time to that
-let endTimeObject = new Date(startTimeObject);
-endTimeObject.setHours(endHour, endMinute, endSecond);
-
-//Now we are ready to compare both the dates
-if(startTimeObject > endTimeObject)
-{
-    console.log('End time should be after start time.');
-}
-else
-{
-    console.log('Entries are perfect.');
+function decrementCardAmount(){
+    totalCards--;
+    cardCount.innerHTML = totalCards;
 }
 
+function cardFlip(){
+    document.querySelector('.vs__flip-card-inner').style.transform = 'rotateY(180deg)';
+    getRandomImage();
+    flipButton.disabled = true;
+    flipButtonBack.disabled = false;
+}
+
+function cardFlipBack(){
+    document.querySelector('.vs__flip-card-inner').style.transform = 'rotateY(360deg)';
+    decrementCardAmount();
+    flipButton.disabled = false;
+    flipButtonBack.disabled = true;
+}
+
+function getRandomImage(){
+
+    var imageArray = new Array();  
+
+    imageArray[0] = "Spook.png";  
+    imageArray[1] = "bad.png";  
+    imageArray[2] = "Borstel.png";  
+    imageArray[3] = "doekie.png";  
+    imageArray[4] = "frogie.png";
+
+    let randomIndex = Math.floor(Math.random() * imageArray.length);
+
+    selected_image =  imageArray[randomIndex];
+    document.getElementById('randomImages--js').src = '/img/games/vlottegeest/' + selected_image;
+}
 
 window.addEventListener('load', function() {
     setupChat();

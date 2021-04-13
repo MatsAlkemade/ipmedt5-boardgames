@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/vieropeenrij/{id}', [VierOpEenRijController::class, 'play']);
 
     Route::get('/vlottegeest', [\App\Http\Controllers\VlotteGeestController::class, 'index']);
-    Route::get('/vlottegeest/create', [\App\Http\Controllers\VlotteGeestController::class, 'create']);
+    Route::get('c', [\App\Http\Controllers\VlotteGeestController::class, 'create']);
     Route::get('/vlottegeest/{id}', [\App\Http\Controllers\VlotteGeestController::class, 'play']);
    
     

@@ -19,28 +19,25 @@
 
         <section class="vs__devider">
             <section class="vs__section">
-                <p class="vs__counter">Aantal kaarten: 0</p>
-                <button class="vs__button--turn">kaaart draaien</button>
-                <button class="vs__button--turnBack">volgende kaart</button>
+                <p class="vs__counter">Aantal kaarten: &nbsp; <span id="cardCount">60</span> </p>
+                <button class="vs__button--turn" id="turn--180" onclick="cardFlip()">kaaart draaien</button>
+                <button class="vs__button--turnBack" id="turn--360" onclick="cardFlipBack()">volgende kaart</button>
             </section>
 
-            <section class="vs__card">
-                <div class="vs__card__inner">
-                    <div class="vs__card__face vs__card__face--front">
-                        <!-- <figure>
-                            <img src="" alt="empty">
-                        </figure> -->
-                        <p>vlotte geest</p>
-                    </div>
-                    
-                    <div class="vs__card__face vs__card__face--back">
-                        <!-- <figure>
-                            <img src="" alt="empty">
-                        </figure> -->
-                        <p>spook</p>
+            <section class="vs__flip-card-c">
+                <div class="vs__flip-card" id="flip_card--js">
+                    <div class="vs__flip-card-inner" id="flip_card--js">
+                        <div class="vs__flip-card-front">
+                          
+                        </div>
+
+                        <div class="vs__flip-card-back">
+                            <figure class="vs__flip-card--image">
+                                <img alt="leeg" id="randomImages--js">
+                            </figure>
+                        </div>
                     </div>
                 </div>
-                
             </section>
         </section>
         
