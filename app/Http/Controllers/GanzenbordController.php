@@ -39,7 +39,7 @@ class GanzenbordController extends Controller
 	}
 
 
-	function getUsers($websocket, $data) {
+	static public function getUsers($websocket, $data) {
         $websocket->emit('getUsers', GameStateController::session($data["id"])["users"]);
 
 	
