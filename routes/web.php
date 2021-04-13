@@ -23,6 +23,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/games/create/{id}', [\App\Http\Controllers\GamesController::class, 'create']);
     Route::get('/games/{game}', [\App\Http\Controllers\GamesController::class, 'show']);
 
+   
+
     Route::get('/trivialpursuit', [\App\Http\Controllers\TrivialPursuitController::class, 'index']);
     Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'index']);
 
@@ -31,9 +33,13 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/vieropeenrij/{id}', [VierOpEenRijController::class, 'play']);
 
     Route::get('/vlottegeest', [\App\Http\Controllers\VlotteGeestController::class, 'index']);
-    Route::get('c', [\App\Http\Controllers\VlotteGeestController::class, 'create']);
+    Route::get('/vlottegeest/create', [\App\Http\Controllers\VlotteGeestController::class, 'create']);
     Route::get('/vlottegeest/{id}', [\App\Http\Controllers\VlotteGeestController::class, 'play']);
    
+
+    Route::get('/ganzenbord',  [\App\Http\Controllers\GanzenbordController::class, 'index']);
+    Route::get('/ganzenbord/create', [\App\Http\Controllers\GanzenbordController::class, 'create']);
+    Route::get('/ganzenbord/{id}', [\App\Http\Controllers\GanzenbordController::class, 'play']);
     
 
     Route::get('/test', function(Request $req) {
@@ -41,8 +47,11 @@ Route::middleware(['auth'])->group(function(){
     });
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
+
+
+    
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

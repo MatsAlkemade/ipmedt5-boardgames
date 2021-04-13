@@ -159,6 +159,65 @@ body {
     color: red;
     margin-bottom: .2rem;
 }
+/* ganzenbord */
+
+
+.gb__title{
+    margin-top:4rem;
+    margin-bottom:6rem;
+    text-align: center;
+}
+
+.gb__players {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    list-style: none;
+    column-gap: 2rem;
+    justify-content: center;  
+    max-width: 100%;
+    margin:1rem;
+    margin-top: 5rem;
+
+    
+}
+.gb__player {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+
+}
+
+.gb__players__figure > img {
+    position: relative;
+    border-radius: 1rem;
+    width: 100%;
+}
+
+.gb__player__goose {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    
+}
+
+.gb__players__goose__figure> figcaption {
+    position: relative;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 2rem;
+    display:grid;
+    margin-bottom: 4rem;
+}
+
+.gb__players__goose__figure > img {
+    position: relative;
+    border-radius: 1rem;
+    width: 100%;
+
+}
+
 
 .defaultGame {
     width: 100%;
@@ -673,6 +732,10 @@ body {
     outline: none;
 }
 
+.u-ul-style{
+    list-style: none;
+}
+
 .u-button-style:disabled {
     background-color: rgba(17,243,162, .5);
     cursor: default;
@@ -682,6 +745,9 @@ body {
 }
 
 
+.u-ul-style{
+    list-style: none;
+}
 /* Media queries */
 
 @media(min-width: 37.5rem){

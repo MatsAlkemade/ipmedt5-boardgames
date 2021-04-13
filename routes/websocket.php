@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use SwooleTW\Http\Websocket\Facades\Websocket;
 use SwooleTW\Http\Websocket\Facades\Room;
 use App\Http\Controllers\VierOpEenRijController;
+use App\Http\Controllers\GanzenbordController;
 use App\Http\Controllers\GameStateController;
 
 use App\Models\User;
@@ -111,6 +112,8 @@ Websocket::on('leave_session', function($websocket, $data) {
 
 Websocket::on('fiar_place', [VierOpEenRijController::class, 'place']);
 Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
+
+Websocket::on('getUsers', [GanzenbordController::class, 'getUsers']);
 
 
 
