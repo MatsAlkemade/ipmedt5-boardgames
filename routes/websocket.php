@@ -98,7 +98,9 @@ Websocket::on('join_session', function($websocket, $data) {
 });
 
 Websocket::on('hardware', function($websocket, $data) {
-	$websocket->toUserId($websocket->getUserId())->emit('hardware', [ 'hardware' => true ]);
+	$userId = $websocket->getUserId();
+	if (!$userId) return;
+	$websocket->toUserId($userId)->emit('hardware', [ 'hardware' => true ]);
 });
 
 Websocket::on('leave_session', function($websocket, $data) {
