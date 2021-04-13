@@ -20,6 +20,9 @@ class VierOpEenRijController extends Controller
         if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
         if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
 
+        var_dump("fiar_place");
+        var_dump($data);
+
     	$gameData = GameStateController::getData($data["id"]);
     	if (!array_key_exists("actions", $gameData)) {
     		$gameData["actions"] = [];
@@ -36,13 +39,16 @@ class VierOpEenRijController extends Controller
                 array_fill(0, 8, null),
             ];
         }
+        var_dump("winner?");
         if (array_key_exists("winner", $gameData)) return $websocket->emit("fiar_winner", $gameData["winner"]);
 
+        var_dump("turn?");
         if (GameStateController::getTurn($data["id"]) != $websocket->getUserId()) {
             self::getState($websocket, $data);
             return;
         }
 
+        var_dump("ok?");
     	array_push($gameData["actions"], ["action" => 'fiar_place',"player" => $websocket->getUserId(), "column" => $data["column"]]);
         $row = self::getAvailableRow($data["column"], $gameData["fiar_board"]);
         var_dump($row);
