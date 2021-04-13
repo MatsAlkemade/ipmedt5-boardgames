@@ -52,7 +52,9 @@ Websocket::on('game', function ($websocket, $data) {
 
 Websocket::on('disconnect', function ($websocket) {
     // called while socket on disconnect
-    $websocket->toUserId($websocket->getUserId())->emit('hardware', [ 'hardware' => false ]);
+    $userId = $websocket->getUserId();
+    if (!$userId) return;
+    $websocket->toUserId($userId)->emit('hardware', [ 'hardware' => false ]);
 });
 
 Websocket::on('example', function ($websocket, $data) {
