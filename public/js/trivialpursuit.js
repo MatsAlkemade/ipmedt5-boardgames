@@ -18,8 +18,6 @@ function setupChat() {
     const chatButton = document.querySelector('.js--chat-button');
     const chatForm = document.querySelector('.js--livechat-form');
     const chatList = document.querySelector('.js--livechat--list');
-    console.log(chatList);
-    console.log(chatIcon);
     socket.emit('chat_state', { game: game, id: id });
     socket.on('chat_state', function(data) {
         console.log("CHAT_STATE", data);
@@ -75,6 +73,8 @@ function setupChat() {
 window.addEventListener('load', setupChat);
 
 
+let item;
+
 function updatePie() {
     const piece = document.getElementsByClassName("trivialpursuit__items");
     piece[item].style.opacity = "1";
@@ -107,5 +107,53 @@ function checkWinner() {
     }
 }
 
-let item = 5
-window.addEventListener('load', updatePie);
+function tp_setup() {
+    let playersSection = document.getElementsByClassName("trivialpursuit__pie");
+    for (let index = 0; index < players.length; index++) {
+        playersSection[index].style.display = "block"
+        playersSection[index].getElementsByTagName("H2")[0].innerHTML = playernames[index];
+    }
+}
+
+function gameStart(data) {
+	console.log("START THE GAME", data);
+	if (data.start == true) {
+		const gb = document.querySelector('.trivialpursuit__pie_container');
+		gb.style.display = "grid";
+        socket.emit('tp_getUsers', { game: game, id: id });
+        socket.emit('tp_playerNames', { game: game, id: id });
+        socket.emit('tp_question', { game: game, id: id });
+	}
+}
+
+
+
+let players;
+let playernames;
+let questionId;
+
+socket.on('tp_getUsers', function(data) {
+    console.log("tp_getUsers", data);
+    players = data;    
+});
+
+socket.on('tp_playerNames', function(data){
+    console.log("help");
+    console.log("playerNames", data);
+    playernames = data;
+    tp_setup();
+});
+
+socket.on('tp_question', function(data) {
+    console.log("tp_question", data);
+    questionId = data;
+    createQuestion();
+});
+
+socket.on('connect', function(){
+    socket.emit('join_session', { game: game, id: id});
+});
+
+socket.on('game_start', function(data) {
+	gameStart(data);
+});

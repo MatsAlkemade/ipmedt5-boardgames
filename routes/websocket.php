@@ -6,6 +6,7 @@ use SwooleTW\Http\Websocket\Facades\Websocket;
 use SwooleTW\Http\Websocket\Facades\Room;
 use App\Http\Controllers\VierOpEenRijController;
 use App\Http\Controllers\GanzenbordController;
+use App\Http\Controllers\TrivialPursuitController;
 use App\Http\Controllers\GameStateController;
 
 use App\Models\User;
@@ -64,6 +65,8 @@ Websocket::on('example', function ($websocket, $data) {
 // Websocket::on('game_start', );
 
 Websocket::on('game_start', [VierOpEenRijController::class, 'gameStart']);
+Websocket::on('game_start', [TrivialPursuitController::class, 'gameStart']);
+
 
 /*
 	Game setup
@@ -122,7 +125,12 @@ Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
 */
 Websocket::on('getUsers', [GanzenbordController::class, 'getUsers']);
 
-
+/*
+	Trivial Pursuit (tp)
+*/
+Websocket::on('tp_getUsers', [TrivialPursuitController::class, 'getUsers']);
+Websocket::on('tp_playerNames', [TrivialPursuitController::class, 'getUsers']);
+Websocket::on('tp_question', [TrivialPursuitController::class, 'question']);
 
 
 /* CHAT */

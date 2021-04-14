@@ -31,8 +31,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/trivialpursuit', [\App\Http\Controllers\TrivialPursuitController::class, 'index']);
     Route::get('/trivialpursuit/question/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'index']);
 
-    Route::get('/trivialpursuit/create', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'create']);
-    Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'play']);
+    Route::get('/trivialpursuit/create', [\App\Http\Controllers\TrivialPursuitController::class, 'create']);
+    Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitController::class, 'play']);
 
     Route::get('/vieropeenrij', [VierOpEenRijController::class, 'index']);
     Route::get('/vieropeenrij/create', [VierOpEenRijController::class, 'create']);

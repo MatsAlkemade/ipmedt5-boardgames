@@ -5,15 +5,69 @@
 
 @section('head-extra')
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<script src="//unpkg.com/string-similarity/umd/string-similarity.min.js"></script>
 <script type="text/javascript">
     let __u__ = "{{ auth()->user()->email }}";
     let __p__ = "{{ auth()->user()->password }}";
     let user_id = {{ auth()->user()->id }};
 </script>
 <script src="/js/trivialpursuit.js"></script>
+<script>
+    let answer;
+    let question;
+    let correct_answer;
+    let questions = <?= $questions ?>;
+
+    function spellingCheck() {
+        answer = document.getElementById('js--answer');
+
+        if(correct_answer.match(/^-?\d+$/)){
+            if(Object.is(answer.value, correct_answer)){
+                console.log("int goed");
+                answer.style.backgroundColor = "green";
+            }
+            else{
+                console.log("int fout");
+                answer.style.backgroundColor = "red";
+            }
+        }
+        else{
+            answer.value = answer.value.toLowerCase();
+            correct_answer = correct_answer.toLowerCase();
+            let spellingcheck = stringSimilarity.compareTwoStrings(correct_answer, answer.value);
+            if(spellingcheck >= 0.8){
+                console.log('String goed')
+                answer.style.backgroundColor = "green";
+            }
+            else{
+                console.log('String fout')
+                answer.style.backgroundColor = "red";
+            }
+        }
+        setTimeout(function() {
+            socket.emit('tp_question', { game: game, id: id });
+        }, 1000);
+    }
+    
+    window.addEventListener('load', function() {
+        question = document.getElementById('js--question');
+        correct_answer = document.getElementById('js--correct-answer').value;
+        document.getElementsByClassName('trivialpursuit__send')[0].addEventListener('click', spellingCheck);
+        socket.emit('tp_question', { game: game, id: id });
+    });
+
+    function createQuestion(){
+        answer = document.getElementById('js--answer');
+        answer.value = "";
+        answer.style.backgroundColor = "white";
+        question.innerText = questions[questionId].question;
+        correct_answer = questions[questionId].answer;
+    }
+</script>
 @endsection
 
 @section('gamecontent')
+    <p></p>
     <article class="trivialpursuit__pie_container">
         <section class="trivialpursuit__pie">
             <h2>Player 1</h2>
@@ -54,8 +108,14 @@
             <div class="trivialpursuit__items" data-type-categorie="Amusument">Amusument</div>
             <div class="trivialpursuit__items" data-type-categorie="Aardrijkskunde">Aardrijkskunde</div>
         </section>
-        <button onclick="checkWinner();">TEST</button>
     </article>
+
+    <section class="trivialpursuit__article">
+        <h2 id="js--question" class="trivialpursuit__question"></h2>
+        <input id="js--answer" class="trivialpursuit__answer" type="text" placeholder="Antwoord">
+        <input id="js--correct-answer" type="hidden" value="">
+        <button class="trivialpursuit__send u-button-style">Antwoord verzenden</button>
+    </section>
 @endsection
 
 @section('livechat')
