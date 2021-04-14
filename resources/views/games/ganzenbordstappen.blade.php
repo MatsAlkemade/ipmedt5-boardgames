@@ -13,29 +13,30 @@
 @endsection
 
 @section('gamecontent')
+<section class="ganzenbord">
 <ul class="gb__players">
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                         <img src="/img/gb_vakjes/gb_rood.png" alt="gans">
-                        <figcaption>Speler 1</figcaption>
+                        <figcaption id="speler_1">Speler 1</figcaption>
                     </figure>
                 </li>
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                      <img src="/img/gb_vakjes/gb_paars.png" alt="gans">
-                     <figcaption>Speler 2</figcaption>
+                     <figcaption id="speler_2">Speler 2</figcaption>
                     </figure>
                 </li>
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                       <img src="/img/gb_vakjes/gb_geel.png" alt="gans">
-                      <figcaption>Speler 3</figcaption>
+                      <figcaption id="speler_3">Speler 3</figcaption>
                     </figure>
                 </li>
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                         <img src="/img/gb_vakjes/gb_blauw.png" alt="gans">
-                        <figcaption>Speler 4</figcaption>
+                        <figcaption id="speler_4">Speler 4</figcaption>
                     </figure>
                 </li>  
 
@@ -64,5 +65,6 @@
                 </li>
             </ul>
             <input id="gb_button" type="submit" name="button" value="Dobbelen"/>
+        </section>
 
 @endsection

@@ -66,6 +66,7 @@ Websocket::on('example', function ($websocket, $data) {
 
 Websocket::on('game_start', [VierOpEenRijController::class, 'gameStart']);
 Websocket::on('ts_start', [ThirtySecondsController::class, 'gameStart']);
+Websocket::on('game_start', [GanzenbordController::class, 'gameStart']);
 
 /*
 	Game setup
@@ -121,11 +122,13 @@ Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
 
 Websocket::on('ts_state', [ThirtySecondsController::class, 'getState']);
 
-/*
-	Ganzenbord (gb)
+/* 
+	Ganzenbord
 */
-
 Websocket::on('getUsers', [GanzenbordController::class, 'getUsers']);
+Websocket::on('ganzenbord_playernames', [GanzenbordController::class, 'getUsers']);
+Websocket::on('dobbel', [GanzenbordController::class, 'dobbel']);
+Websocket::on('ganzenbord_state', [GanzenbordController::class, 'getState']);
 
 
 

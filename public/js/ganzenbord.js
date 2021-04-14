@@ -6,22 +6,79 @@ let id = split[2];
 
 let waitTurn = false;
 
+let players = [];
+let playerPositions = {};
+let playernames =[];
+
+let counter = 0;
 
 socket.on('getUsers', function(data) {
-    console.log('kaas');
     console.log("GETUSERS", data);
+    players = data;
+    socket.emit('ganzenbord_state', { game: game, id: id });
+    
+});
+
+socket.on('ganzenbord_playernames', function(data){
+    playernames = data;
+    updatePlayers()
+    console.log("GETPLAYERNAMES", playernames);
+    socket.emit('ganzenbord_state', { game: game, id: id });
+    
+    
+
+});
+
+
+socket.on('game_start', function(data,) {
+	gameStart(data);
+    
+    
+});
+socket.on('connect', function() {
+    socket.emit('join_session', { game: game, id: id });
+});
+
+socket.on('dobbel', function(data) {
+	console.log("IK HEB EEN RANDOM NUMMER", data);
+	// counter += Number(data.getal)
+    if (data.position >= 63){
+        data.position = 63;
+        console.log('gewonnen')
+    }
+    if (data.position == 58){
+        data.position = 0;
+        console.log('dood')
+    }
+    if (data.position == 6){
+        data.position = 12;
+        console.log('brug')
+    }
+    if (data.position == 42){
+        data.position = 39;
+        console.log('door')
+    }
+    goto(getPlayer(data.playerId), data.position);
+
+});
+
+socket.on('ganzenbord_state', function(data) {
+	console.log("STATE", data);
+	playerPositions = data.playerPositions;
+
+
+	for (const userid in playerPositions) {
+		goto(getPlayer(userid), playerPositions[userid]);
+	}
+    
+
 });
 
 socket.emit('getUsers', { game: game, id: id });
+socket.emit('ganzenbord_playernames', { game: game, id: id });
 
- 
 
-let testPlayers = [
-    1,
-    4,
-    5,
-    3
-];
+
 
 const specialeVakjes = {
 	"6": 12,
@@ -34,34 +91,63 @@ const beurtOverslaanVakjes = [
 	52
 ];
 
-//     if(counter == 6){
-    //         document.canvas.src = imagesArray[counter]; // show image van de huidige positie
-    //         setTimeout(naar_12_func, 5000);
-    
-            
-    //     }
-    //     if(counter == 42){
-    //         document.canvas.src = imagesArray[counter]; // show image van de huidige positie
-    //         setTimeout(naar_39_func, 5000);
-    
-            
-    //     } 
-    //     if(counter == 58){
-    //         document.canvas.src = imagesArray[counter]; // show image van de huidige positie
-    //         setTimeout(naar_start_func, 5000);
-    
-            
-    //     } 
 
 function getPlayer(user_id) {
 
-    return testPlayers.indexOf(user_id) + 1;
+    return players.indexOf(Number(user_id)) + 1;
 
     
+}
+function getPlayerName(player_id){
+    return playernames[getPlayer(player_id)-1];
+
 }
 
 
 
+function gameStart(data) {
+	console.log("START THE GAME", data);
+	if (data.start == true) {
+		const gb = document.querySelector('.ganzenbord');
+		gb.style.display = "block";
+    }
+    
+	
+}
+
+function updatePlayers(){
+    if(playernames.length == 1){
+        var name_1 = document.getElementById('speler_1');
+        name_1.innerHTML = playernames[0];
+    }
+    if(playernames.length == 2){
+        var name_1 = document.getElementById('speler_1');
+        name_1.innerHTML = playernames[0];
+        var name_2 = document.getElementById('speler_2');
+        name_2.innerHTML = playernames[1];
+    }
+    if(playernames.length == 3){
+        var name_1 = document.getElementById('speler_1');
+        name_1.innerHTML = playernames[0];
+        var name_2 = document.getElementById('speler_2');
+        name_2.innerHTML = playernames[1];
+        var name_3 = document.getElementById('speler_3');
+        name_3.innerHTML = playernames[2];
+    }
+    if(playernames.length == 4){
+        var name_1 = document.getElementById('speler_1');
+        name_1.innerHTML = playernames[0];
+        var name_2 = document.getElementById('speler_2');
+        name_2.innerHTML = playernames[1];
+        var name_3 = document.getElementById('speler_3');
+        name_3.innerHTML = playernames[2];
+        var name_4 = document.getElementById('speler_4');
+        name_4.innerHTML = playernames[3];
+    }
+    else{
+        return;
+    }
+}
 
 
 function setupChat() {
@@ -197,35 +283,29 @@ var imagesArray = [
     '/img/gb_vakjes/gb_63.png',
 ];
 
-window.addEventListener('load', function() {   
+window.addEventListener('load', function() { 
+    pageLoaded = true;
+	const fiar = document.querySelector('.ganzenbord');
+	fiar.style.display = "none";
+
 
     setupChat();
 
     document.getElementById('gb_button').addEventListener('click', function(){
         console.log('hi');
-        dobbel();
+        socket.emit('dobbel', { game: game, id: id });
+        // dobbel();
 	});
     
-    let counter = 0;
-    let gegooid =0;
-    function dobbel(){
-		if (waitTurn) return;
-        gegooid = Math.floor(Math.random() * 13); 
-        console.log(gegooid);
-        counter = counter + gegooid; //start positie +gegooid 
-        console.log(counter);
-            
-        if(counter >= 63){
-            counter = 63;
-        }
-        goto(getPlayer(user_id), counter);
-        return;
-    }
+
 });
 
 
 function goto(player, place) {
 	console.log("GOTO", player, place);
+    if(place >= 63){
+        place =63;
+    }
     if (specialeVakjes[place] !== undefined) {
     	console.log(specialeVakjes[place]);
     	setTimeout(() => {
