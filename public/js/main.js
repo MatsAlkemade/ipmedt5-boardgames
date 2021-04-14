@@ -25,7 +25,6 @@ const popupBtns = document.getElementById('js--popupBtns');
 const popups = document.getElementById('js--popups');
 const liveChat = document.getElementById('js--liveChat');
 const rules = document.getElementById('js--rules');
-const position = document.getElementById('js--position');
 
 function showPopup(popup){
     popupBtns.style.pointerEvents = 'none';
@@ -60,14 +59,6 @@ function showPopup(popup){
         rules.style.height = "0";
         setTimeout(function() {
             rules.style.display = "none";
-        }, 1000);
-    }
-    
-    if(popup.id != 'js--position'){
-        position.style.animationName = "popdown";
-        position.style.height = "0";
-        setTimeout(function() {
-            position.style.display = "none";
         }, 1000);
     }
 }
