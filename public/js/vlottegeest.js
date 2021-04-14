@@ -51,6 +51,12 @@ window.addEventListener('load', function() {
 });
 
 function setupChat() {
+    socket.on('chat_msg', function(data) {
+        if (!isChatOpen()) chatIcon.classList.add("icon__badge");
+        console.log("CHATMSG", data);
+        addChatMessage(data.username, data.message, data.order);
+    });
+ 
     if (!liveChat) return;
     let orderCount = 1;
     const chatIcon = document.querySelector('.js--chat-icon');
@@ -79,9 +85,11 @@ function setupChat() {
         
         input.value = "";
     });
+
     function isChatOpen() {
         return liveChat.style.display == "block";
     }
+
     function addChatMessage(username, message, order=undefined) {
         const chatMessage = createChatMessage(username, message);
         if (order !== undefined) {
@@ -95,6 +103,7 @@ function setupChat() {
             chatList.scrollTo(0, chatList.scrollHeight);
         }
     }
+    
     function createChatMessage(_username, _message) {
         const msg = document.createElement('li');
         const username = document.createElement('p');
