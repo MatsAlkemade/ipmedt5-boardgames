@@ -119,6 +119,7 @@ Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
 	Ganzenbord
 */
 Websocket::on('getUsers', [GanzenbordController::class, 'getUsers']);
+Websocket::on('ganzenbord_playernames', [GanzenbordController::class, 'getUsers']);
 Websocket::on('dobbel', [GanzenbordController::class, 'dobbel']);
 Websocket::on('ganzenbord_state', [GanzenbordController::class, 'getState']);
 

@@ -162,9 +162,12 @@ class GanzenbordController extends Controller
     		array_push($gameData["actions"], ["action" => 'game_start',"player" => $websocket->getUserId()]);
 			$websocket->to($data['game'] . '.' . $data['id'])->emit('game_start', [ 'start' => true ]);
             $gameData["started"] = true;
-			$websocket->to('ganzenbord.' . $data["id"])->emit('getUsers', GameStateController::session($data["id"])["users"]);
+			self::getUsers($websocket, $data);
+			//$websocket->to('ganzenbord.' . $data["id"])->emit('getUsers', GameStateController::session($data["id"])["users"]);
+			//$websocket->to('ganzenbord.' . $data[$playerNames])->emit('getUsers', GameStateController::session($data[$playerNames])["users"]);
 
     		GameStateController::setData($data["id"], $gameData);
+			
 
             $websocket->to('ganzenbord.' . $data["id"])->emit('turn', ["turn" => GameStateController::nextTurn($data["id"])]);
 		} else if (sizeof($gameUsers) <= 1) {

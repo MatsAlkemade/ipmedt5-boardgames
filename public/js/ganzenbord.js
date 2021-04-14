@@ -8,6 +8,7 @@ let waitTurn = false;
 
 let players = [];
 let playerPositions = {};
+let playernames =[];
 
 let counter = 0;
 
@@ -19,18 +20,20 @@ socket.on('getUsers', function(data) {
 });
 
 socket.on('ganzenbord_playernames', function(data){
-    console.log(data);
     playernames = data;
+    updatePlayers()
+    console.log("GETPLAYERNAMES", playernames);
+    socket.emit('ganzenbord_state', { game: game, id: id });
+    
+    
+
 });
 
-let playernames =[];
-function getPlayerName(player_id){
-    return playernames[getPlayer(player_id)-1];
 
-}
-
-socket.on('game_start', function(data) {
+socket.on('game_start', function(data,) {
 	gameStart(data);
+    
+    
 });
 socket.on('connect', function() {
     socket.emit('join_session', { game: game, id: id });
@@ -63,12 +66,17 @@ socket.on('ganzenbord_state', function(data) {
 	console.log("STATE", data);
 	playerPositions = data.playerPositions;
 
+
 	for (const userid in playerPositions) {
 		goto(getPlayer(userid), playerPositions[userid]);
 	}
+    
+
 });
 
 socket.emit('getUsers', { game: game, id: id });
+socket.emit('ganzenbord_playernames', { game: game, id: id });
+
 
 
 
@@ -90,15 +98,56 @@ function getPlayer(user_id) {
 
     
 }
+function getPlayerName(player_id){
+    return playernames[getPlayer(player_id)-1];
+
+}
+
+
 
 function gameStart(data) {
 	console.log("START THE GAME", data);
 	if (data.start == true) {
 		const gb = document.querySelector('.ganzenbord');
 		gb.style.display = "block";
-	}
+    }
+    
+	
 }
 
+function updatePlayers(){
+    if(playernames.length == 1){
+        var name_1 = document.getElementById('speler_1');
+        name_1.innerHTML = playernames[0];
+    }
+    if(playernames.length == 2){
+        var name_1 = document.getElementById('speler_1');
+        name_1.innerHTML = playernames[0];
+        var name_2 = document.getElementById('speler_2');
+        name_2.innerHTML = playernames[1];
+    }
+    if(playernames.length == 3){
+        var name_1 = document.getElementById('speler_1');
+        name_1.innerHTML = playernames[0];
+        var name_2 = document.getElementById('speler_2');
+        name_2.innerHTML = playernames[1];
+        var name_3 = document.getElementById('speler_3');
+        name_3.innerHTML = playernames[2];
+    }
+    if(playernames.length == 4){
+        var name_1 = document.getElementById('speler_1');
+        name_1.innerHTML = playernames[0];
+        var name_2 = document.getElementById('speler_2');
+        name_2.innerHTML = playernames[1];
+        var name_3 = document.getElementById('speler_3');
+        name_3.innerHTML = playernames[2];
+        var name_4 = document.getElementById('speler_4');
+        name_4.innerHTML = playernames[3];
+    }
+    else{
+        return;
+    }
+}
 
 
 function setupChat() {
@@ -234,7 +283,11 @@ var imagesArray = [
     '/img/gb_vakjes/gb_63.png',
 ];
 
-window.addEventListener('load', function() {   
+window.addEventListener('load', function() { 
+    pageLoaded = true;
+	const fiar = document.querySelector('.ganzenbord');
+	fiar.style.display = "none";
+
 
     setupChat();
 
