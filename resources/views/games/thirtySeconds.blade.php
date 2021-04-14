@@ -15,6 +15,9 @@
 
 @section('gamecontent')
     <article class="ts">
+        <section class="ts__state">
+            <p id="js--tsState">Niemand is aan de beurt</p>
+        </section>
         <section class="ts__cardWrapper" id="js--tsCard">
             <section class="ts__card ts__front">
                 <figure>

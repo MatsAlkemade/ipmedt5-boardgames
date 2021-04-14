@@ -119,7 +119,7 @@ Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
 	Thirty Seconds (ts)
 */
 
-// Websocket::on('ts_state', [ThirtySecondsController::class, 'getState']);
+Websocket::on('ts_state', [ThirtySecondsController::class, 'getState']);
 
 /*
 	Ganzenbord (gb)

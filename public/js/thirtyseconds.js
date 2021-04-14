@@ -4,8 +4,20 @@ let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
 const turnButton = document.getElementById("js--tsCardTurnBtn");
+const tsState = document.getElementById("js--tsState");
 
 turnButton.setAttribute("disabled", true);
+
+socket.on('connect', function() {
+    console.log("Connected to socketio server!");
+
+    socket.emit('join_session', { game: game, id: id });
+    socket.emit('ts_state', {game: game, id: id});
+});
+
+socket.on('turn', function(data){
+    console.log('TURN', data.turn);
+});
 
 function setupChat() {
     const liveChat = document.getElementById('js--liveChat');

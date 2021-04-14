@@ -5,6 +5,7 @@
         let __u__ = "{{ auth()->user()->email }}";
         let __p__ = "{{ auth()->user()->password }}";
         let user_id = {{ auth()->user()->id }};
+        let gameType = "{{$gameType}}"
     </script>
     <script src="/js/gamelobby.js" defer></script>
 @endsection
@@ -19,9 +20,9 @@
             <h2>Spelers</h2>
             <ul class="lobby__users__list" id="js--userList">
                 @foreach($users as $user)
-                    <li class="lobby__users__list__item">
+                    <li class="lobby__users__list__item" data-id="{{$user->id}}">
                         <i class="fas fa-trash-alt"></i>
-                        <p data-id="{{$user->id}}">{{$user->name}}</p>
+                        <p>{{$user->name}}</p>
                         <i class="fas fa-flag redFlag"></i>
                         <i class="fas fa-flag blueFlag"></i>
                     </li>
