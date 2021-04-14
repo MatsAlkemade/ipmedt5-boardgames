@@ -71,24 +71,80 @@ class GanzenbordController extends Controller
 
 		$position = $gameData["playerPositions"][$userId];
 		
-	
-
-		// if ($position >= 63) {
-		// 	console.log('gwnonnen');
-        //     $gameData["winner"] = ["position" => $position, "winner" => $websocket->getUserId(), "username" => User::where('id', $websocket->getUserId())->first()->name];
-		// 	console.log('gwnonne2n');
-            
-        //     var_dump("GOT A WINNER!");
-        //     var_dump($gameData["winner"]);
-
-        //     $websocket->to('vieropeenrij.' . $data["id"])->emit('fiar_winner', $gameData["winner"]);
-        // }
-
 		$gameData["playerPositions"][$userId] = $position + $random;
-		if ($position >= 58) {
+		if ($gameData["playerPositions"][$userId] == 58) {
 			$position = 0;
 			$gameData["playerPositions"][$userId] = 0;
 		}
+		if ($gameData["playerPositions"][$userId] == 6) {
+			$position = 12;
+			$gameData["playerPositions"][$userId] = 12;
+		}
+		if ($gameData["playerPositions"][$userId] == 42) {
+			$position = 39;
+			$gameData["playerPositions"][$userId] = 39;
+		}
+		if ($gameData["playerPositions"][$userId] >= 63) {
+			$position = 63;
+			$gameData["playerPositions"][$userId] = 63;
+		}
+		// if ($gameData["playerPositions"][$userId] == 5) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 9) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 14) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 18) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 23) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 26) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 27) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 32) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 36) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 41) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 45) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 50) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 54) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+		// if ($gameData["playerPositions"][$userId] == 59) {
+		// 	$position = $gameData["playerPositions"][$userId] + $random;
+		// 	$gameData["playerPositions"][$userId] = $position;
+		// }
+
 
 
     	$playerTurn = GameStateController::nextTurn($data["id"]);
@@ -139,6 +195,11 @@ class GanzenbordController extends Controller
 		$websocket->emit('ganzenbord_playernames', $playerNames);
 	}
 
+	public function returnWinner(){
+		$user = Auth::user();
+		Javascript::put([ 'user.name' => $user->name]);
+	}
+
 
 	static public function gameStart($websocket, $data) {
 		if (!$data) return;
@@ -165,6 +226,15 @@ class GanzenbordController extends Controller
 			$websocket->to($data['game'] . '.' . $data['id'])->emit('game_start', [ 'start' => true ]);
             $gameData["started"] = true;
 			self::getUsers($websocket, $data);
+			$websocket->to($data['game'] . '.' . $data['id'])->emit('getUsers', GameStateController::session($data["id"])["users"]);
+
+
+			$players = GameStateController::session($data['id'])["users"];
+			$playerNames = [];
+			foreach ($players as $player){
+				array_push($playerNames, User::where('id', $player)->first()->name);
+			}
+			$websocket->to($data['game'] . '.' . $data['id'])->emit('ganzenbord_playernames', $playerNames);
 			//$websocket->to('ganzenbord.' . $data["id"])->emit('getUsers', GameStateController::session($data["id"])["users"]);
 			//$websocket->to('ganzenbord.' . $data[$playerNames])->emit('getUsers', GameStateController::session($data[$playerNames])["users"]);
 

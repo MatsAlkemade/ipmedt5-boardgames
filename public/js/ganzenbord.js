@@ -6,6 +6,8 @@ let id = split[2];
 
 let waitTurn = false;
 
+let winner = false;
+
 let players = [];
 let playerPositions = {};
 let playernames =[];
@@ -30,6 +32,8 @@ socket.on('ganzenbord_playernames', function(data){
 });
 
 
+
+
 socket.on('game_start', function(data,) {
 	gameStart(data);
     
@@ -39,32 +43,82 @@ socket.on('connect', function() {
     socket.emit('join_session', { game: game, id: id });
 });
 
+socket.on('turn', function(data) {
+	console.log("TURN", data, user_id);
+	myTurn = false;
+	if (data.turn == user_id) myTurn = true;
+	const turnText = document.querySelector('.js--gb-turn');
+
+    if(winner == false){
+        if (!myTurn) {
+            turnText.classList.add('js--gb-other');
+            turnText.classList.remove('js--gb-me');
+            turnText.innerText = "Het is de beurt van een andere speler!";
+        } else {
+            turnText.classList.remove('js--gb-other');
+            turnText.classList.add('js--gb-me');
+            turnText.innerText = "Het is jouw beurt!";
+        }
+    }
+	
+});
+
 socket.on('dobbel', function(data) {
 	console.log("IK HEB EEN RANDOM NUMMER", data);
 	// counter += Number(data.getal)
+    console.log(data.getal);
+
+
+
     if (data.position >= 63){
         data.position = 63;
-        console.log('gewonnen')
+        console.log('gewonnen');
+        winner = true;
+        winnerName = getPlayerName(data.playerId);
+        const turnText = document.querySelector('.js--gb-turn');
+	    turnText.innerText = winnerName + " heeft gewonnen!";
+        
     }
-    if (data.position == 58){
+    // else if ((data.position == 5) || 9 || 14 || 18 || 23 || 26 || 27 || 32 || 36 || 41 || 45 || 54 || 59 ){
+    //     console.log(data.position);
+    //     huidige_speler = getPlayerName(data.playerId);
+    //     const geefgedobbeld = document.querySelector('.js--gb-dobbel');
+    //     geefgedobbeld.innerText = huidige_speler + " heeft " + data.getal + " gegooid en is op een Gans belandt! Daarom mag hij " +data.getal +  "stappen verder";
+    // }
+
+    
+    else if (data.position == 58){
         data.position = 0;
-        console.log('dood')
+        console.log('dood');
     }
-    if (data.position == 6){
+    else if (data.position == 6){
         data.position = 12;
-        console.log('brug')
+        console.log('brug');
     }
-    if (data.position == 42){
+    else if (data.position == 42){
         data.position = 39;
-        console.log('door')
+        console.log('door');
     }
+    else{
+        huidige_speler = getPlayerName(data.playerId);
+        const geefgedobbeld = document.querySelector('.js--gb-dobbel');
+        geefgedobbeld.innerText = huidige_speler + " heeft " + data.getal + " gegooid!";
+
+    }
+
+
     goto(getPlayer(data.playerId), data.position);
 
 });
 
 socket.on('ganzenbord_state', function(data) {
 	console.log("STATE", data);
+    if (data.started == true){
+        gameStart({ start: true });
+    
+    }
 	playerPositions = data.playerPositions;
+
 
 
 	for (const userid in playerPositions) {
@@ -74,8 +128,10 @@ socket.on('ganzenbord_state', function(data) {
 
 });
 
+
 socket.emit('getUsers', { game: game, id: id });
 socket.emit('ganzenbord_playernames', { game: game, id: id });
+
 
 
 
@@ -103,14 +159,19 @@ function getPlayerName(player_id){
 
 }
 
+function winnerName(player_id){
+    return playernames
 
+}
 
 function gameStart(data) {
+    
 	console.log("START THE GAME", data);
 	if (data.start == true) {
 		const gb = document.querySelector('.ganzenbord');
 		gb.style.display = "block";
     }
+
     
 	
 }
@@ -118,31 +179,31 @@ function gameStart(data) {
 function updatePlayers(){
     if(playernames.length == 1){
         var name_1 = document.getElementById('speler_1');
-        name_1.innerHTML = playernames[0];
+        name_1.innerText = playernames[0];
     }
     if(playernames.length == 2){
         var name_1 = document.getElementById('speler_1');
-        name_1.innerHTML = playernames[0];
+        name_1.innerText = playernames[0];
         var name_2 = document.getElementById('speler_2');
-        name_2.innerHTML = playernames[1];
+        name_2.innerText = playernames[1];
     }
     if(playernames.length == 3){
         var name_1 = document.getElementById('speler_1');
-        name_1.innerHTML = playernames[0];
+        name_1.innerText = playernames[0];
         var name_2 = document.getElementById('speler_2');
-        name_2.innerHTML = playernames[1];
+        name_2.innerText = playernames[1];
         var name_3 = document.getElementById('speler_3');
-        name_3.innerHTML = playernames[2];
+        name_3.innerText = playernames[2];
     }
     if(playernames.length == 4){
         var name_1 = document.getElementById('speler_1');
-        name_1.innerHTML = playernames[0];
+        name_1.innerText = playernames[0];
         var name_2 = document.getElementById('speler_2');
-        name_2.innerHTML = playernames[1];
+        name_2.innerText = playernames[1];
         var name_3 = document.getElementById('speler_3');
-        name_3.innerHTML = playernames[2];
+        name_3.innerText = playernames[2];
         var name_4 = document.getElementById('speler_4');
-        name_4.innerHTML = playernames[3];
+        name_4.innerText = playernames[3];
     }
     else{
         return;
