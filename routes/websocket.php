@@ -6,6 +6,7 @@ use SwooleTW\Http\Websocket\Facades\Websocket;
 use SwooleTW\Http\Websocket\Facades\Room;
 use App\Http\Controllers\VierOpEenRijController;
 use App\Http\Controllers\GanzenbordController;
+use App\Http\Controllers\VlotteGeestController;
 use App\Http\Controllers\GameStateController;
 
 use App\Models\User;
@@ -64,6 +65,8 @@ Websocket::on('example', function ($websocket, $data) {
 // Websocket::on('game_start', );
 
 Websocket::on('game_start', [VierOpEenRijController::class, 'gameStart']);
+Websocket::on('game_start', [VlotteGeestController::class, 'gameStart']);
+
 
 /*
 	Game setup
@@ -122,7 +125,9 @@ Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
 */
 Websocket::on('getUsers', [GanzenbordController::class, 'getUsers']);
 
-
+// vlottegeest
+Websocket::on('vg_getUsers', [VlotteGeestController::class, 'getUsers']);
+Websocket::on('vg_playerNames', [VlotteGeestController::class, 'getUsers']);
 
 
 /* CHAT */

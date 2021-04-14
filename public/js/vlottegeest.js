@@ -7,6 +7,25 @@ let totalCardsBound = 0;
 let totalCards = 60;
 let active;
 
+socket.on('connect', function() {
+    console.log("Connected to socketio server!");
+    socket.emit('join_session', { game: game, id: id });
+});
+
+socket.on('vg_getUsers', function(data) {
+    console.log("GETUSERS", data);
+    players = data;
+    socket.emit('vlottegeest_state', { game: game, id: id });
+});
+
+socket.on('vg_playerNames', function(data){
+    console.log(data);
+    playernames = data;
+});
+
+socket.emit('vg_getUsers', { game: game, id: id });
+socket.emit('vg_playerNames', { game: game, id: id });
+
 cardCount = document.getElementById('cardCount');
 flipButton = document.getElementById('turn--180');
 flipButtonBack = document.getElementById('turn--360');
@@ -66,11 +85,7 @@ function setupChat() {
     console.log(chatList);
     console.log(chatIcon);
     socket.emit('chat_state', { game: game, id: id });
-    socket.on('chat_msg', function(data) {
-        if (!isChatOpen()) chatIcon.classList.add("icon__badge");
-        console.log("CHATMSG", data);
-        addChatMessage(data.username, data.message, data.order);
-    });
+
     socket.on('chat_state', function(data) {
         console.log("CHAT_STATE", data);
     });
@@ -125,3 +140,6 @@ function setupChat() {
     }
 }
 
+function gameStart(data) {
+	console.log("START THE GAME", data);
+}
