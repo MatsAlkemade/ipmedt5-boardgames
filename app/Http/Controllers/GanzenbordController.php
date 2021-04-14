@@ -70,9 +70,7 @@ class GanzenbordController extends Controller
 		}
 
 		$position = $gameData["playerPositions"][$userId];
-		if ($position >= 63) {
-			console.log('kaas');
-		}
+		
 	
 
 		// if ($position >= 63) {
@@ -87,6 +85,10 @@ class GanzenbordController extends Controller
         // }
 
 		$gameData["playerPositions"][$userId] = $position + $random;
+		if ($position >= 58) {
+			$position = 0;
+			$gameData["playerPositions"][$userId] = 0;
+		}
 
 
     	$playerTurn = GameStateController::nextTurn($data["id"]);
@@ -96,7 +98,7 @@ class GanzenbordController extends Controller
     	]);
 
     	$websocket->to('ganzenbord.' . $data["id"])->emit('turn', ["turn" => $playerTurn]);
-    	$websocket->to('ganzenbord.' . $data["id"])->emit('dobbel', ["getal" => $random, 'position' => $position + $random, 'playerId' => $websocket->getUserId()]);
+    	$websocket->to('ganzenbord.' . $data["id"])->emit('dobbel', ["getal" => $random, 'position' => $gameData["playerPositions"][$userId], 'playerId' => $websocket->getUserId()]);
 
         GameStateController::setData($data["id"], $gameData);
 
