@@ -14,7 +14,48 @@
 @endsection
 
 @section('gamecontent')
+    <article class="trivialpursuit__pie_container">
+        <section class="trivialpursuit__pie">
+            <h2>Player 1</h2>
+            <div class="trivialpursuit__items" data-type-categorie="WetenschapNatuur">Wetenschap & Natuur</div>
+            <div class="trivialpursuit__items" data-type-categorie="Sport">Sport</div>
+            <div class="trivialpursuit__items" data-type-categorie="KunstLiteratuur">Kunst & Literatuur</div>
+            <div class="trivialpursuit__items" data-type-categorie="Geschiedenis">Geschiedenis</div>
+            <div class="trivialpursuit__items" data-type-categorie="Amusument">Amusument</div>
+            <div class="trivialpursuit__items" data-type-categorie="Aardrijkskunde">Aardrijkskunde</div>
+        </section>
 
+        <section class="trivialpursuit__pie">
+            <h2>Player 2</h2>
+            <div class="trivialpursuit__items" data-type-categorie="WetenschapNatuur">Wetenschap & Natuur</div>
+            <div class="trivialpursuit__items" data-type-categorie="Sport">Sport</div>
+            <div class="trivialpursuit__items" data-type-categorie="KunstLiteratuur">Kunst & Literatuur</div>
+            <div class="trivialpursuit__items" data-type-categorie="Geschiedenis">Geschiedenis</div>
+            <div class="trivialpursuit__items" data-type-categorie="Amusument">Amusument</div>
+            <div class="trivialpursuit__items" data-type-categorie="Aardrijkskunde">Aardrijkskunde</div>
+        </section>
+
+        <section class="trivialpursuit__pie">
+            <h2>Player 3</h2>
+            <div class="trivialpursuit__items" data-type-categorie="WetenschapNatuur">Wetenschap & Natuur</div>
+            <div class="trivialpursuit__items" data-type-categorie="Sport">Sport</div>
+            <div class="trivialpursuit__items" data-type-categorie="KunstLiteratuur">Kunst & Literatuur</div>
+            <div class="trivialpursuit__items" data-type-categorie="Geschiedenis">Geschiedenis</div>
+            <div class="trivialpursuit__items" data-type-categorie="Amusument">Amusument</div>
+            <div class="trivialpursuit__items" data-type-categorie="Aardrijkskunde">Aardrijkskunde</div>
+        </section>
+
+        <section class="trivialpursuit__pie">
+            <h2>Player 4</h2>
+            <div class="trivialpursuit__items" data-type-categorie="WetenschapNatuur">Wetenschap & Natuur</div>
+            <div class="trivialpursuit__items" data-type-categorie="Sport">Sport</div>
+            <div class="trivialpursuit__items" data-type-categorie="KunstLiteratuur">Kunst & Literatuur</div>
+            <div class="trivialpursuit__items" data-type-categorie="Geschiedenis">Geschiedenis</div>
+            <div class="trivialpursuit__items" data-type-categorie="Amusument">Amusument</div>
+            <div class="trivialpursuit__items" data-type-categorie="Aardrijkskunde">Aardrijkskunde</div>
+        </section>
+        <button onclick="checkWinner();">TEST</button>
+    </article>
 @endsection
 
 @section('livechat')

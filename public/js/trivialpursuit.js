@@ -3,9 +3,15 @@ const socket = io(window.location.protocol + '//' + window.location.host, { tran
 let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
-console.log("test");
 
 function setupChat() {
+
+    socket.on('chat_msg', function(data) {
+        if (!isChatOpen()) chatIcon.classList.add("icon__badge");
+        console.log("CHATMSG", data);
+        addChatMessage(data.username, data.message, data.order);
+    });
+
     if (!liveChat) return;
     let orderCount = 1;
     const chatIcon = document.querySelector('.js--chat-icon');
@@ -15,11 +21,6 @@ function setupChat() {
     console.log(chatList);
     console.log(chatIcon);
     socket.emit('chat_state', { game: game, id: id });
-    socket.on('chat_msg', function(data) {
-        if (!isChatOpen()) chatIcon.classList.add("icon__badge");
-        console.log("CHATMSG", data);
-        addChatMessage(data.username, data.message, data.order);
-    });
     socket.on('chat_state', function(data) {
         console.log("CHAT_STATE", data);
     });
@@ -72,3 +73,39 @@ function setupChat() {
 }
 
 window.addEventListener('load', setupChat);
+
+
+function updatePie() {
+    const piece = document.getElementsByClassName("trivialpursuit__items");
+    piece[item].style.opacity = "1";
+}
+
+let winner;
+
+function checkWinner() {
+    let piece = document.getElementsByClassName("trivialpursuit__items");
+
+    for (let index = 0; index < piece.length; index++) {
+
+        if(winner == 6){
+            console.log("gewonnen");
+            break;
+        }
+
+        else if(piece[index].style.opacity == 1){
+            winner = winner + 1;
+        }
+
+        else if(piece[index] == 6 || piece[index] == 12 || piece[index] == 18){
+            winner == 0;
+        }
+
+        else{
+            winner = 0;
+        }
+        
+    }
+}
+
+let item = 5
+window.addEventListener('load', updatePie);
