@@ -13,7 +13,7 @@ const badkuip =document.getElementById("badkuip--js");
 const borstel =document.getElementById("borstel--js");
 const kleed =document.getElementById("kleed--js");
 const bord = document.getElementById("vs--js");
-let chec; 
+// let chec; 
 bord.style.display = "none";
 
 function gameStart(data) {
@@ -157,6 +157,12 @@ flipButton = document.getElementById('turn--180');
 
 function decrementCardAmount(){
     totalCards--;
+    // if(totalCars > 0){
+    //     totalCards--;
+    // }
+    // else{
+    //     console.log("game over");
+    // }
     cardCount.innerHTML = totalCards;
 }
 
@@ -164,11 +170,15 @@ function cardFlip(){
     document.querySelector('.vs__flip-card-inner').style.transform = 'rotateY(180deg)';
     // getRandomImage();
     flipButton.disabled = true;
-    kleed.style.visibility = "visible";
-    spook.style.visibility = "visible";
-    badkuip.style.visibility = "visible";
-    borstel.style.visibility = "visible";
-    kikker.style.visibility = "visible";
+
+    function turnVisibilityOn(){
+        kleed.style.visibility = "visible";
+        spook.style.visibility = "visible";
+        badkuip.style.visibility = "visible";
+        borstel.style.visibility = "visible";
+        kikker.style.visibility = "visible";
+    }
+    setTimeout(turnVisibilityOn, 1000);
 }
 
 function cardFlipBack(){

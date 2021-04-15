@@ -17,6 +17,12 @@
 @section('gamecontent')
     <main class="vs" id="vs--js">
 
+        <!-- <section class="vs__roundWinner">
+            <div class="vs__roundWinner__content">
+                <h2>Speler: x heeft de ronde gewonnen</h2>
+            </div>
+        </section> -->
+
         <section class="vs__devider">
             <section class="vs__section">
                 <p class="vs__counter">Aantal kaarten: &nbsp; <span id="cardCount">5</span> </p>

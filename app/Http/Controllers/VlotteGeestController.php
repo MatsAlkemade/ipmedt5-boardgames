@@ -65,7 +65,7 @@ class VlotteGeestController extends Controller
 
     static public function randomImage(){
         $images = ['/img/games/vlottegeest/Spook.png', '/img/games/vlottegeest/bad.png', '/img/games/vlottegeest/doekie.png', '/img/games/vlottegeest/frogie.png', '/img/games/vlottegeest/Borstel.png' ];
-        $randomImage = $images[array_rand($images)]; // See comments
+        $randomImage = $images[array_rand($images)]; 
         return $randomImage;
     }
 

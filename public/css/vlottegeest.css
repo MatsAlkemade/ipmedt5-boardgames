@@ -12,6 +12,11 @@
   width: 100%;
 }
 
+.vs__roundWinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* Counter & buttons section */
 .vs__section{
   height: 100%;
