@@ -3,15 +3,11 @@ const socket = io(window.location.protocol + '//' + window.location.host, { tran
 let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
-
 let waitTurn = false;
-
 let winner = false;
-
 let players = [];
 let playerPositions = {};
 let playernames =[];
-
 let counter = 0;
 
 socket.on('getUsers', function(data) {
@@ -26,13 +22,7 @@ socket.on('ganzenbord_playernames', function(data){
     updatePlayers()
     console.log("GETPLAYERNAMES", playernames);
     socket.emit('ganzenbord_state', { game: game, id: id });
-    
-    
-
 });
-
-
-
 
 socket.on('game_start', function(data,) {
 	gameStart(data);
@@ -43,6 +33,7 @@ socket.on('connect', function() {
     socket.emit('join_session', { game: game, id: id });
 });
 
+//Verander de naam van wie aan de beurt is
 socket.on('turn', function(data) {
 	console.log("TURN", data, user_id);
 	myTurn = false;
@@ -62,13 +53,10 @@ socket.on('turn', function(data) {
     }
 	
 });
-
+//Verander de text als iemand heeft gewonnen 
 socket.on('dobbel', function(data) {
 	console.log("IK HEB EEN RANDOM NUMMER", data);
-	// counter += Number(data.getal)
     console.log(data.getal);
-
-
 
     if (data.position >= 63){
         data.position = 63;
@@ -79,14 +67,7 @@ socket.on('dobbel', function(data) {
 	    turnText.innerText = winnerName + " heeft gewonnen!";
         
     }
-    // else if ((data.position == 5) || 9 || 14 || 18 || 23 || 26 || 27 || 32 || 36 || 41 || 45 || 54 || 59 ){
-    //     console.log(data.position);
-    //     huidige_speler = getPlayerName(data.playerId);
-    //     const geefgedobbeld = document.querySelector('.js--gb-dobbel');
-    //     geefgedobbeld.innerText = huidige_speler + " heeft " + data.getal + " gegooid en is op een Gans belandt! Daarom mag hij " +data.getal +  "stappen verder";
-    // }
 
-    
     else if (data.position == 58){
         data.position = 0;
         console.log('dood');
@@ -115,11 +96,8 @@ socket.on('ganzenbord_state', function(data) {
 	console.log("STATE", data);
     if (data.started == true){
         gameStart({ start: true });
-    
     }
 	playerPositions = data.playerPositions;
-
-
 
 	for (const userid in playerPositions) {
 		goto(getPlayer(userid), playerPositions[userid]);
@@ -131,9 +109,6 @@ socket.on('ganzenbord_state', function(data) {
 
 socket.emit('getUsers', { game: game, id: id });
 socket.emit('ganzenbord_playernames', { game: game, id: id });
-
-
-
 
 
 const specialeVakjes = {
@@ -163,19 +138,17 @@ function winnerName(player_id){
     return playernames
 
 }
-
+//Als de game start zet de elements op visible
 function gameStart(data) {
-    
 	console.log("START THE GAME", data);
 	if (data.start == true) {
 		const gb = document.querySelector('.ganzenbord');
 		gb.style.display = "block";
     }
-
-    
-	
+ 
 }
 
+//als de game start verander de namen in de namen vd spelers
 function updatePlayers(){
     if(playernames.length == 1){
         var name_1 = document.getElementById('speler_1');
@@ -210,7 +183,7 @@ function updatePlayers(){
     }
 }
 
-
+//Maak de chat
 function setupChat() {
     if (!liveChat) return;
     let orderCount = 1;
@@ -344,6 +317,7 @@ var imagesArray = [
     '/img/gb_vakjes/gb_63.png',
 ];
 
+//Als je het spel laat zet de display op none
 window.addEventListener('load', function() { 
     pageLoaded = true;
 	const fiar = document.querySelector('.ganzenbord');
@@ -353,15 +327,13 @@ window.addEventListener('load', function() {
     setupChat();
 
     document.getElementById('gb_button').addEventListener('click', function(){
-        console.log('hi');
         socket.emit('dobbel', { game: game, id: id });
-        // dobbel();
 	});
     
 
 });
 
-
+//Verander de positie van de speler
 function goto(player, place) {
 	console.log("GOTO", player, place);
     if(place >= 63){
