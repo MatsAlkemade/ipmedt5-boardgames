@@ -42,6 +42,31 @@ class TrivialPursuitController extends Controller
         $websocket->emit('tp_question', $random);
     }
 
+    static public function vraag($websocket, $data) {
+		if (!$data) return;
+        if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
+        if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
+        
+        $websocket -> emit('tp_vraag', $data);
+        $user_id = $websocket->getUserid();
+
+    	$gameData = GameStateController::getData($data["id"]);
+    	if (!array_key_exists("vraag_goed_fout", $gameData)) {
+    		$gameData["vraag_goed_fout"] = [];
+    	}
+
+        if (!array_key_exists($user_id, $gameData["vraag_goed_fout"])) {
+            $gameData["vraag_goed_fout"][$user_id] = [
+                "antwoord" => 0,
+            ];
+        }
+        
+        $gameData["vraag_goed_fout"][$user_id]["antwoord"] = $data["antwoord"];
+        
+        GameStateController::setData($data["id"], $gameData);
+        var_dump($gameData["vraag_goed_fout"]);
+    }
+
     static public function getUsers($websocket, $data){
         if (!$data) return;
         if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
@@ -57,6 +82,17 @@ class TrivialPursuitController extends Controller
 
 		$websocket->emit('tp_playerNames', $playerNames);
     }
+
+    static public function getState($websocket, $data) {
+		var_dump($data);
+		if (!$data) return;
+        if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
+        if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
+        
+    	$gameData = GameStateController::getData($data["id"]);
+        $websocket->emit('tp_state', $gameData);
+		$websocket->emit('tp_turn', ["turn" => GameStateController::getTurn($data["id"])]);	
+	}
 
     static public function gameStart($websocket, $data) {
 		if (!$data) return;
@@ -81,6 +117,7 @@ class TrivialPursuitController extends Controller
     		array_push($gameData["actions"], ["action" => 'game_start',"player" => $websocket->getUserId()]);
 			$websocket->to($data['game'] . '.' . $data['id'])->emit('game_start', [ 'start' => true ]);
             $gameData["started"] = true;
+            self::getUsers($websocket, $data);
 			$websocket->to('trivialpursuit.' . $data["id"])->emit('getUsers', GameStateController::session($data["id"])["users"]);
 
     		GameStateController::setData($data["id"], $gameData);

@@ -5,7 +5,7 @@
 
 @section('head-extra')
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<script src="//unpkg.com/string-similarity/umd/string-similarity.min.js"></script>
+<script src="//unpkg.com/string-similarity/umd/string-similarity.min.js">//dit zorgt ervoor dat de spellingCheck() werkt en volgens de Dice coefficient</script>
 <script type="text/javascript">
     let __u__ = "{{ auth()->user()->email }}";
     let __p__ = "{{ auth()->user()->password }}";
@@ -16,36 +16,40 @@
     let answer;
     let question;
     let correct_answer;
-    let questions = <?= $questions ?>;
+    let questions = <?= $questions ?>; //leest de php varibalen uit en zet het om naar een .json bestand
 
     function spellingCheck() {
-        answer = document.getElementById('js--answer');
+        answer = document.getElementById('js--answer'); //pakt het ingevulde antwoord
 
-        if(correct_answer.match(/^-?\d+$/)){
+        if(correct_answer.match(/^-?\d+$/)){ //kijkt of de vraag een int is
             if(Object.is(answer.value, correct_answer)){
                 console.log("int goed");
+                socket.emit('tp_vraag', {antwoord: 1, game: game, id: id });
                 answer.style.backgroundColor = "green";
             }
             else{
                 console.log("int fout");
+                socket.emit('tp_vraag', {antwoord: 2, game: game, id: id });
                 answer.style.backgroundColor = "red";
             }
         }
         else{
-            answer.value = answer.value.toLowerCase();
-            correct_answer = correct_answer.toLowerCase();
-            let spellingcheck = stringSimilarity.compareTwoStrings(correct_answer, answer.value);
-            if(spellingcheck >= 0.8){
+            answer.value = answer.value.toLowerCase(); //zet de user input naar kleine letters want stringSimilarity is hoofdletter gevoelig
+            correct_answer = correct_answer.toLowerCase(); // zelfde als hierboven maar dan voort het antwoord
+            let spellingcheck = stringSimilarity.compareTwoStrings(correct_answer, answer.value); //voert de controlle uit en krijgt een getal tussen de 0 en 1 terug
+            if(spellingcheck >= 0.8){ //als de overeenkomst 80% is het goed anders fout
                 console.log('String goed')
+                socket.emit('tp_vraag', {antwoord: 1, game: game, id: id });
                 answer.style.backgroundColor = "green";
             }
             else{
                 console.log('String fout')
+                socket.emit('tp_vraag', {antwoord: 2, game: game, id: id });
                 answer.style.backgroundColor = "red";
             }
         }
         setTimeout(function() {
-            socket.emit('tp_question', { game: game, id: id });
+            socket.emit('tp_question', { game: game, id: id }); //pakt een andere vraag
         }, 1000);
     }
     
@@ -63,11 +67,11 @@
         question.innerText = questions[questionId].question;
         correct_answer = questions[questionId].answer;
     }
+
 </script>
 @endsection
 
 @section('gamecontent')
-    <p></p>
     <article class="trivialpursuit__pie_container">
         <section class="trivialpursuit__pie">
             <h2>Player 1</h2>
