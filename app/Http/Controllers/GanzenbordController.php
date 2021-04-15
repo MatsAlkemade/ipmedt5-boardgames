@@ -10,6 +10,9 @@ use SwooleTW\Http\Websocket\Facades\Room;
 
 class GanzenbordController extends Controller
 {
+	static public $skipBeurtPosities = [19, 31, 52];
+	static public $nogEenKeerDobbelenPosities = [5, 9, 14, 18, 23, 26, 27, 32, 36, 41, 45, 50, 54, 59];
+
 	public function index(){
 		return view('games.ganzenbordstappen',[
 			'ganzenbordstappen' =>\App\Models\GanzenbordStappen::all(),
@@ -53,14 +56,16 @@ class GanzenbordController extends Controller
     	if (!array_key_exists("playerPositions", $gameData)) {
     		$gameData["playerPositions"] = [];
     	}
+
+    	if (array_key_exists("winner", $gameData) && intval($gameData["winner"]) >= 0) {
+    		return $websocket->emit("winner", [ "winnerId" => $gameData["winner"] ]);
+    	}
+
 		if (GameStateController::getTurn($data["id"]) != $websocket->getUserId()) {
             return;
         }
 		
 
-
-
-        // TOOD: Check hier of persoon is geblokkeerd, zo ja volgende speler + onblokkeer de speler
 
     	$random = random_int(1, 12);
 
@@ -69,9 +74,14 @@ class GanzenbordController extends Controller
 			$gameData["playerPositions"][$userId] = 0;
 		}
 
+		if (!array_key_exists("skipBeurtPlayers", $gameData)) {
+			$gameData["skipBeurtPlayers"] = [];
+		}
+
 		$position = $gameData["playerPositions"][$userId];
 		
 		$gameData["playerPositions"][$userId] = $position + $random;
+
 		if ($gameData["playerPositions"][$userId] == 58) {
 			$position = 0;
 			$gameData["playerPositions"][$userId] = 0;
@@ -87,64 +97,19 @@ class GanzenbordController extends Controller
 		if ($gameData["playerPositions"][$userId] >= 63) {
 			$position = 63;
 			$gameData["playerPositions"][$userId] = 63;
+			$gameData["winner"] = $userId;
 		}
-		// if ($gameData["playerPositions"][$userId] == 5) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 9) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 14) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 18) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 23) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 26) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 27) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 32) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 36) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 41) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 45) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 50) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 54) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
-		// if ($gameData["playerPositions"][$userId] == 59) {
-		// 	$position = $gameData["playerPositions"][$userId] + $random;
-		// 	$gameData["playerPositions"][$userId] = $position;
-		// }
 
+
+		if (in_array($gameData["playerPositions"][$userId], self::$nogEenKeerDobbelenPosities)) { // TODO: Veranderen
+			$position = $gameData["playerPositions"][$userId] +$random;
+			$gameData["playerPositions"][$userId] = $position;
+		}
+
+
+		if (in_array($gameData["playerPositions"][$userId], self::$skipBeurtPosities)) {
+			array_push($gameData["skipBeurtPlayers"], $userId);
+		}
 
 
     	$playerTurn = GameStateController::nextTurn($data["id"]);
@@ -152,6 +117,15 @@ class GanzenbordController extends Controller
     		$position,
     		$random
     	]);
+
+    	while (in_array($playerTurn, $gameData["skipBeurtPlayers"])) {
+    		$spelerIndex = array_search($playerTurn, $gameData["skipBeurtPlayers"]);
+    		unset($gameData["skipBeurtPlayers"][$spelerIndex]);
+			var_dump("In de array", $playerTurn);
+    		$playerTurn = GameStateController::nextTurn($data["id"]);
+			var_dump("In de array volgende", $playerTurn);
+		}
+
 
     	$websocket->to('ganzenbord.' . $data["id"])->emit('turn', ["turn" => $playerTurn]);
     	$websocket->to('ganzenbord.' . $data["id"])->emit('dobbel', ["getal" => $random, 'position' => $gameData["playerPositions"][$userId], 'playerId' => $websocket->getUserId()]);
