@@ -121,6 +121,7 @@ Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
 */
 
 Websocket::on('ts_state', [ThirtySecondsController::class, 'getState']);
+Websocket::on('ts_answers', [ThirtySecondsController::class, 'checkAnswers']);
 
 /* 
 	Ganzenbord

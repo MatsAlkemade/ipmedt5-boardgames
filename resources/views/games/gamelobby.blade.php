@@ -23,8 +23,10 @@
                     <li class="lobby__users__list__item" data-id="{{$user->id}}">
                         <i class="fas fa-trash-alt"></i>
                         <p>{{$user->name}}</p>
-                        <i class="fas fa-flag redFlag"></i>
-                        <i class="fas fa-flag blueFlag"></i>
+                        @if($gameType == "Thirty Seconds")
+                            <i class="fas fa-flag redFlag"></i>
+                            <i class="fas fa-flag blueFlag"></i>
+                        @endif
                     </li>
                 @endforeach
             </ul>

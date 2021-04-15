@@ -27,7 +27,7 @@ class ThirtySecondsController extends Controller
             }
         }
 
-        return redirect('/thirtyseconds');
+        return redirect('/thirtyseconds/' . $request->input('gameId'));
     }
 
     public function create(Request $request) {
@@ -93,7 +93,9 @@ class ThirtySecondsController extends Controller
             $gameData["started"] = true;
             GameStateController::setData($data["id"], $gameData);
             GameStateController::setTurnMode($data["id"], 1);
-            $websocket->to('thirtyseconds.' . $data["id"])->emit('turn', ["turn" => GameStateController::nextTurn($data["id"])]);
+            $websocket->to('thirtyseconds.' . $data["id"])->emit('turn', [
+                "turn2" => GameStateController::nextTurn($data["id"]),
+            ]);
         } else if (sizeof($gameUsers) <= 1) {
             $websocket->emit('game_start', [ "error" => "Not enough players in the game." ]);
         } else if (sizeof($gameUsers) > 4) {
@@ -108,6 +110,57 @@ class ThirtySecondsController extends Controller
 
         $websocket->emit('turn', [
             'turn' => gameStateController::getTurn($data['id']),
+        ]);
+    }
+
+    static public function checkAnswers($websocket, $data){
+        $correct = array_count_values($data['questions'])[1];
+        $gameData = gameStateController::getData($data['id']);
+        if (!array_key_exists('teamPosition', $gameData)) {
+            $gameData['teamPosition'] = [];
+        }
+
+        $userId = $websocket->getUserId();
+        $teamId = array_search(GameStateController::getTurn($data['id']), GameStateController::session($data['id'])['teams']);
+
+        if ($teamId === false) return;
+
+        if (!array_key_exists($teamId, $gameData['teamPosition'])) {
+            $gameData['teamPosition'][$teamId] = [
+                'position' => 0,
+                'lastUser' => GameStateController::getTurn($data['id'])[0],
+            ];
+        }
+
+        $position = $gameData['teamPosition'][$teamId]['position'];
+
+        $gameData['teamPosition'][$teamId]['position'] = $position + $correct;
+
+        $nextUser = array_search($gameData['teamPosition'][$teamId]['lastUser'], GameStateController::getTurn($data['id']));
+        $nextUser++;
+        if($nextUser >= sizeof(GameStateController::getTurn($data['id']))) {
+            $nextUser = 0;
+        }
+
+        $gameData['teamPosition'][$teamId]['lastUser'] = $nextUser;
+
+        GameStateController::setData($data['id'], $gameData);
+
+        $websocket->to('thirtyseconds.' . $data["id"])->emit('teamAnswer', [
+            'teamInfo' => $gameData['teamPosition'][$teamId],
+        ]);
+
+        $turn = GameStateController::nextTurn($data['id']);
+
+        $nextUser = array_search($gameData['teamPosition'][$teamId]['lastUser'], GameStateController::getTurn($data['id']));
+        $nextUser++;
+        if($nextUser >= sizeof(GameStateController::getTurn($data['id']))) {
+            $nextUser = 0;
+        }
+
+        $websocket->to('thirtyseconds.' . $data["id"])->emit('turn', [
+            'turn' => $turn,
+            'userId' => $nextUser,
         ]);
     }
 }

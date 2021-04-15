@@ -3,9 +3,25 @@ const socket = io(window.location.protocol + '//' + window.location.host, { tran
 let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
+const tsCard = document.getElementById('js--tsCard');
+const tsCardBack = document.getElementById("js--tsCardBack");
+const tsCardTurnBtn = document.getElementById("js--tsCardTurnBtn");
+const tsCardSubmitBtn = document.getElementById("js--tsCardSubmitBtn");
+const tsCardForm = document.getElementById("js--tsCardForm");
+const tsTimer = document.getElementById("js--tsTimer");
+const tsTimerBar = document.getElementById("js--tsTimerBar");
+let tsInitTimerBar;
 const turnButton = document.getElementById("js--tsCardTurnBtn");
 const tsState = document.getElementById("js--tsState");
+const formGameId = document.getElementById("js--formGameId");
+const q1 = document.getElementById("q1");
+const q2 = document.getElementById("q2");
+const q3 = document.getElementById("q3");
+const q4 = document.getElementById("q4");
+const q5 = document.getElementById("q5");
+let timer = setTimeout(()=>{});
 
+formGameId.setAttribute("value", id);
 turnButton.setAttribute("disabled", true);
 
 socket.on('connect', function() {
@@ -16,8 +32,39 @@ socket.on('connect', function() {
 });
 
 socket.on('turn', function(data){
-    console.log('TURN', data.turn);
+    if (data.turn && data.turn.length < 1) return;
+    console.log(data);
+    data.turn.forEach(player => {
+        console.log(player, user_id);
+        if (player == user_id){
+            turnButton.removeAttribute("disabled");
+        }
+    });
 });
+
+socket.on('teamAnswer', function(data){
+    console.log(data);
+});
+
+function submitTurn(e) {
+    e.preventDefault();
+    let questions = {
+        "q1": q1.checked ? 1 : 0,
+        "q2": q2.checked ? 1 : 0,
+        "q3": q3.checked ? 1 : 0,
+        "q4": q4.checked ? 1 : 0,
+        "q5": q5.checked ? 1 : 0,
+    };
+    socket.emit('ts_answers', {game: game, id: id, questions: questions});
+    tsCardSubmitBtn.setAttribute("disabled", "");
+    tsCard.style.transform = "rotateY(0)";
+    setTimeout(function() {
+        tsCardBack.style.zIndex = "-1";
+    }, 600);
+    clearTimeout(timer);
+    tsTimer.innerText = 30;
+    tsTimerBar.style.width = tsInitTimerBar + 'px';
+}
 
 function setupChat() {
     const liveChat = document.getElementById('js--liveChat');
@@ -87,3 +134,37 @@ function setupChat() {
 }
 
 setupChat();
+
+function turnCard(){
+    tsStartTimer();
+    tsCard.style.transform = "rotateY(180deg)";
+    setTimeout(function() {
+        tsCardBack.style.zIndex = "1";
+    }, 600);
+    tsCardSubmitBtn.removeAttribute("disabled");
+    tsCardTurnBtn.setAttribute("disabled", "");
+}
+
+function tsSubmitForm(){
+    tsCardForm.submit();
+}
+
+function tsStartTimer() {
+    let counter = 30;
+    tsInitTimerBar = tsTimerBar.offsetWidth;
+    let barWidth = tsTimerBar.offsetWidth;
+    let barStep = tsTimerBar.offsetWidth / counter;
+    function next() {
+        if (counter <= 1) {
+            tsTimerBar.style.width = 0;
+            tsTimer.innerText = 0;
+            return;
+        }
+        counter--;
+        barWidth = barWidth - barStep;
+        tsTimerBar.style.width = barWidth + "px";
+        tsTimer.innerText = counter;
+        timer = setTimeout(next, 1000);
+    }
+    timer = setTimeout(next, 1000);
+}
