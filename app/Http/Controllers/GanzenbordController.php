@@ -67,7 +67,7 @@ class GanzenbordController extends Controller
 		
 
 
-    	$random = random_int(1, 12);
+    	$random = random_int(2, 12);
 
 		$userId = $websocket->getUserId();
 		if (!array_key_exists($userId, $gameData["playerPositions"])) {
