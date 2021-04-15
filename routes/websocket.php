@@ -87,7 +87,6 @@ Websocket::on('session', function($websocket) {
 	$websocket->emit('session', GameStateController::fc());
 });
 
-
 Websocket::on('join_session', function($websocket, $data) {
 	if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
 
@@ -128,7 +127,8 @@ Websocket::on('getUsers', [GanzenbordController::class, 'getUsers']);
 // vlottegeest
 Websocket::on('vg_getUsers', [VlotteGeestController::class, 'getUsers']);
 Websocket::on('vg_playerNames', [VlotteGeestController::class, 'getUsers']);
-
+Websocket::on('objecten', [VlotteGeestController::class, 'objecten']);
+Websocket::on('vg_state', [VlotteGeestController::class, 'getState']);
 
 /* CHAT */
 Websocket::on('chat_msg', function($websocket, $data) {

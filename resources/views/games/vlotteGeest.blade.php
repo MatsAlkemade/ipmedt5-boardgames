@@ -15,7 +15,7 @@
 @endsection
 
 @section('gamecontent')
-    <main class="vs">
+    <main class="vs" id="vs--js">
 
         <section class="vs__devider">
             <section class="vs__section">
@@ -43,11 +43,11 @@
         
         <article class="vs__objects">
             <ul class="vs__list">
-                <li class="vs__list__item">Geest</li>
-                <li class="vs__list__item">Kikker</li>
-                <li class="vs__list__item">Badkuip</li>
-                <li class="vs__list__item">Borstel</li>
-                <li class="vs__list__item">Kleed</li>
+                <li class="vs__list__item" id="spook--js" data-value="Spook.png">Spook</li>
+                <li class="vs__list__item" id="kikker--js" data-value="frogie.png">Kikker</li>
+                <li class="vs__list__item" id="badkuip--js" data-value="bad.png">Badkuip</li>
+                <li class="vs__list__item" id="borstel--js" data-value="Borstel.png">Borstel</li>
+                <li class="vs__list__item" id="kleed--js" data-value="doekie.png">Kleed</li>
             </ul>
         </article>
 

@@ -3,13 +3,85 @@ const socket = io(window.location.protocol + '//' + window.location.host, { tran
 let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
-let totalCardsBound = 0;
-let totalCards = 60;
-let active;
+let winner = false;
+totalCards = 60;
+let rondeNummer = -1;
+
+const spook = document.getElementById("spook--js");
+const kikker =document.getElementById("kikker--js");
+const badkuip =document.getElementById("badkuip--js");
+const borstel =document.getElementById("borstel--js");
+const kleed =document.getElementById("kleed--js");
+const bord = document.getElementById("vs--js");
+let chec; 
+bord.style.display = "none";
+
+// let objecten = ['Spook', 'Bad', 'Kleed', 'Kikker', 'Borstel'];
+// // grabbedObject = [];
+function gameStart(data) {
+	console.log("START THE GAME", data);
+    if (data.start == true) {
+        bord.style.display = "block";
+    }
+}
+
+function clickObject(){
+    kleed.addEventListener('click', function(){
+        kleed.style.visibility = "hidden";
+        socket.emit('objecten', {object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
+        // checkIfEqaul(this.dataset.value);
+    });
+    
+    spook.addEventListener('click', function(){
+        spook.style.visibility = "hidden";
+        socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
+        // checkIfEqaul(this.dataset.value);
+   
+    });
+    
+    badkuip.addEventListener('click', function(){
+        badkuip.style.visibility = "hidden";
+        socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
+        // checkIfEqaul(this.dataset.value);
+    });
+    
+    borstel.addEventListener('click', function(){
+        borstel.style.visibility = "hidden";
+        socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
+        // checkIfEqaul(this.dataset.value);
+    });
+    
+    kikker.addEventListener('click', function(){
+        kikker.style.visibility = "hidden";
+        socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
+        // checkIfEqaul(this.dataset.value);
+    });
+}
+clickObject();
 
 socket.on('connect', function() {
     console.log("Connected to socketio server!");
     socket.emit('join_session', { game: game, id: id });
+});
+
+socket.on('rondeNummer', function(data) {
+    console.log(data);
+    if(rondeNummer != data.rondeNummer && rondeNummer != -1){
+        cardFlipBack();
+        console.log(data.Winner);
+    }
+    rondeNummer = data.rondeNummer;
+
+});
+
+socket.on('randomObject', function(data) {
+    console.log(data);
+    // if(rondeNummer != data.rondeNummer && rondeNummer != -1){
+    //     cardFlipBack();
+    //     console.log(data.Winner);
+    // }
+    // rondeNummer = data.rondeNummer
+
 });
 
 socket.on('vg_getUsers', function(data) {
@@ -23,8 +95,27 @@ socket.on('vg_playerNames', function(data){
     playernames = data;
 });
 
+socket.on('game_start', function(data) {
+    gameStart(data);
+    
+});
+
+socket.on('vg_state', function(data) {
+    console.log("STATE", data);
+    if (data.started == true){
+        gameStart({ start: true });
+    }
+    playerPositions = data.playerPositions;
+
+    for (const userid in playerPositions) {
+        goto(getPlayer(userid), playerPositions[userid]);
+    }
+});
+
+socket.emit('vg_state', { game: game, id: id });
 socket.emit('vg_getUsers', { game: game, id: id });
 socket.emit('vg_playerNames', { game: game, id: id });
+
 
 cardCount = document.getElementById('cardCount');
 flipButton = document.getElementById('turn--180');
@@ -53,11 +144,11 @@ function getRandomImage(){
 
     var imageArray = new Array();  
 
-    imageArray[0] = "Spook.png";  
-    imageArray[1] = "bad.png";  
-    imageArray[2] = "Borstel.png";  
-    imageArray[3] = "doekie.png";  
-    imageArray[4] = "frogie.png";
+    imageArray[0]= "Spook.png";  
+    imageArray[1]= "bad.png";  
+    imageArray[2]= "Borstel.png";  
+    imageArray[3]= "doekie.png";  
+    imageArray[4]= "frogie.png";
 
     let randomIndex = Math.floor(Math.random() * imageArray.length);
 
@@ -68,6 +159,23 @@ function getRandomImage(){
 window.addEventListener('load', function() {
     setupChat();
 });
+
+function checkIfEqaul(value){
+    
+    let src = document.getElementById('randomImages--js').src; 
+    src = src.split("/");
+    src = src[src.length -1];
+
+    if(src == value){
+        console.log("true");
+        return true;
+    }
+    else{
+        console.log("false");
+        return false;
+    }
+}
+
 
 function setupChat() {
     socket.on('chat_msg', function(data) {
@@ -138,8 +246,4 @@ function setupChat() {
 
         return msg;
     }
-}
-
-function gameStart(data) {
-	console.log("START THE GAME", data);
 }

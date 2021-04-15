@@ -1,6 +1,7 @@
 .vs{
   height: 80%;
-  width: 100%; 
+  width: 100%;
+  display:none;
 }
 
 .vs__devider{
