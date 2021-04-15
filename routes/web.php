@@ -20,11 +20,13 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/', [\App\Http\Controllers\GamesController::class, 'index']);
     Route::get('/logout', [\App\Http\Controllers\GamesController::class, 'logout']);
     Route::get('/vlottegeest', [\App\Http\Controllers\VlotteGeestController::class, 'index']);
-    Route::post('/thirtyseconds', [\App\Http\Controllers\ThirtySecondsController::class, 'store']);
     Route::get('/games/create/{id}', [\App\Http\Controllers\GamesController::class, 'create']);
     Route::get('/games/{game}', [\App\Http\Controllers\GamesController::class, 'show']);
 
-   
+    Route::get('/thirtyseconds', [\App\Http\Controllers\ThirtySecondsController::class, 'show']);
+    Route::post('/thirtyseconds', [\App\Http\Controllers\ThirtySecondsController::class, 'store']);
+    Route::get('/thirtyseconds/create', [\App\Http\Controllers\ThirtySecondsController::class, 'create']);
+    Route::get('/thirtyseconds/{id}', [\App\Http\Controllers\ThirtySecondsController::class, 'play']);
 
     Route::get('/trivialpursuit', [\App\Http\Controllers\TrivialPursuitController::class, 'index']);
     Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'index']);
