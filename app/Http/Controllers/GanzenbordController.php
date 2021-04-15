@@ -27,10 +27,23 @@ class GanzenbordController extends Controller
 	public function play($id) {
 		if (GameStateController::sessionExists($id) && GameStateController::session($id)["game"] == 'ganzenbord') {
 			GameStateController::addUser($id, auth()->user());
+			$gameData = GameStateController::getData($id);
 			$userIds = GameStateController::session($id)["users"];
-			$users = User::select('name')->whereIn('id', $userIds)->get();
+            $users = User::whereIn('id', $userIds)->get();
 			Websocket::broadcast()->to('ganzenbord.' . $id)->emit('users', $users);
-			return view('games.ganzenbordstappen', [ 'gameCode' => $id, 'users' => $users ]);
+
+			if (!array_key_exists("started", $gameData)) {
+                return view('games.gamelobby', [
+                    'gameCode' => $id,
+                    'users' => $users,
+                    'gameType' => 'Ganzenbord',
+                ]);
+            }
+
+			return view('games.ganzenbordstappen', [
+				'gameCode' => $id,
+				'users' => $users,
+			]);
 		}
 
 		return "Game does not exist!";
@@ -178,7 +191,6 @@ class GanzenbordController extends Controller
 	static public function gameStart($websocket, $data) {
 		if (!$data) return;
 		if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
-
 		if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
 
 		$gameData = GameStateController::getData($data["id"]);

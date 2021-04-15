@@ -28,6 +28,10 @@ startGameBtn.addEventListener('click', function() {
     if (gameType == "Thirty Seconds"){
         socket.emit('ts_start', { game: game, id: id, teams: [ { team: 0, users: teamRed }, { team: 1, users: teamBlue } ] });
     }
+
+    if (gameType == "Ganzenbord"){
+        socket.emit('game_start', { game: game, id: id, });
+    }
 });
 
 redFlags.forEach(function (flagElement) {

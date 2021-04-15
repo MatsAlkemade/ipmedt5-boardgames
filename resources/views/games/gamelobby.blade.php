@@ -48,5 +48,5 @@
 @endsection
 
 @section('rules')
-    <p>{{$ts->description}}</p>
+    <p>Hier komen de regels</p>
 @endsection

@@ -42,7 +42,7 @@ class ThirtySecondsController extends Controller
             $gameData = GameStateController::getData($id);
             $userIds = GameStateController::session($id)["users"];
             $users = User::whereIn('id', $userIds)->get();
-            Websocket::broadcast()->to('thirtytseconds.' . $id)->emit('users', $users);
+            Websocket::broadcast()->to('thirtyseconds.' . $id)->emit('users', $users);
 
             if (!array_key_exists("started", $gameData)) {
                 return view('games.gamelobby', [
