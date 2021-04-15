@@ -72,3 +72,19 @@
         </section>
 
 @endsection
+
+@section('livechat')
+    <li class="livechat__item livechat__item--console">
+        <p class="livechat__item__username">Ganzenbord</p>
+        <p class="livechat__item__message">Welkom bij Ganzenbord! Dit is de chat.</p>
+    </li>
+@endsection
+
+@section('rules')
+    <p class="gb__description"> {{$ganzenbord->description}}</p><br />
+        @foreach ($ganzenbordstappen as $ganzenbordstap)
+            <p class="gb__description"> {{$ganzenbordstap->description}} </p><br />
+        @endforeach
+@endsection
+
+

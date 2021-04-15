@@ -245,6 +245,11 @@ body {
     align-items: center;  
 }
 
+.gb__description{
+    font-size: 1.3rem;
+    text-align:center;
+}
+
 
 
 @media only screen and (min-width: 375px){
@@ -272,6 +277,9 @@ body {
         width: 8rem;
         
     }
+    .gb__description{
+        font-size: 1.5rem;
+    }
     
 }
 @media only screen and (min-width: 450px){
@@ -293,6 +301,9 @@ body {
         width: 9rem;
         
     }
+    .gb__description{
+        font-size: 1.7rem;
+    }
     
 }
 @media only screen and (min-width: 600px){
@@ -311,6 +322,9 @@ body {
     .gb__players__figure > img {
         width: 11rem;
         
+    }
+    .gb__description{
+        font-size: 1.9rem;
     }
 
     

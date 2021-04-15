@@ -30,7 +30,7 @@ class GanzenbordController extends Controller
 			$userIds = GameStateController::session($id)["users"];
 			$users = User::select('name')->whereIn('id', $userIds)->get();
 			Websocket::broadcast()->to('ganzenbord.' . $id)->emit('users', $users);
-			return view('games.ganzenbordstappen', [ 'gameCode' => $id, 'users' => $users ]);
+			return view('games.ganzenbordstappen', [ 'gameCode' => $id, 'users' => $users, 'ganzenbordstappen'=>\App\Models\GanzenbordStappen::all(),'ganzenbord'=>\App\Models\Ganzenbord::first(), ]);
 		}
 
 		return "Game does not exist!";
