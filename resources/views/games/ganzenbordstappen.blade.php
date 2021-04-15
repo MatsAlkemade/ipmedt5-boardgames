@@ -15,7 +15,7 @@
 @section('gamecontent')
 <section class="ganzenbord">
 <h2 class="gb__header"><span class="js--gb-turn js--gb-other"> </span></h2>
-<h2 class="gb__header"><span class="js--gb-dobbel"> </span></h2>
+<h2 class="gb__secondHeader"><span class="js--gb-dobbel"> </span></h2>
 <ul class="gb__players">
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
@@ -66,7 +66,9 @@
 
                 </li>
             </ul>
-            <input id="gb_button" type="submit" name="button" value="Dobbelen"/>
+            <section class="gb__button">
+                  <input class="u-button-style u-button-style-center" id="gb_button" type="submit" name="button" value="Dobbelen"/>
+            </section>
         </section>
 
 @endsection
