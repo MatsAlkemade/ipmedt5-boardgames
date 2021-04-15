@@ -13,7 +13,15 @@ class VlotteGeestController extends Controller
         return view('games.vlottegeest');
     }
 
-  
+    static public function turnCards($websocket, $data){
+        $gameUsers = GameStateController::session($data["id"])["users"];
+        $isCreator = $gameUsers[0] == $websocket->getUserId();
+
+        if($isCreator){
+          $websocket->to('vlottegeest.' . $data["id"])->emit('turnCard', []);
+        }
+    }
+
     static public function objecten($websocket, $data){
         // var_dump($data);
         $websocket -> emit('object', $data);
@@ -44,6 +52,7 @@ class VlotteGeestController extends Controller
             $gameData["rondeNummer"] -= 1;
             var_dump("dezelfde ronde nummefr");
             $websocket->to('vlottegeest.' . $data["id"])->emit('rondeNummer', ["rondeNummer" => $gameData["rondeNummer"], "Winner" => $websocket->getUserId()]);
+            $websocket->to('vlottegeest.' . $data["id"])->emit('randomObject', ["randomObject" => self::randomImage(), "timestamp" => $timestamp]);
 
         }
 
@@ -52,26 +61,12 @@ class VlotteGeestController extends Controller
         // $gameData["rondeNummer"][$user_id]["ronderNummer"] = ;
         GameStateController::setData($data["id"], $gameData);
         var_dump($data);
-
     }
 
     static public function randomImage(){
-      // function getRandomImage(){
-        
-        // $array = images("Spook.png", "bad.png", "Borstel.png", "doekie.png", "doekie.png")
-        // // $randomIndex = Math.floor(Math.random() * imageArray.length);
-        // $randomImage = $images[array_rand($images)];
-
-        $imagesDir = '/img/games/vlottegeest';
-        $images = glob($imagesDir . '*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+        $images = ['/img/games/vlottegeest/Spook.png', '/img/games/vlottegeest/bad.png', '/img/games/vlottegeest/doekie.png', '/img/games/vlottegeest/frogie.png', '/img/games/vlottegeest/Borstel.png' ];
         $randomImage = $images[array_rand($images)]; // See comments
         return $randomImage;
-      
-    //     let randomIndex = Math.floor(Math.random() * imageArray.length);
-    //     selected_image =  imageArray[randomIndex];
-    //     document.getElementById('randomImages--js').src = '/img/games/vlottegeest/' + selected_image;
-    // }
-    
     }
 
     //vlotte geest
@@ -148,7 +143,7 @@ class VlotteGeestController extends Controller
           GameStateController::setData($data["id"], $gameData);
   
               $websocket->to('vlottegeest.' . $data["id"])->emit('turn', ["turn" => GameStateController::nextTurn($data["id"])]);
-              $websocket->to('vlottegeest.' . $data["id"])->emit('randomObject', ["randomObject" => randomImage()]);
+              $websocket->to('vlottegeest.' . $data["id"])->emit('randomObject', ["randomObject" => self::randomImage()]);
               $websocket->to('vlottegeest.' . $data["id"])->emit('rondeNummer', ["rondeNummer" => 5]);
               
       } else if (sizeof($gameUsers) <= 1) {

@@ -4,7 +4,7 @@ let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
 let winner = false;
-totalCards = 60;
+totalCards = 5;
 let rondeNummer = -1;
 
 const spook = document.getElementById("spook--js");
@@ -16,8 +16,6 @@ const bord = document.getElementById("vs--js");
 let chec; 
 bord.style.display = "none";
 
-// let objecten = ['Spook', 'Bad', 'Kleed', 'Kikker', 'Borstel'];
-// // grabbedObject = [];
 function gameStart(data) {
 	console.log("START THE GAME", data);
     if (data.start == true) {
@@ -59,9 +57,49 @@ function clickObject(){
 }
 clickObject();
 
+// function getRandomImage(){
+
+//     var imageArray = new Array();  
+
+//     imageArray[0]= "Spook.png";  
+//     imageArray[1]= "bad.png";  
+//     imageArray[2]= "Borstel.png";  
+//     imageArray[3]= "doekie.png";  
+//     imageArray[4]= "frogie.png";
+
+//     let randomIndex = Math.floor(Math.random() * imageArray.length);
+
+//     selected_image =  imageArray[randomIndex];
+//     document.getElementById('randomImages--js').src = '/img/games/vlottegeest/' + selected_image;
+// }
+
+function checkIfEqaul(value){
+    
+    let src = document.getElementById('randomImages--js').src; 
+    src = src.split("/");
+    src = src[src.length -1];
+
+    if(src == value){
+        console.log("true");
+        return true;
+    }
+    else{
+        console.log("false");
+        return false;
+    }
+}
+
 socket.on('connect', function() {
     console.log("Connected to socketio server!");
     socket.emit('join_session', { game: game, id: id });
+});
+
+function turnCards(){
+    socket.emit('turnCards', { game: game, id: id });
+}
+
+socket.on('turnCard', function() {
+    cardFlip();
 });
 
 socket.on('rondeNummer', function(data) {
@@ -71,18 +109,14 @@ socket.on('rondeNummer', function(data) {
         console.log(data.Winner);
     }
     rondeNummer = data.rondeNummer;
-
 });
 
-socket.on('randomObject', function(data) {
+
+socket.on('randomObject', function(data){
     console.log(data);
-    // if(rondeNummer != data.rondeNummer && rondeNummer != -1){
-    //     cardFlipBack();
-    //     console.log(data.Winner);
-    // }
-    // rondeNummer = data.rondeNummer
-
+    document.getElementById('randomImages--js').src = data.randomObject;
 });
+
 
 socket.on('vg_getUsers', function(data) {
     console.log("GETUSERS", data);
@@ -119,7 +153,7 @@ socket.emit('vg_playerNames', { game: game, id: id });
 
 cardCount = document.getElementById('cardCount');
 flipButton = document.getElementById('turn--180');
-flipButtonBack = document.getElementById('turn--360');
+// flipButtonBack = document.getElementById('turn--360');
 
 function decrementCardAmount(){
     totalCards--;
@@ -128,54 +162,25 @@ function decrementCardAmount(){
 
 function cardFlip(){
     document.querySelector('.vs__flip-card-inner').style.transform = 'rotateY(180deg)';
-    getRandomImage();
+    // getRandomImage();
     flipButton.disabled = true;
-    flipButtonBack.disabled = false;
+    kleed.style.visibility = "visible";
+    spook.style.visibility = "visible";
+    badkuip.style.visibility = "visible";
+    borstel.style.visibility = "visible";
+    kikker.style.visibility = "visible";
 }
 
 function cardFlipBack(){
     document.querySelector('.vs__flip-card-inner').style.transform = 'rotateY(360deg)';
     decrementCardAmount();
     flipButton.disabled = false;
-    flipButtonBack.disabled = true;
-}
-
-function getRandomImage(){
-
-    var imageArray = new Array();  
-
-    imageArray[0]= "Spook.png";  
-    imageArray[1]= "bad.png";  
-    imageArray[2]= "Borstel.png";  
-    imageArray[3]= "doekie.png";  
-    imageArray[4]= "frogie.png";
-
-    let randomIndex = Math.floor(Math.random() * imageArray.length);
-
-    selected_image =  imageArray[randomIndex];
-    document.getElementById('randomImages--js').src = '/img/games/vlottegeest/' + selected_image;
+    // flipButtonBack.disabled = true;
 }
 
 window.addEventListener('load', function() {
     setupChat();
 });
-
-function checkIfEqaul(value){
-    
-    let src = document.getElementById('randomImages--js').src; 
-    src = src.split("/");
-    src = src[src.length -1];
-
-    if(src == value){
-        console.log("true");
-        return true;
-    }
-    else{
-        console.log("false");
-        return false;
-    }
-}
-
 
 function setupChat() {
     socket.on('chat_msg', function(data) {

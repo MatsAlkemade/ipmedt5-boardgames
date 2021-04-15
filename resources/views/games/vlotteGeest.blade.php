@@ -19,9 +19,9 @@
 
         <section class="vs__devider">
             <section class="vs__section">
-                <p class="vs__counter">Aantal kaarten: &nbsp; <span id="cardCount">60</span> </p>
-                <button class="vs__button--turn" id="turn--180" onclick="cardFlip()">kaaart draaien</button>
-                <button class="vs__button--turnBack" id="turn--360" onclick="cardFlipBack()">volgende kaart</button>
+                <p class="vs__counter">Aantal kaarten: &nbsp; <span id="cardCount">5</span> </p>
+                <button class="vs__button--turn" id="turn--180" onclick="turnCards()">kaaart draaien</button>
+                <!-- <button class="vs__button--turnBack" id="turn--360" onclick="cardFlipBack()">volgende kaart</button> -->
             </section>
 
             <section class="vs__flip-card-c">
