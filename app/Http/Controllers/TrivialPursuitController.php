@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use SwooleTW\Http\Websocket\Facades\Websocket;
 use SwooleTW\Http\Websocket\Facades\Room;
+use Illuminate\Support\Facades\Auth;
 
 class TrivialPursuitController extends Controller
 {
@@ -21,8 +22,11 @@ class TrivialPursuitController extends Controller
           $userIds = GameStateController::session($id)["users"];
           $users = User::select('name')->whereIn('id', $userIds)->get();
           Websocket::broadcast()->to('trivialpursuit.' . $id)->emit('users', $users);
+
           $questions = \App\Models\TrivialPursuitQuestions::all()->toJson();
-          return view('games.trivialpursuit', [ 'gameCode' => $id, 'users' => $users, 'questions' => $questions]);
+          $loggedUserId = Auth::id(); 
+
+          return view('games.trivialpursuit', [ 'gameCode' => $id, 'users' => $users, 'questions' => $questions, 'loggedId' => $loggedUserId,]);
         }
         return "Game does not exist!";
       }
@@ -42,29 +46,59 @@ class TrivialPursuitController extends Controller
         $websocket->emit('tp_question', $random);
     }
 
-    static public function vraag($websocket, $data) {
+    static public function getPlaats($websocket, $data){
+        if (!$data) return;
+        if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
+        if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
+
+        $gameData = GameStateController::getData($data["id"]);
+        $user_id = $websocket->getUserid();
+
+		if (!array_key_exists($user_id, $gameData["positie"])) {
+			$gameData["positie"] = 0;
+		}
+        
+        $plaats =  $gameData["positie"];
+
+        $websocket->emit('tp_getPlaats', $plaats);
+    }
+
+    static public function lopen($websocket, $data) {
 		if (!$data) return;
         if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
         if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
         
-        $websocket -> emit('tp_vraag', $data);
+        $websocket -> emit('tp_lopen', $data);
         $user_id = $websocket->getUserid();
 
     	$gameData = GameStateController::getData($data["id"]);
-    	if (!array_key_exists("vraag_goed_fout", $gameData)) {
-    		$gameData["vraag_goed_fout"] = [];
+    	if (!array_key_exists("positie", $gameData)) {
+    		$gameData["positie"] = [];
     	}
 
-        if (!array_key_exists($user_id, $gameData["vraag_goed_fout"])) {
-            $gameData["vraag_goed_fout"][$user_id] = [
-                "antwoord" => 0,
+        if (!array_key_exists($user_id, $gameData["positie"])) {
+            $gameData["positie"][$user_id] = [
+                "plek" => 0,
             ];
         }
-        
-        $gameData["vraag_goed_fout"][$user_id]["antwoord"] = $data["antwoord"];
-        
+
+        if ($data["plek"] <= 0){
+            $gameData["positie"][$user_id]["plek"] = 0;
+        }
+
+        elseif($data["plek"] >= 20){
+            $winner = [];
+            $user = array_push($winner, User::where('id', $user_id)->first()->name);
+            $websocket->emit('tp_getWinner', $winner);
+        }
+
+        else{
+            $gameData["positie"][$user_id]["plek"] = $data["plek"];
+
+        }
+                
         GameStateController::setData($data["id"], $gameData);
-        var_dump($gameData["vraag_goed_fout"]);
+        var_dump($gameData["positie"]);
     }
 
     static public function getUsers($websocket, $data){
@@ -84,7 +118,6 @@ class TrivialPursuitController extends Controller
     }
 
     static public function getState($websocket, $data) {
-		var_dump($data);
 		if (!$data) return;
         if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
         if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
@@ -107,8 +140,6 @@ class TrivialPursuitController extends Controller
         if (array_key_exists("started", $gameData) && $gameData["started"] == true) {
             return;
         }
-
-
 
 		$gameUsers = GameStateController::session($data["id"])["users"];
 		$isCreator = $gameUsers[0] == $websocket->getUserId();

@@ -132,7 +132,9 @@ Websocket::on('tp_getUsers', [TrivialPursuitController::class, 'getUsers']);
 Websocket::on('tp_playerNames', [TrivialPursuitController::class, 'getUsers']);
 Websocket::on('tp_question', [TrivialPursuitController::class, 'question']);
 Websocket::on('tp_state', [TrivialPursuitController::class, 'getState']);
-Websocket::on('tp_vraag', [TrivialPursuitController::class, 'vraag']);
+Websocket::on('tp_lopen', [TrivialPursuitController::class, 'lopen']);
+Websocket::on('tp_getPlaats', [TrivialPursuitController::class, 'getPlaats']);
+Websocket::on('tp_getWinner', [TrivialPursuitController::class, 'lopen']);
 
 
 /* CHAT */

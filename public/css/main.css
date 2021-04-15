@@ -672,6 +672,10 @@ body {
     background-color: green;
 }
 
+.tp_winner{
+    text-align: center;
+}
+
 
 @media only screen and (max-width: 62.5rem){
     .trivialpursuit__article{

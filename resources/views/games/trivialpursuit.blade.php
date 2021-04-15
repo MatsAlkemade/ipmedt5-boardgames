@@ -16,20 +16,25 @@
     let answer;
     let question;
     let correct_answer;
+    let plaats = 0;
     let questions = <?= $questions ?>; //leest de php varibalen uit en zet het om naar een .json bestand
 
     function spellingCheck() {
         answer = document.getElementById('js--answer'); //pakt het ingevulde antwoord
+        socket.emit('tp_getPlaats', {game: game, id: id}); //pakt de huidige plek op het bord
+        console.log(plaats);
 
         if(correct_answer.match(/^-?\d+$/)){ //kijkt of de vraag een int is
             if(Object.is(answer.value, correct_answer)){
                 console.log("int goed");
-                socket.emit('tp_vraag', {antwoord: 1, game: game, id: id });
+                plaats = plaats + 1;
+                socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
                 answer.style.backgroundColor = "green";
             }
             else{
                 console.log("int fout");
-                socket.emit('tp_vraag', {antwoord: 2, game: game, id: id });
+                plaats = plaats - 1;
+                socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
                 answer.style.backgroundColor = "red";
             }
         }
@@ -39,12 +44,14 @@
             let spellingcheck = stringSimilarity.compareTwoStrings(correct_answer, answer.value); //voert de controlle uit en krijgt een getal tussen de 0 en 1 terug
             if(spellingcheck >= 0.8){ //als de overeenkomst 80% is het goed anders fout
                 console.log('String goed')
-                socket.emit('tp_vraag', {antwoord: 1, game: game, id: id });
+                plaats = plaats + 1;
+                socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
                 answer.style.backgroundColor = "green";
             }
             else{
                 console.log('String fout')
-                socket.emit('tp_vraag', {antwoord: 2, game: game, id: id });
+                plaats = plaats - 1;
+                socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
                 answer.style.backgroundColor = "red";
             }
         }
@@ -60,6 +67,16 @@
         socket.emit('tp_question', { game: game, id: id });
     });
 
+    socket.on('tp_getPlaats', function(data) {
+        plaats = data[{{$loggedId}}].plek;
+        socket.emit('tp_getWinner', {plek: plaats, game: game, id: id });
+
+    });
+
+    socket.on('tp_getWinner', function(data) {
+        document.getElementById('js--gewonnen').innerText = data[0] + " heeft gewonnen!";
+    });
+
     function createQuestion(){
         answer = document.getElementById('js--answer');
         answer.value = "";
@@ -72,48 +89,7 @@
 @endsection
 
 @section('gamecontent')
-    <article class="trivialpursuit__pie_container">
-        <section class="trivialpursuit__pie">
-            <h2>Player 1</h2>
-            <div class="trivialpursuit__items" data-type-categorie="WetenschapNatuur">Wetenschap & Natuur</div>
-            <div class="trivialpursuit__items" data-type-categorie="Sport">Sport</div>
-            <div class="trivialpursuit__items" data-type-categorie="KunstLiteratuur">Kunst & Literatuur</div>
-            <div class="trivialpursuit__items" data-type-categorie="Geschiedenis">Geschiedenis</div>
-            <div class="trivialpursuit__items" data-type-categorie="Amusument">Amusument</div>
-            <div class="trivialpursuit__items" data-type-categorie="Aardrijkskunde">Aardrijkskunde</div>
-        </section>
-
-        <section class="trivialpursuit__pie">
-            <h2>Player 2</h2>
-            <div class="trivialpursuit__items" data-type-categorie="WetenschapNatuur">Wetenschap & Natuur</div>
-            <div class="trivialpursuit__items" data-type-categorie="Sport">Sport</div>
-            <div class="trivialpursuit__items" data-type-categorie="KunstLiteratuur">Kunst & Literatuur</div>
-            <div class="trivialpursuit__items" data-type-categorie="Geschiedenis">Geschiedenis</div>
-            <div class="trivialpursuit__items" data-type-categorie="Amusument">Amusument</div>
-            <div class="trivialpursuit__items" data-type-categorie="Aardrijkskunde">Aardrijkskunde</div>
-        </section>
-
-        <section class="trivialpursuit__pie">
-            <h2>Player 3</h2>
-            <div class="trivialpursuit__items" data-type-categorie="WetenschapNatuur">Wetenschap & Natuur</div>
-            <div class="trivialpursuit__items" data-type-categorie="Sport">Sport</div>
-            <div class="trivialpursuit__items" data-type-categorie="KunstLiteratuur">Kunst & Literatuur</div>
-            <div class="trivialpursuit__items" data-type-categorie="Geschiedenis">Geschiedenis</div>
-            <div class="trivialpursuit__items" data-type-categorie="Amusument">Amusument</div>
-            <div class="trivialpursuit__items" data-type-categorie="Aardrijkskunde">Aardrijkskunde</div>
-        </section>
-
-        <section class="trivialpursuit__pie">
-            <h2>Player 4</h2>
-            <div class="trivialpursuit__items" data-type-categorie="WetenschapNatuur">Wetenschap & Natuur</div>
-            <div class="trivialpursuit__items" data-type-categorie="Sport">Sport</div>
-            <div class="trivialpursuit__items" data-type-categorie="KunstLiteratuur">Kunst & Literatuur</div>
-            <div class="trivialpursuit__items" data-type-categorie="Geschiedenis">Geschiedenis</div>
-            <div class="trivialpursuit__items" data-type-categorie="Amusument">Amusument</div>
-            <div class="trivialpursuit__items" data-type-categorie="Aardrijkskunde">Aardrijkskunde</div>
-        </section>
-    </article>
-
+    <h2 class="tp_winner" id="js--gewonnen">Er is nog geen winnaar</h2>
     <section class="trivialpursuit__article">
         <h2 id="js--question" class="trivialpursuit__question"></h2>
         <input id="js--answer" class="trivialpursuit__answer" type="text" placeholder="Antwoord">

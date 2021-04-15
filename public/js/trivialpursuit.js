@@ -108,11 +108,7 @@ function checkWinner() {
 }
 
 function tp_setup() {
-    let playersSection = document.getElementsByClassName("trivialpursuit__pie");
-    for (let index = 0; index < players.length; index++) {
-        playersSection[index].style.display = "block"
-        playersSection[index].getElementsByTagName("H2")[0].innerHTML = playernames[index];
-    }
+    console.log("SETUP");
 }
 
 function gameStart(data) {
@@ -141,7 +137,6 @@ socket.on('tp_getUsers', function(data) {
 });
 
 socket.on('tp_playerNames', function(data){
-    console.log("help");
     console.log("playerNames", data);
     playernames = data;
     tp_setup();
