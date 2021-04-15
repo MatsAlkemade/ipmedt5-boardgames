@@ -20,13 +20,9 @@ socket.on('connect', function() {
     socket.emit('join_session', { game: game, id: id });
 });
 
-socket.on('game_start', function(data) {
-    if (data && data.start == true) window.location.reload();
-});
-
 startGameBtn.addEventListener('click', function() {
     if (gameType == "Thirty Seconds"){
-        socket.emit('ts_start', { game: game, id: id, teams: [ { team: 0, users: teamRed }, { team: 1, users: teamBlue } ] });
+        socket.emit('game_start', { game: game, id: id, teams: [ { team: 0, users: teamRed }, { team: 1, users: teamBlue } ] });
     }
 });
 

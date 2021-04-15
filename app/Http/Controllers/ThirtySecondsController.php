@@ -42,7 +42,7 @@ class ThirtySecondsController extends Controller
             $gameData = GameStateController::getData($id);
             $userIds = GameStateController::session($id)["users"];
             $users = User::whereIn('id', $userIds)->get();
-            Websocket::broadcast()->to('thirtytseconds.' . $id)->emit('users', $users);
+            Websocket::broadcast()->to('thirtyseconds.' . $id)->emit('users', $users);
 
             if (!array_key_exists("started", $gameData)) {
                 return view('games.gamelobby', [
@@ -94,7 +94,7 @@ class ThirtySecondsController extends Controller
             GameStateController::setData($data["id"], $gameData);
             GameStateController::setTurnMode($data["id"], 1);
             $websocket->to('thirtyseconds.' . $data["id"])->emit('turn', [
-                "turn2" => GameStateController::nextTurn($data["id"]),
+                "turn" => GameStateController::nextTurn($data["id"]),
             ]);
         } else if (sizeof($gameUsers) <= 1) {
             $websocket->emit('game_start', [ "error" => "Not enough players in the game." ]);
