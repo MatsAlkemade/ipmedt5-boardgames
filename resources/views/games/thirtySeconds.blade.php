@@ -16,7 +16,7 @@
 @section('gamecontent')
     <article class="ts">
         <section class="ts__state">
-            <p id="js--tsState">Niemand is aan de beurt</p>
+            <p id="js--tsState">Niet je page refreshen</p>
         </section>
         <section class="ts__cardWrapper" id="js--tsCard">
             <section class="ts__card ts__front">
@@ -57,7 +57,7 @@
             </section>
             <p class="ts__timer__time" id="js--tsTimer">30</p>
         </section>
-        <section class="ts__btns">
+        <section class="ts__btns" id="js--tsBtns">
             <button class="u-button-style" id="js--tsCardTurnBtn" onclick="turnCard()">Draai kaart</button>
             <button class="u-button-style" id="js--tsCardSubmitBtn" onclick="submitTurn(event)" disabled>Bevestigen</button>
         </section>

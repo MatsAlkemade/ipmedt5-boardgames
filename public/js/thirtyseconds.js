@@ -11,39 +11,69 @@ const tsCardForm = document.getElementById("js--tsCardForm");
 const tsTimer = document.getElementById("js--tsTimer");
 const tsTimerBar = document.getElementById("js--tsTimerBar");
 let tsInitTimerBar;
-const turnButton = document.getElementById("js--tsCardTurnBtn");
 const tsState = document.getElementById("js--tsState");
+const tsBtns = document.getElementById("js--tsBtns");
 const formGameId = document.getElementById("js--formGameId");
 const q1 = document.getElementById("q1");
 const q2 = document.getElementById("q2");
 const q3 = document.getElementById("q3");
 const q4 = document.getElementById("q4");
 const q5 = document.getElementById("q5");
+const q1_label = document.getElementById("label-q1");
+const q2_label = document.getElementById("label-q2");
+const q3_label = document.getElementById("label-q3");
+const q4_label = document.getElementById("label-q4");
+const q5_label = document.getElementById("label-q5");
 let timer = setTimeout(()=>{});
+let myTurn = false;
+let initTurn = true;
 
 formGameId.setAttribute("value", id);
-turnButton.setAttribute("disabled", true);
+tsCardTurnBtn.setAttribute("disabled", true);
 
 socket.on('connect', function() {
     console.log("Connected to socketio server!");
 
     socket.emit('join_session', { game: game, id: id });
-    socket.emit('ts_state', {game: game, id: id});
+    socket.emit('getQuestions', {game: game, id: id});
+    socket.emit('getTurn', { game: game, id: id });
 });
 
 socket.on('turn', function(data){
     if (data.turn && data.turn.length < 1) return;
-    console.log(data);
-    data.turn.forEach(player => {
-        console.log(player, user_id);
-        if (player == user_id){
-            turnButton.removeAttribute("disabled");
+    console.log(data.turn);
+    if (data.turn == 1) return;
+    if (data.turn.indexOf(String(user_id)) != -1) {
+        if (initTurn) {
+            initTurn = false;
+            if (data.turn.indexOf(String(user_id)) == 0 && myTurn == false) {
+                myTurn = true;
+            } else {
+                myTurn = false;
+            }
+        } else {
+            myTurn = !myTurn;
         }
-    });
+        if (myTurn) tsCardTurnBtn.removeAttribute("disabled");
+        else tsCardTurnBtn.setAttribute("disabled", true);
+    } else {
+        tsCardTurnBtn.setAttribute("disabled", true);
+    }
 });
 
 socket.on('teamAnswer', function(data){
     console.log(data);
+    if (data.teamInfo.position >= 5){
+        console.log(data.teamId);
+        if(data.teamId == 0){
+            tsState.style.color = 'orangered';
+            tsState.innerText = 'Team Rood heeft gewonnen!';
+        } else{
+            tsState.style.color = 'cornflowerblue';
+            tsState.innerText = 'Team Blauw heeft gewonnen!';
+        }
+        tsBtns.style.display = "none";
+    }
 });
 
 function submitTurn(e) {
@@ -64,7 +94,24 @@ function submitTurn(e) {
     clearTimeout(timer);
     tsTimer.innerText = 30;
     tsTimerBar.style.width = tsInitTimerBar + 'px';
+    q1.checked = false;
+    q2.checked = false;
+    q3.checked = false;
+    q4.checked = false;
+    q5.checked = false;
+    socket.emit('getQuestions', {game: game, id: id});
 }
+
+socket.on('setQuestions', function(data){
+    console.log(data);
+    setTimeout(function(){
+        q1_label.innerText = data.questions.question_1;
+        q2_label.innerText = data.questions.question_2;
+        q3_label.innerText = data.questions.question_3;
+        q4_label.innerText = data.questions.question_4;
+        q5_label.innerText = data.questions.question_5;
+    }, 1000);
+});
 
 function setupChat() {
     const liveChat = document.getElementById('js--liveChat');

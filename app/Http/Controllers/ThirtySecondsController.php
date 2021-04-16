@@ -31,7 +31,7 @@ class ThirtySecondsController extends Controller
     }
 
     public function create(Request $request) {
-        $id = GameStateController::createSession('thirtyseconds', auth()->user());
+        $id = GameStateController::createSession('thirtyseconds', auth()->user(), 1);
 
         return redirect('/thirtyseconds/' . $id);
     }
@@ -92,7 +92,6 @@ class ThirtySecondsController extends Controller
             $websocket->to($data['game'] . '.' . $data['id'])->emit('game_start', [ 'start' => true ]);
             $gameData["started"] = true;
             GameStateController::setData($data["id"], $gameData);
-            GameStateController::setTurnMode($data["id"], 1);
             $websocket->to('thirtyseconds.' . $data["id"])->emit('turn', [
                 "turn" => GameStateController::nextTurn($data["id"]),
             ]);
@@ -103,18 +102,19 @@ class ThirtySecondsController extends Controller
         }
     }
 
-    static public function getState($websocket, $data){
-        if (!$data) return;
-        if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
-        if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
-
+    static public function getTurn($websocket, $data){
         $websocket->emit('turn', [
-            'turn' => gameStateController::getTurn($data['id']),
+            'turn' => GameStateController::getTurn($data["id"]),
         ]);
     }
 
     static public function checkAnswers($websocket, $data){
-        $correct = array_count_values($data['questions'])[1];
+        $correct = array_count_values($data['questions']);
+        if (!array_key_exists(1, $correct)) {
+            $correct = 0;
+        } else{
+            $correct = $correct[1];
+        }
         $gameData = gameStateController::getData($data['id']);
         if (!array_key_exists('teamPosition', $gameData)) {
             $gameData['teamPosition'] = [];
@@ -128,7 +128,6 @@ class ThirtySecondsController extends Controller
         if (!array_key_exists($teamId, $gameData['teamPosition'])) {
             $gameData['teamPosition'][$teamId] = [
                 'position' => 0,
-                'lastUser' => GameStateController::getTurn($data['id'])[0],
             ];
         }
 
@@ -136,31 +135,26 @@ class ThirtySecondsController extends Controller
 
         $gameData['teamPosition'][$teamId]['position'] = $position + $correct;
 
-        $nextUser = array_search($gameData['teamPosition'][$teamId]['lastUser'], GameStateController::getTurn($data['id']));
-        $nextUser++;
-        if($nextUser >= sizeof(GameStateController::getTurn($data['id']))) {
-            $nextUser = 0;
-        }
-
-        $gameData['teamPosition'][$teamId]['lastUser'] = $nextUser;
+        if ($gameData['teamPosition'][$teamId]['position'] > 35) $gameData['teamPosition'][$teamId]['position'] = 35;
 
         GameStateController::setData($data['id'], $gameData);
 
         $websocket->to('thirtyseconds.' . $data["id"])->emit('teamAnswer', [
+            'teamId' => $teamId,
             'teamInfo' => $gameData['teamPosition'][$teamId],
         ]);
 
         $turn = GameStateController::nextTurn($data['id']);
 
-        $nextUser = array_search($gameData['teamPosition'][$teamId]['lastUser'], GameStateController::getTurn($data['id']));
-        $nextUser++;
-        if($nextUser >= sizeof(GameStateController::getTurn($data['id']))) {
-            $nextUser = 0;
-        }
-
         $websocket->to('thirtyseconds.' . $data["id"])->emit('turn', [
             'turn' => $turn,
-            'userId' => $nextUser,
         ]);
+    }
+
+    static public function randomQuestions($websocket, $data){
+        $questions = \App\Models\ThirtySecondsQuestion::all();
+        $r = random_int(0, 125);
+        $randomQuestions = $questions[$r];
+        $websocket->emit('setQuestions', ['questions' => $randomQuestions]);
     }
 }
