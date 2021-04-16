@@ -155,13 +155,20 @@ class VierOpEenRijController extends Controller
 
     static public function checkDiagonals($board, $column, $row) {
         $count = 1;
+        var_dump("CHECK DIAGONALS");
 
         // Count topleft
         $count += self::recursiveCheck($board, $column, $row, -1, -1); // TODO: Fix, return correct column and row
+        var_dump($count);
+        var_dump($column);
+        var_dump($row);
         $begin = [$column-$count-1, $row-$count-1];
 
         // Count bottomright
         $count += self::recursiveCheck($board, $column, $row, 1, 1);
+        var_dump($count);
+        var_dump($column);
+        var_dump($row);
         $end = [$column+($count - $begin[0]), $row+($count - $begin[1])]; // TODO: Fix, return correct column and row
 
         if ($count >= 4) return ["begin" => $begin, "end" => $end];
@@ -170,12 +177,22 @@ class VierOpEenRijController extends Controller
 
         // Count topright
         $count += self::recursiveCheck($board, $column, $row, 1, -1);
-        $begin = [$column+$count-1, $row-$count+1]; // TODO: Fix, return correct column and row
+        var_dump($count);
+        var_dump($column);
+        var_dump($row);
+        $begin = [$column-$count-1, $row+1]; // TODO: Fix, return correct column and row
 
         // Count bottomleft
         $count += self::recursiveCheck($board, $column, $row, -1, 1);
-        $end = [$column-$begin[0], $row-$begin[1]]; // TODO: Fix, return correct column and row
+        var_dump($count);
+        var_dump($column);
+        var_dump($row);
+        $end = [$column+$count-$begin[0], $row+$count-$begin[1]]; // TODO: Fix
 
+        var_dump("");
+        var_dump("");
+        var_dump($begin);
+        var_dump($end);
         if ($count >= 4) return ["begin" => $begin, "end" => $end];
         return false;
 
@@ -216,6 +233,8 @@ class VierOpEenRijController extends Controller
 		if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
 
 		if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
+        if ($data["game"] != "vieropeenrij") return var_dump('not same!', $data["game"]);
+        var_dump("YES");
 
 		$gameData = GameStateController::getData($data["id"]);
     	if (!array_key_exists("actions", $gameData)) {
@@ -237,8 +256,15 @@ class VierOpEenRijController extends Controller
             $gameData["started"] = true;
 
     		GameStateController::setData($data["id"], $gameData);
+            $turn = GameStateController::nextTurn($data["id"]);
+            var_dump("FIAR TURN TEST");
+            var_dump($turn);
+            if ($turn === null) {
+                $turn = GameStateController::nextTurn($data["id"]);
+            }
+            var_dump($turn);
 
-            $websocket->to('vieropeenrij.' . $data["id"])->emit('turn', ["turn" => GameStateController::nextTurn($data["id"])]);
+            $websocket->to('vieropeenrij.' . $data["id"])->emit('turn', ["turn" => $turn]);
 		} else if (sizeof($gameUsers) <= 1) {
 			$websocket->emit('game_start', [ "error" => "Not enough players in the game." ]);
 		} else if (sizeof($gameUsers) > 2) {

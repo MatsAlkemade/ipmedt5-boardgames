@@ -183,6 +183,15 @@ class GanzenbordController extends Controller
 
 		if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
 
+		switch ($data["game"]) {
+			case 'vieropeenrij':
+				var_dump("VIEROPEENRIJ");
+				return VierOpEenRijController::gameStart($websocket, $data);
+				break;
+		}
+        // if ($data["game"] != "ganzenbord") return var_dump('not same!', $data["game"]);
+        // var_dump("YES");
+
 		$gameData = GameStateController::getData($data["id"]);
     	if (!array_key_exists("actions", $gameData)) {
     		$gameData["actions"] = [];
