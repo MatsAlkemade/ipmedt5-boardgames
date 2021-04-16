@@ -182,13 +182,14 @@ class GanzenbordController extends Controller
 		if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
 
 		if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
-
+		var_dump("GANZENBORD_CONTROLLER");
 		switch ($data["game"]) {
 			case 'vieropeenrij':
 				var_dump("VIEROPEENRIJ");
 				return VierOpEenRijController::gameStart($websocket, $data);
 				break;
 		}
+		var_dump("after switch");
         // if ($data["game"] != "ganzenbord") return var_dump('not same!', $data["game"]);
         // var_dump("YES");
 
