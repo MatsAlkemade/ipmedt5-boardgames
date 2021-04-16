@@ -193,6 +193,7 @@ function setupChat() {
     const chatList = document.querySelector('.js--livechat--list');
     console.log(chatList);
     console.log(chatIcon);
+    addChatMessage('Ganzenbord', 'Welkom bij Ganzenbord, dit is de chat', 0);
     socket.emit('chat_state', { game: game, id: id });
     socket.on('chat_msg', function(data) {
         if (!isChatOpen()) chatIcon.classList.add("icon__badge");
@@ -234,7 +235,7 @@ function setupChat() {
         const username = document.createElement('p');
         const message = document.createElement('p');
         msg.classList.add('livechat__item');
-        if (_username.toLowerCase() == "console") {
+        if (_username.toLowerCase() == "ganzenbord") {
             msg.classList.add('livechat__item--console');
         } else if (_username.toLowerCase() == "you") {
             msg.classList.add('livechat__item--me');

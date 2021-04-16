@@ -14,9 +14,9 @@ class GanzenbordController extends Controller
 	static public $nogEenKeerDobbelenPosities = [5, 9, 14, 18, 23, 26, 27, 32, 36, 41, 45, 50, 54, 59];
 
 	public function index(){
-		return view('games.ganzenbordstappen',[
+		return view('games.ganzenbordLobby',[
 			'ganzenbordstappen' =>\App\Models\GanzenbordStappen::all(),
-			'ganzenbord'=>\App\Models\Ganzenbord::all(),
+			'ganzenbord'=>\App\Models\Ganzenbord::first()
 		]);
 		
 	}

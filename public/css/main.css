@@ -304,8 +304,12 @@ body {
     .gb__description{
         font-size: 1.7rem;
     }
+
     
 }
+
+
+
 @media only screen and (min-width: 600px){
     .gb__players__goose__figure > img {
         width: 10rem;
@@ -352,6 +356,7 @@ body {
     flex-direction: row;
     align-items: center;
     height: 10%;
+    font-size: 80%;
 }
 
 .defaultGame__title__button {
@@ -483,6 +488,42 @@ body {
 
 .popup__closeBtn:hover {
     cursor: pointer;
+}
+
+.joinGame__buttons{
+    margin: 2rem;
+    margin-bottom: 2rem;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.joinGame__buttonCreate{
+    margin-bottom: 2rem;
+    margin-top: 4rem;
+}
+.joinGame__input{
+    margin-top: 2rem;
+    border: 2px solid #11F3A2;
+    border-radius: 4px;
+    height: 2.5rem;
+}
+
+.joinGame__buttonJoin{
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+.joinGame__text{
+    font-size: 90%;
+    max-width: 20rem;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+@media only screen and (min-width: 450px){
+    .defaultGame__title{
+        font-size: 100%;
+    }
 }
 
 @keyframes popup {
