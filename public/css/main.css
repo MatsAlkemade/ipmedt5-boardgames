@@ -388,7 +388,7 @@ body {
 .defaultGame__footer__list {
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .defaultGame__footer__list__item {
@@ -403,6 +403,7 @@ body {
 
 .defaultGame__footer__list__item:nth-of-type(2) {
     border-left: solid .2rem var(--bg);
+    border-right: solid .2rem var(--bg);
 }
 
 .defaultGame__footer__list__item:hover {
