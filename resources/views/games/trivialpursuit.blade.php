@@ -22,20 +22,15 @@
 
         function spellingCheck() {
             answer = document.getElementById('js--answer'); //pakt het ingevulde antwoord
-            socket.emit('tp_getPlaats', {game: game, id: id}); //pakt de huidige plek op het bord
-            console.log(plaats);
+            let plek = plaats;
 
             if(correct_answer.match(/^-?\d+$/)){ //kijkt of de vraag een int is
                 if(Object.is(answer.value, correct_answer)){
-                    console.log("int goed");
-                    plaats = plaats + 1;
-                    socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
+                    ++plek;
                     answer.style.backgroundColor = "green";
                 }
                 else{
-                    console.log("int fout");
-                    plaats = plaats - 1;
-                    socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
+                    --plek;
                     answer.style.backgroundColor = "red";
                 }
             }
@@ -44,21 +39,21 @@
                 correct_answer = correct_answer.toLowerCase(); // zelfde als hierboven maar dan voort het antwoord
                 let spellingcheck = stringSimilarity.compareTwoStrings(correct_answer, answer.value); //voert de controlle uit en krijgt een getal tussen de 0 en 1 terug
                 if(spellingcheck >= 0.8){ //als de overeenkomst 80% is het goed anders fout
-                    console.log('String goed')
-                    plaats = plaats + 1;
-                    socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
+                    ++plek;
                     answer.style.backgroundColor = "green";
                 }
                 else{
-                    console.log('String fout')
-                    plaats = plaats - 1;
-                    socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
+                    --plek;
                     answer.style.backgroundColor = "red";
                 }
             }
-            setTimeout(function() {
-                socket.emit('tp_question', { game: game, id: id }); //pakt een andere vraag
-            }, 1000);
+            if(plek == -1){
+                plek = 0;
+            }
+            socket.emit('tp_question', { game: game, id: id }); //pakt een andere vraag
+            socket.emit('tp_lopen', {plek: plek, game: game, id: id }); //update de plek op het bord
+            socket.emit('tp_getPlaats', {game: game, id: id}); //pakt de nieuwe plek op het bord
+
         }
         
         question = document.getElementById('js--question');
@@ -67,8 +62,7 @@
 
         socket.on('tp_getPlaats', function(data) {
             plaats = data[{{$loggedId}}].plek;
-            socket.emit('tp_getWinner', {plek: plaats, game: game, id: id });
-
+            console.log("__GET_PLAATS__", plaats);
         });
 
         socket.on('tp_getWinner', function(data) {
@@ -84,7 +78,6 @@
         }
 
         socket.on('tp_question', function(data) {
-            console.log("tp_question", data);
             questionId = data;
             createQuestion();
         });

@@ -91,7 +91,6 @@ function beginGame(){
     }
 
     socket.emit('tp_getUsers', { game: game, id: id });
-    socket.emit('tp_playerNames', { game: game, id: id });
     socket.emit('tp_question', { game: game, id: id });
     socket.emit('tp_state', { game: game, id: id });
 
