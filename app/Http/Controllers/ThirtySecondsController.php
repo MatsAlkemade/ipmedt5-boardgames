@@ -53,7 +53,7 @@ class ThirtySecondsController extends Controller
                 ]);
             }
 
-            return view('games.thirtyseconds', [
+            return view('games.thirtySeconds', [
                 'gameCode' => $id,
                 'users' => $users,
                 'ts' => \App\Models\ThirtySeconds::first(),
