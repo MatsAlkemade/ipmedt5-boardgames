@@ -17,6 +17,7 @@
     justify-content: center;
     transform-style: preserve-3d;
     transition: all 2s;
+    transform: rotateY(180deg);
 }
 
 .ts__card {
@@ -32,17 +33,22 @@
 
 .ts__card__form {
     list-style: none;
+    width: 100%;
 }
 
 .ts__card__form__item {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(12, minmax(0,1fr));
     color: black;
-    margin-bottom: 1.5rem;
+    margin: 0 3rem 1.5rem 3rem;
+}
+
+.ts__card__form__item > label {
+    grid-column: span 11;
 }
 
 .ts__card__form__item > input {
-    margin-left: 10rem;
+    grid-column: span 1;
 }
 
 .ts__card__form__item:last-of-type{

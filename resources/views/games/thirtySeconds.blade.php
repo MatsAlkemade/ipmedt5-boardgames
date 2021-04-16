@@ -29,23 +29,23 @@
                     @csrf
                     <input type="hidden" name="gameId" id="js--formGameId">
                     <section class="ts__card__form__item">
-                        <label for="q1" id="label-q1">{{$tsq[0]->question_1}}</label>
+                        <label for="q1" id="label-q1">vraag</label>
                         <input type="checkbox" value="true" id="q1" name="q1">
                     </section>
                     <section class="ts__card__form__item">
-                        <label for="q2" id="label-q2">{{$tsq[0]->question_2}}</label>
+                        <label for="q2" id="label-q2">vraag</label>
                         <input type="checkbox" value="true" id="q2" name="q2">
                     </section>
                     <section class="ts__card__form__item">
-                        <label for="q3" id="label-q3">{{$tsq[0]->question_3}}</label>
+                        <label for="q3" id="label-q3">vraag</label>
                         <input type="checkbox" value="true" id="q3" name="q3">
                     </section>
                     <section class="ts__card__form__item">
-                        <label for="q4" id="label-q4">{{$tsq[0]->question_4}}</label>
+                        <label for="q4" id="label-q4">vraag</label>
                         <input type="checkbox" value="true" id="q4" name="q4">
                     </section>
                     <section class="ts__card__form__item">
-                        <label for="q5" id="label-q5">{{$tsq[0]->question_5}}</label>
+                        <label for="q5" id="label-q5">vraag</label>
                         <input type="checkbox" value="true" id="q5" name="q5">
                     </section>
                 </form>

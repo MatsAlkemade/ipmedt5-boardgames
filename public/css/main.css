@@ -130,14 +130,7 @@ body {
 }
 
 .home__game__button {
-    /* position: absolute;
-    left: 50%;
-    transform: translateX(-50%); */
     margin-top: 1rem;
-}
-
-.home__game__button:active{
-    transform: translate(-50%, .3rem) !important; /*Deze overwrite de u-button-style omdat de center voor deze buttons gedaan is via position absolute */
 }
 
 .home__footer {

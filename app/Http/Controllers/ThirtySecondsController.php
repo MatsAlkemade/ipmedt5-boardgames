@@ -10,7 +10,7 @@ use SwooleTW\Http\Websocket\Facades\Room;
 class ThirtySecondsController extends Controller
 {
     public function show(){
-        return view('games.thirtyseconds',[
+        return view('games.thirtysecondsLobby',[
             'ts' => \App\Models\ThirtySeconds::first(),
             'tsq' => \App\Models\ThirtySecondsQuestion::get(),
         ]);
