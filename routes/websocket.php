@@ -33,6 +33,7 @@ function sessionExists($id) {
 }
 
 Websocket::on('connect', function ($websocket, Request $request) {
+	if (!$request) return;
 	if ($request->user() !== null) Websocket::loginUsing($request->user());
 	if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
 
@@ -52,7 +53,9 @@ Websocket::on('game', function ($websocket, $data) {
 
 Websocket::on('disconnect', function ($websocket) {
     // called while socket on disconnect
-    $websocket->toUserId($websocket->getUserId())->emit('hardware', [ 'hardware' => false ]);
+    $userId = $websocket->getUserId();
+    if (!$userId) return;
+    $websocket->toUserId($userId)->emit('hardware', [ 'hardware' => false ]);
 });
 
 Websocket::on('example', function ($websocket, $data) {
@@ -96,7 +99,9 @@ Websocket::on('join_session', function($websocket, $data) {
 });
 
 Websocket::on('hardware', function($websocket, $data) {
-	$websocket->toUserId($websocket->getUserId())->emit('hardware', [ 'hardware' => true ]);
+	$userId = $websocket->getUserId();
+	if (!$userId) return;
+	$websocket->toUserId($userId)->emit('hardware', [ 'hardware' => true ]);
 });
 
 Websocket::on('leave_session', function($websocket, $data) {

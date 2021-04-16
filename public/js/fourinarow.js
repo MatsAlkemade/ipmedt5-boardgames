@@ -1,7 +1,6 @@
 const l = "email=" + __u__ + "&password=" + __p__;
 
 const socket = io(window.location.protocol + '//' + window.location.host, { transports: ['websocket'], query: l });
-let players = 2;
 let gameBuilt = false;
 let myTurn = false;
 let winner = false;
@@ -333,7 +332,6 @@ function place(column, player=0) {
 	lic.classList.add("p" + player);
 	lic.style.setProperty("--piece-row", 0);
 	if (getLastInColumn(column) == null) return document.querySelector('.fourinarow__buttons > button:nth-child('+(column+1)+')').disabled = 'disabled';
-	checkWin();
 }
 
 function getLastInColumn(column) {
@@ -347,19 +345,4 @@ function getLastInColumn(column) {
 		}
 	}
 	return document.querySelector("[data-column='"+column+"'][data-row='7']");
-}
-
-function checkWin() {
-	for (let i = 0; i < players; i++) {
-		const pp = document.querySelectorAll('.fourinarow__pieces > .p' + (i+1));
-		// console.log(pp);
-		if (pp == null || pp.length == 0) continue;
-
-		for (let i = 0; i < pp.length; i++) {
-
-			// console.log(pp[i]);
-		}
-	}
-
-	return false;
 }
