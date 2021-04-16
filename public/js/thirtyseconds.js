@@ -63,7 +63,7 @@ socket.on('turn', function(data){
 
 socket.on('teamAnswer', function(data){
     console.log(data);
-    if (data.teamInfo.position >= 5){
+    if (data.teamInfo.position >= 35){
         console.log(data.teamId);
         if(data.teamId == 0){
             tsState.style.color = 'orangered';
