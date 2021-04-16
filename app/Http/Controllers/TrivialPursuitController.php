@@ -60,6 +60,7 @@ class TrivialPursuitController extends Controller
         
         $plaats =  $gameData["positie"];
 
+        var_dump($plaats);
         $websocket->emit('tp_getPlaats', $plaats);
     }
 
@@ -98,7 +99,6 @@ class TrivialPursuitController extends Controller
         }
                 
         GameStateController::setData($data["id"], $gameData);
-        var_dump($gameData["positie"]);
     }
 
     static public function getUsers($websocket, $data){
