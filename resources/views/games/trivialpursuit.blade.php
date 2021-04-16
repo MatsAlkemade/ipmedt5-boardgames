@@ -62,7 +62,7 @@
 
         socket.on('tp_getPlaats', function(data) {
             plaats = data[{{$loggedId}}].plek;
-            console.log("__GET_PLAATS__", plaats);
+            console.log("__GET_PLAATS__", data);
         });
 
         socket.on('tp_getWinner', function(data) {
