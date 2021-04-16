@@ -1,5 +1,9 @@
 @extends('games.defaultGame')
 
+@section('title')
+    Lobby - {{$gameType}}
+@endsection
+
 @section('head-extra')
     <script type="text/javascript">
         let __u__ = "{{ auth()->user()->email }}";
