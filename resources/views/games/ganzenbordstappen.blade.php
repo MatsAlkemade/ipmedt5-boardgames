@@ -45,7 +45,7 @@
 
                 <li class="gb__player js--player1">
                     <figure class="gb__players__figure">
-                        <img id="speler_1" src="/img/gb_vakjes/gb_start.png" alt="Start vakje">
+                        <img src="/img/gb_vakjes/gb_start.png" alt="Start vakje">
                     </figure>
                 </li>
             
