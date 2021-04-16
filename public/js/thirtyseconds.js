@@ -29,7 +29,7 @@ let myTurn = false;
 let initTurn = true;
 
 formGameId.setAttribute("value", id);
-tsCardTurnBtn.setAttribute("disabled", true);
+tsCardTurnBtn.setAttribute("disabled", "");
 
 socket.on('connect', function() {
     console.log("Connected to socketio server!");
@@ -55,9 +55,9 @@ socket.on('turn', function(data){
             myTurn = !myTurn;
         }
         if (myTurn) tsCardTurnBtn.removeAttribute("disabled");
-        else tsCardTurnBtn.setAttribute("disabled", true);
+        else tsCardTurnBtn.setAttribute("disabled", "");
     } else {
-        tsCardTurnBtn.setAttribute("disabled", true);
+        tsCardTurnBtn.setAttribute("disabled", "");
     }
 });
 
