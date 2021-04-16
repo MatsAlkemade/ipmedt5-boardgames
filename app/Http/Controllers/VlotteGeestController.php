@@ -47,8 +47,10 @@ class VlotteGeestController extends Controller
         if (!array_key_exists("rondeNummer", $gameData)) {
           $gameData["rondeNummer"] = 5;
         }
-
-        if(($gameData["rondeNummer"] == $data["rondeNummer"] && $data["object"] == true) || $gameData["rondeNummer"] < 0){
+        // str_contains ( string $haystack , string $needle ) : bool
+        var_dump($gameData["object"]);
+        if(!str_contains(strtolower($gameData["object"]), $data["object"])) return;
+        if(($gameData["rondeNummer"] == $data["rondeNummer"]) || $gameData["rondeNummer"] < 0){
             $gameData["rondeNummer"] -= 1;
             if($gameData["rondeNummer"] < 0){
               $websocket->to('vlottegeest.' . $data["id"])->emit('rondeNummer', ["rondeNummer" => -1]);
@@ -67,8 +69,10 @@ class VlotteGeestController extends Controller
             }
             var_dump("dezelfde ronde nummefr");
             $websocket->to('vlottegeest.' . $data["id"])->emit('rondeNummer', ["rondeNummer" => $gameData["rondeNummer"], "Winner" => $websocket->getUserId()]);
-            $websocket->to('vlottegeest.' . $data["id"])->emit('randomObject', ["randomObject" => self::randomImage(), "timestamp" => $timestamp]);
+            $gameData["object"] = self::randomImage();
+            $websocket->to('vlottegeest.' . $data["id"])->emit('randomObject', ["randomObject" => $gameData["object"], "timestamp" => $timestamp]);
 
+          
             if (!array_key_exists($websocket->getUserId(), $gameData)) {
               $gameData[$websocket->getUserId()] = 0;
               }
@@ -159,11 +163,12 @@ class VlotteGeestController extends Controller
         $gameData["started"] = true;
         self::getUsers($websocket, $data);
         $websocket->to('vlottegeest.' . $data["id"])->emit('getUsers', GameStateController::session($data["id"])["users"]);
-  
+          $gameData["object"] = self::randomImage();
           GameStateController::setData($data["id"], $gameData);
-  
+              
               $websocket->to('vlottegeest.' . $data["id"])->emit('turn', ["turn" => GameStateController::nextTurn($data["id"])]);
-              $websocket->to('vlottegeest.' . $data["id"])->emit('randomObject', ["randomObject" => self::randomImage()]);
+              
+              $websocket->to('vlottegeest.' . $data["id"])->emit('randomObject', ["randomObject" => $gameData["object"]]);
               $websocket->to('vlottegeest.' . $data["id"])->emit('rondeNummer', ["rondeNummer" => 5]);
               
       } else if (sizeof($gameUsers) <= 1) {
