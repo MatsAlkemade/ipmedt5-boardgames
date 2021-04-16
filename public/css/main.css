@@ -388,7 +388,7 @@ body {
 .defaultGame__footer__list {
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .defaultGame__footer__list__item {
@@ -883,6 +883,10 @@ body {
 }
 
 @media only screen and (max-width: 25rem){
+    .trivialpursuit__question{
+        font-size: 150%;
+    }
+
     .trivialpursuit__categories{
         width: 100%;
     }
@@ -897,11 +901,11 @@ body {
 
     .trivialpursuit__article{
         width: 95vw;
-        margin: 2rem;
     }
 
     .trivialpursuit__answer{
         width: 90%;
+        margin-bottom: 3rem;
     }
 }
 
