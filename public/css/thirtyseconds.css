@@ -5,6 +5,11 @@
     align-items: center;
 }
 
+.ts__state > p {
+    pointer-events: none;
+    opacity: 1;
+}
+
 .ts__cardWrapper {
     margin-top: 12rem;
     display: flex;

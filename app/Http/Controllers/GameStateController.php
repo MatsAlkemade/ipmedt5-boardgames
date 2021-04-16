@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 class GameStateController extends Controller {
 	protected static $sessions;
 
-    static function createSession($gameType, $user) {
+    static function createSession($gameType, $user, $turnMode = 0) {
     	self::$sessions = Cache::get('sessions');
     	// TODO: Generate a random id of 6 numbers
     	$sessionId = mt_rand(100000, 999999);
@@ -28,7 +28,7 @@ class GameStateController extends Controller {
 			"teams" => [],
 			"data" => [],
 			"turn" => null,
-			"turnMode" => 0, // 0 == users, 1 == teams
+			"turnMode" => $turnMode, // 0 == users, 1 == teams
     	];
 
     	Cache::put('sessions', self::$sessions);
@@ -38,6 +38,7 @@ class GameStateController extends Controller {
 
     static function setTurnMode($sessionId, $mode) {
     	if (!self::sessionExists($sessionId)) return null;
+
     	self::$sessions = Cache::get('sessions');
 
     	self::$sessions[$sessionId]["turnMode"] = $mode;
@@ -49,7 +50,7 @@ class GameStateController extends Controller {
     static function getTurnMode($sessionId) {
     	if (!self::sessionExists($sessionId)) return null;
     	self::$sessions = Cache::get('sessions');
-    	return self::$sessions[$sessionId]["mode"];
+    	return self::$sessions[$sessionId]["turnMode"];
     }
 
     static function sessionExists($sessionId) {

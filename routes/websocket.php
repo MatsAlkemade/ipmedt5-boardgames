@@ -6,6 +6,7 @@ use SwooleTW\Http\Websocket\Facades\Websocket;
 use SwooleTW\Http\Websocket\Facades\Room;
 use App\Http\Controllers\VierOpEenRijController;
 use App\Http\Controllers\GanzenbordController;
+use App\Http\Controllers\ThirtySecondsController;
 use App\Http\Controllers\GameStateController;
 
 use App\Models\User;
@@ -67,6 +68,8 @@ Websocket::on('example', function ($websocket, $data) {
 // Websocket::on('game_start', );
 
 Websocket::on('game_start', [VierOpEenRijController::class, 'gameStart']);
+Websocket::on('ts_start', [ThirtySecondsController::class, 'gameStart']);
+Websocket::on('game_start', [GanzenbordController::class, 'gameStart']);
 
 /*
 	Game setup
@@ -122,10 +125,17 @@ Websocket::on('fiar_state', [VierOpEenRijController::class, 'getState']);
 	Thirty Seconds (ts)
 */
 
-/*
-	Ganzenbord (gb)
+Websocket::on('getTurn', [ThirtySecondsController::class, 'getTurn']);
+Websocket::on('ts_answers', [ThirtySecondsController::class, 'checkAnswers']);
+Websocket::on('getQuestions', [ThirtySecondsController::class, 'randomQuestions']);
+
+/* 
+	Ganzenbord
 */
 Websocket::on('getUsers', [GanzenbordController::class, 'getUsers']);
+Websocket::on('ganzenbord_playernames', [GanzenbordController::class, 'getUsers']);
+Websocket::on('dobbel', [GanzenbordController::class, 'dobbel']);
+Websocket::on('ganzenbord_state', [GanzenbordController::class, 'getState']);
 
 
 
