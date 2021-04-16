@@ -161,17 +161,29 @@ body {
 /* ganzenbord */
 
 .ganzenbord {
-	max-width: 600px;
 	margin: 0 auto;
-	width: 100%;
-	padding-left: 2rem;
-	padding-right: 2rem;
+    
 }
 
 .gb__title{
     margin-top:4rem;
     margin-bottom:6rem;
     text-align: center;
+    max-width: 5rem;
+}
+
+.gb__header{
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.gb__secondHeader{
+    font-size: 1.7rem;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: grey;
 }
 
 .gb__players {
@@ -179,32 +191,35 @@ body {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     list-style: none;
     column-gap: 2rem;
-    justify-content: center;  
     max-width: 100%;
     margin:1rem;
     margin-top: 5rem;
-
-    
+    justify-items: center;
 }
 .gb__player {
     display: grid;
     justify-content: center;
     align-items: center;
-    max-width: 100%;
+    width: 5rem;
+    margin: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 
 .gb__players__figure > img {
     position: relative;
     border-radius: 1rem;
-    width: 100%;
+    width: 6rem;
+    
 }
 
 .gb__player__goose {
     display: grid;
     justify-content: center;
     align-items: center;
-    max-width: 100%;
+    
     
 }
 
@@ -212,17 +227,123 @@ body {
     position: relative;
     text-align: center;
     margin-top: 1rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     display:grid;
     margin-bottom: 4rem;
+    max-width: 6rem;
 }
 
 .gb__players__goose__figure > img {
     position: relative;
     border-radius: 1rem;
-    width: 100%;
+    width: 6rem;
 
 }
+.gb__button{
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+}
+
+.gb__description{
+    font-size: 1.3rem;
+    text-align:center;
+}
+
+
+
+@media only screen and (min-width: 375px){
+    .gb__header{
+        font-size: 2.5rem;
+        margin-top: 1rem;
+    }
+    .gb__secondHeader{
+        font-size: 2rem;
+        margin-top: 1rem;
+    }
+    .gb__players__goose__figure > img {
+        width: 6rem;
+    }
+    .gb__players__goose__figure> figcaption {
+        max-width: 6rem;
+        font-size: 1.7rem;
+        margin-bottom: 2rem;
+    }
+    .gb__player {
+        width: 6rem;
+        margin: 0.8rem;
+    }
+    .gb__players__figure > img {
+        width: 8rem;
+        
+    }
+    .gb__description{
+        font-size: 1.5rem;
+    }
+    
+}
+@media only screen and (min-width: 450px){
+    .gb__players__goose__figure > img {
+        width: 7rem;
+    }
+    .gb__players__goose__figure> figcaption {
+        max-width: 7rem;
+        font-size: 1.8rem;
+    }
+    .gb__player {
+        width: 7rem;
+        margin: 0.8rem;
+    }
+    .gb__players {
+        margin-top:2rem;
+    }
+    .gb__players__figure > img {
+        width: 9rem;
+        
+    }
+    .gb__description{
+        font-size: 1.7rem;
+    }
+
+    
+}
+
+
+
+@media only screen and (min-width: 600px){
+    .gb__players__goose__figure > img {
+        width: 10rem;
+    }
+    .gb__players__goose__figure> figcaption {
+        max-width: 10rem;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    .gb__player {
+        width: 10rem;
+        margin: 0.8rem;
+    }
+    .gb__players__figure > img {
+        width: 11rem;
+        
+    }
+    .gb__description{
+        font-size: 1.9rem;
+    }
+
+    
+}
+@media only screen and (min-width: 680px){
+    .ganzenbord {
+        max-width: 600px;
+        
+    }
+    
+}
+
+
+
+
 
 
 .defaultGame {
@@ -235,6 +356,7 @@ body {
     flex-direction: row;
     align-items: center;
     height: 10%;
+    font-size: 80%;
 }
 
 .defaultGame__title__button {
@@ -365,6 +487,42 @@ body {
 
 .popup__closeBtn:hover {
     cursor: pointer;
+}
+
+.joinGame__buttons{
+    margin: 2rem;
+    margin-bottom: 2rem;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.joinGame__buttonCreate{
+    margin-bottom: 2rem;
+    margin-top: 4rem;
+}
+.joinGame__input{
+    margin-top: 2rem;
+    border: 2px solid #11F3A2;
+    border-radius: 4px;
+    height: 2.5rem;
+}
+
+.joinGame__buttonJoin{
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+.joinGame__text{
+    font-size: 90%;
+    max-width: 20rem;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+@media only screen and (min-width: 450px){
+    .defaultGame__title{
+        font-size: 100%;
+    }
 }
 
 @keyframes popup {

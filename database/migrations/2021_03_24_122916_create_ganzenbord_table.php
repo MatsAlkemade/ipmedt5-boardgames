@@ -15,7 +15,6 @@ class CreateGanzenbordTable extends Migration
     {
         Schema::create('ganzenbord', function (Blueprint $table) {
             $table->string('name')->primary();
-            $table->integer('steps')->default(0);
             $table->string('description')->default("Stap 0");
         });
     }

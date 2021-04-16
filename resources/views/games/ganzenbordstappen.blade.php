@@ -9,34 +9,36 @@
 @endsection
 @extends('games.defaultGame')
 @section('title')
-    Ganzenbord
+    Ganzenbord  ({{$gameCode}})
 @endsection
 
 @section('gamecontent')
 <section class="ganzenbord">
+<h2 class="gb__header"><span class="js--gb-turn js--gb-other"> </span></h2>
+<h2 class="gb__secondHeader"><span class="js--gb-dobbel"> </span></h2>
 <ul class="gb__players">
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                         <img src="/img/gb_vakjes/gb_rood.png" alt="gans">
-                        <figcaption id="speler_1">Speler 1</figcaption>
+                        <figcaption id="speler_1">Geen Deelnemer</figcaption>
                     </figure>
                 </li>
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                      <img src="/img/gb_vakjes/gb_paars.png" alt="gans">
-                     <figcaption id="speler_2">Speler 2</figcaption>
+                     <figcaption id="speler_2">Geen Deelnemer</figcaption>
                     </figure>
                 </li>
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                       <img src="/img/gb_vakjes/gb_geel.png" alt="gans">
-                      <figcaption id="speler_3">Speler 3</figcaption>
+                      <figcaption id="speler_3">Geen Deelnemer</figcaption>
                     </figure>
                 </li>
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
                         <img src="/img/gb_vakjes/gb_blauw.png" alt="gans">
-                        <figcaption id="speler_4">Speler 4</figcaption>
+                        <figcaption id="speler_4">Geen Deelnemer</figcaption>
                     </figure>
                 </li>  
 
@@ -64,7 +66,19 @@
 
                 </li>
             </ul>
-            <input id="gb_button" type="submit" name="button" value="Dobbelen"/>
+            <section class="gb__button">
+                  <input class="u-button-style u-button-style-center" id="gb_button" type="submit" name="button" value="Dobbelen"/>
+            </section>
         </section>
 
 @endsection
+
+
+@section('rules')
+    <p class="gb__description"> {{$ganzenbord->description}}</p><br />
+        @foreach ($ganzenbordstappen as $ganzenbordstap)
+            <p class="gb__description"> {{$ganzenbordstap->description}} </p><br />
+        @endforeach
+@endsection
+
+

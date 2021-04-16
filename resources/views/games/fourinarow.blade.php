@@ -16,6 +16,8 @@
 @section('gamecontent')
     <section class="fourinarow">
     	<h2 class="fourinarow__header"><span class="js--fiar-turn js--fiar-other">(Other players turn)</span></h2>
+		<h2 class="fourinarow__header"><span class="js--fiar-turn js--fiar-other"></span></h2>
+
 		<section class="fourinarow__buttons">
 			<button class="fourinarow__button"><i class="fad fa-arrow-square-down"></i></button>
 			<button class="fourinarow__button"><i class="fad fa-arrow-square-down"></i></button>
@@ -30,4 +32,8 @@
 			
 		</section>
 	</section>
+@endsection
+
+@section('rules')
+    <p class="gb__description">Deze versie van Vier Op Een Rij heeft 8 rijen en 8 colommen. </p>
 @endsection

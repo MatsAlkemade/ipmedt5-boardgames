@@ -3,13 +3,11 @@ const socket = io(window.location.protocol + '//' + window.location.host, { tran
 let split = window.location.pathname.split('/');
 let game = split[1];
 let id = split[2];
-
 let waitTurn = false;
-
+let winner = false;
 let players = [];
 let playerPositions = {};
 let playernames =[];
-
 let counter = 0;
 
 socket.on('getUsers', function(data) {
@@ -24,11 +22,7 @@ socket.on('ganzenbord_playernames', function(data){
     updatePlayers()
     console.log("GETPLAYERNAMES", playernames);
     socket.emit('ganzenbord_state', { game: game, id: id });
-    
-    
-
 });
-
 
 socket.on('game_start', function(data,) {
 	gameStart(data);
@@ -39,33 +33,71 @@ socket.on('connect', function() {
     socket.emit('join_session', { game: game, id: id });
 });
 
+//Verander de naam van wie aan de beurt is
+socket.on('turn', function(data) {
+	console.log("TURN", data, user_id);
+	myTurn = false;
+	if (data.turn == user_id) myTurn = true;
+	const turnText = document.querySelector('.js--gb-turn');
+
+    if(winner == false){
+        if (!myTurn) {
+            turnText.classList.add('js--gb-other');
+            turnText.classList.remove('js--gb-me');
+            turnText.innerText = "Het is de beurt van een andere speler!";
+        } else {
+            turnText.classList.remove('js--gb-other');
+            turnText.classList.add('js--gb-me');
+            turnText.innerText = "Het is jouw beurt!";
+        }
+    }
+	
+});
+//Verander de text als iemand heeft gewonnen 
 socket.on('dobbel', function(data) {
 	console.log("IK HEB EEN RANDOM NUMMER", data);
-	// counter += Number(data.getal)
+    console.log(data.getal);
+
     if (data.position >= 63){
         data.position = 63;
-        console.log('gewonnen')
+        console.log('gewonnen');
+        winner = true;
+        winnerName = getPlayerName(data.playerId);
+        const turnText = document.querySelector('.js--gb-turn');
+	    turnText.innerText = winnerName + " heeft gewonnen!";
+        
     }
-    if (data.position == 58){
+
+    else if (data.position == 58){
         data.position = 0;
-        console.log('dood')
+        console.log('dood');
     }
-    if (data.position == 6){
+    else if (data.position == 6){
         data.position = 12;
-        console.log('brug')
+        console.log('brug');
     }
-    if (data.position == 42){
+    else if (data.position == 42){
         data.position = 39;
-        console.log('door')
+        console.log('door');
     }
+    else{
+        huidige_speler = getPlayerName(data.playerId);
+        const geefgedobbeld = document.querySelector('.js--gb-dobbel');
+        geefgedobbeld.innerText = huidige_speler + " heeft " + data.getal + " gegooid!";
+
+    }
+
+
     goto(getPlayer(data.playerId), data.position);
 
 });
 
 socket.on('ganzenbord_state', function(data) {
 	console.log("STATE", data);
+    if (data.started == true){
+        gameStart({ start: true });
+    }
 	playerPositions = data.playerPositions;
-
 
 	for (const userid in playerPositions) {
 		goto(getPlayer(userid), playerPositions[userid]);
@@ -74,10 +106,9 @@ socket.on('ganzenbord_state', function(data) {
 
 });
 
+
 socket.emit('getUsers', { game: game, id: id });
 socket.emit('ganzenbord_playernames', { game: game, id: id });
-
-
 
 
 const specialeVakjes = {
@@ -103,53 +134,56 @@ function getPlayerName(player_id){
 
 }
 
+function winnerName(player_id){
+    return playernames
 
-
+}
+//Als de game start zet de elements op visible
 function gameStart(data) {
 	console.log("START THE GAME", data);
 	if (data.start == true) {
 		const gb = document.querySelector('.ganzenbord');
 		gb.style.display = "block";
     }
-    
-	
+ 
 }
 
+//als de game start verander de namen in de namen vd spelers
 function updatePlayers(){
     if(playernames.length == 1){
         var name_1 = document.getElementById('speler_1');
-        name_1.innerHTML = playernames[0];
+        name_1.innerText = playernames[0];
     }
     if(playernames.length == 2){
         var name_1 = document.getElementById('speler_1');
-        name_1.innerHTML = playernames[0];
+        name_1.innerText = playernames[0];
         var name_2 = document.getElementById('speler_2');
-        name_2.innerHTML = playernames[1];
+        name_2.innerText = playernames[1];
     }
     if(playernames.length == 3){
         var name_1 = document.getElementById('speler_1');
-        name_1.innerHTML = playernames[0];
+        name_1.innerText = playernames[0];
         var name_2 = document.getElementById('speler_2');
-        name_2.innerHTML = playernames[1];
+        name_2.innerText = playernames[1];
         var name_3 = document.getElementById('speler_3');
-        name_3.innerHTML = playernames[2];
+        name_3.innerText = playernames[2];
     }
     if(playernames.length == 4){
         var name_1 = document.getElementById('speler_1');
-        name_1.innerHTML = playernames[0];
+        name_1.innerText = playernames[0];
         var name_2 = document.getElementById('speler_2');
-        name_2.innerHTML = playernames[1];
+        name_2.innerText = playernames[1];
         var name_3 = document.getElementById('speler_3');
-        name_3.innerHTML = playernames[2];
+        name_3.innerText = playernames[2];
         var name_4 = document.getElementById('speler_4');
-        name_4.innerHTML = playernames[3];
+        name_4.innerText = playernames[3];
     }
     else{
         return;
     }
 }
 
-
+//Maak de chat
 function setupChat() {
     if (!liveChat) return;
     let orderCount = 1;
@@ -159,6 +193,7 @@ function setupChat() {
     const chatList = document.querySelector('.js--livechat--list');
     console.log(chatList);
     console.log(chatIcon);
+    addChatMessage('Ganzenbord', 'Welkom bij Ganzenbord, dit is de chat', 0);
     socket.emit('chat_state', { game: game, id: id });
     socket.on('chat_msg', function(data) {
         if (!isChatOpen()) chatIcon.classList.add("icon__badge");
@@ -200,7 +235,7 @@ function setupChat() {
         const username = document.createElement('p');
         const message = document.createElement('p');
         msg.classList.add('livechat__item');
-        if (_username.toLowerCase() == "console") {
+        if (_username.toLowerCase() == "ganzenbord") {
             msg.classList.add('livechat__item--console');
         } else if (_username.toLowerCase() == "you") {
             msg.classList.add('livechat__item--me');
@@ -283,6 +318,7 @@ var imagesArray = [
     '/img/gb_vakjes/gb_63.png',
 ];
 
+//Als je het spel laat zet de display op none
 window.addEventListener('load', function() { 
     pageLoaded = true;
 	const fiar = document.querySelector('.ganzenbord');
@@ -292,15 +328,13 @@ window.addEventListener('load', function() {
     setupChat();
 
     document.getElementById('gb_button').addEventListener('click', function(){
-        console.log('hi');
         socket.emit('dobbel', { game: game, id: id });
-        // dobbel();
 	});
     
 
 });
 
-
+//Verander de positie van de speler
 function goto(player, place) {
 	console.log("GOTO", player, place);
     if(place >= 63){
