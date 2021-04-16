@@ -856,3 +856,7 @@ body {
     width: 8.5rem;
     margin-right: 1rem;
 }
+
+#js--rules{
+    overflow-y: auto;
+}
