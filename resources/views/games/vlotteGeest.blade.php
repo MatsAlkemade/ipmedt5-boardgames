@@ -22,7 +22,7 @@
         </div>
     </section>
 
-    <main class="vs" id="vs--js">
+    <section class="vs" id="vs--js">
 
         <section class="vs__devider">
             <section class="vs__section">
@@ -32,7 +32,7 @@
             </section>
 
             <section class="vs__flip-card-c">
-                <div class="vs__flip-card" id="flip_card--js">
+                <div class="vs__flip-card">
                     <div class="vs__flip-card-inner" id="flip_card--js">
                         <div class="vs__flip-card-front">
                           
@@ -58,11 +58,11 @@
             </ul>
         </article>
 
-    </main>
+    </section>
 @endsection
 
 @section('rules')
-    <ul class="rules">
+    <section class="rules">
         <p>#1: Met één hand probeer je het gewenste item te pakken dat in de originele kleur op de kaart staat afgebeeld, bijvoorbeeld de blauwe borstel of de rode handdoek</p>
         <br/>
         <p>#2: En als er geen item in de originele kleur is afgebeeld? In dit geval pak je het item dat niet is afgebeeld en waarvan de kleur niet op de kaart staat.</p>
@@ -70,7 +70,7 @@
         <p>#3: Als je het juiste item pakt, leg je de omgedraaide kaart als beloning voor je neer. De gegrepen items worden in het midden van de tafel teruggeplaatst. Dan draait een van de spelers de volgende kaart om.</p>
         <br/>
         <p>#4: De speler die als laatste het afgebeelde item heeft gepakt, moet de bovenste kaart van de stapel verwijderen.</p>
-    </ul>
+    </section>
 @endsection
 
 
