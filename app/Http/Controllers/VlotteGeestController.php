@@ -48,13 +48,33 @@ class VlotteGeestController extends Controller
           $gameData["rondeNummer"] = 5;
         }
 
-        if($gameData["rondeNummer"] == $data["rondeNummer"] && $data["object"] == true){
+        if(($gameData["rondeNummer"] == $data["rondeNummer"] && $data["object"] == true) || $gameData["rondeNummer"] < 0){
             $gameData["rondeNummer"] -= 1;
+            if($gameData["rondeNummer"] < 0){
+              $websocket->to('vlottegeest.' . $data["id"])->emit('rondeNummer', ["rondeNummer" => -1]);
+
+              $users = GameStateController::session($data["id"])["users"];
+              $userScores = [];
+              foreach ($users as $userId) {
+                  if(!array_key_exists($userId, $gameData)){
+                    $userScores[$userId] = 0;
+                    continue;
+                  }
+                  $userScores[$userId] = $gameData[$userId];
+              }
+              $websocket->to('vlottegeest.' . $data["id"])->emit('scores', $userScores);
+              return;
+            }
             var_dump("dezelfde ronde nummefr");
             $websocket->to('vlottegeest.' . $data["id"])->emit('rondeNummer', ["rondeNummer" => $gameData["rondeNummer"], "Winner" => $websocket->getUserId()]);
             $websocket->to('vlottegeest.' . $data["id"])->emit('randomObject', ["randomObject" => self::randomImage(), "timestamp" => $timestamp]);
 
-        }
+            if (!array_key_exists($websocket->getUserId(), $gameData)) {
+              $gameData[$websocket->getUserId()] = 0;
+              }
+              $score = $gameData[$websocket->getUserId()];
+              $gameData[$websocket->getUserId()] = $score + 1;
+            }
 
         $gameData["grabbedObject"][$user_id]["time"] = $timestamp;
         $gameData["grabbedObject"][$user_id]["object"] = $data["object"];

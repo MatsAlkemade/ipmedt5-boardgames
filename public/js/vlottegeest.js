@@ -6,6 +6,7 @@ let id = split[2];
 let winner = false;
 totalCards = 5;
 let rondeNummer = -1;
+let players = [];
 
 const spook = document.getElementById("spook--js");
 const kikker =document.getElementById("kikker--js");
@@ -13,7 +14,9 @@ const badkuip =document.getElementById("badkuip--js");
 const borstel =document.getElementById("borstel--js");
 const kleed =document.getElementById("kleed--js");
 const bord = document.getElementById("vs--js");
-// let chec; 
+let cardCount = document.getElementById('cardCount');
+let flipButton = document.getElementById('turn--180');
+const gameWinner = document.getElementById("gameWinner--js");
 bord.style.display = "none";
 
 function gameStart(data) {
@@ -27,51 +30,30 @@ function clickObject(){
     kleed.addEventListener('click', function(){
         kleed.style.visibility = "hidden";
         socket.emit('objecten', {object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
-        // checkIfEqaul(this.dataset.value);
     });
     
     spook.addEventListener('click', function(){
         spook.style.visibility = "hidden";
         socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
-        // checkIfEqaul(this.dataset.value);
-   
     });
     
     badkuip.addEventListener('click', function(){
         badkuip.style.visibility = "hidden";
         socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
-        // checkIfEqaul(this.dataset.value);
+
     });
     
     borstel.addEventListener('click', function(){
         borstel.style.visibility = "hidden";
         socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
-        // checkIfEqaul(this.dataset.value);
     });
     
     kikker.addEventListener('click', function(){
         kikker.style.visibility = "hidden";
         socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
-        // checkIfEqaul(this.dataset.value);
     });
 }
 clickObject();
-
-// function getRandomImage(){
-
-//     var imageArray = new Array();  
-
-//     imageArray[0]= "Spook.png";  
-//     imageArray[1]= "bad.png";  
-//     imageArray[2]= "Borstel.png";  
-//     imageArray[3]= "doekie.png";  
-//     imageArray[4]= "frogie.png";
-
-//     let randomIndex = Math.floor(Math.random() * imageArray.length);
-
-//     selected_image =  imageArray[randomIndex];
-//     document.getElementById('randomImages--js').src = '/img/games/vlottegeest/' + selected_image;
-// }
 
 function checkIfEqaul(value){
     
@@ -87,6 +69,10 @@ function checkIfEqaul(value){
         console.log("false");
         return false;
     }
+}
+
+function getPlayerName(player_id){
+    return playernames[getPlayer(player_id)-1];
 }
 
 socket.on('connect', function() {
@@ -109,12 +95,18 @@ socket.on('rondeNummer', function(data) {
         console.log(data.Winner);
     }
     rondeNummer = data.rondeNummer;
+    cardCount.innerText = totalCards;
+    // if(cardCount)
+
 });
 
 
 socket.on('randomObject', function(data){
     console.log(data);
-    document.getElementById('randomImages--js').src = data.randomObject;
+    function turnVisibilityOn(){
+        document.getElementById('randomImages--js').src = data.randomObject;
+    }
+    setTimeout(turnVisibilityOn, 500);
 });
 
 
@@ -127,11 +119,42 @@ socket.on('vg_getUsers', function(data) {
 socket.on('vg_playerNames', function(data){
     console.log(data);
     playernames = data;
+   
 });
 
 socket.on('game_start', function(data) {
     gameStart(data);
     
+});
+
+function getPlayer(user_id) {
+    return players.indexOf(Number(user_id)) + 1;
+    
+}
+socket.on('scores', function(data) {
+    
+    var keys = Object.keys(data);
+    // var min = data[keys[0]]; // ignoring case of empty list for conciseness
+    var userid = keys[0];
+    var score = data[keys[0]];
+    var i;
+
+    for (i = 1; i < keys.length; i++) {
+        console.log(userid, keys[i], value, score);
+        var value = data[keys[i]];
+        if (value > score) userid = keys[i];
+        if (value > score) score = value;
+    }
+    console.log(userid);
+    console.log(score);
+    if(score){
+        function turnVisibilityOff(){
+            bord.style.display = "none";
+            gameWinner.style.display = "flex";
+            gameWinner.querySelector("p").innerText = getPlayerName(userid) +  " heeft gewonnen!"
+        }
+        setTimeout(turnVisibilityOff, 0);
+    }
 });
 
 socket.on('vg_state', function(data) {
@@ -150,42 +173,25 @@ socket.emit('vg_state', { game: game, id: id });
 socket.emit('vg_getUsers', { game: game, id: id });
 socket.emit('vg_playerNames', { game: game, id: id });
 
-
-cardCount = document.getElementById('cardCount');
-flipButton = document.getElementById('turn--180');
-// flipButtonBack = document.getElementById('turn--360');
-
 function decrementCardAmount(){
     totalCards--;
-    // if(totalCars > 0){
-    //     totalCards--;
-    // }
-    // else{
-    //     console.log("game over");
-    // }
-    cardCount.innerHTML = totalCards;
 }
 
 function cardFlip(){
     document.querySelector('.vs__flip-card-inner').style.transform = 'rotateY(180deg)';
-    // getRandomImage();
     flipButton.disabled = true;
-
-    function turnVisibilityOn(){
-        kleed.style.visibility = "visible";
-        spook.style.visibility = "visible";
-        badkuip.style.visibility = "visible";
-        borstel.style.visibility = "visible";
-        kikker.style.visibility = "visible";
-    }
-    setTimeout(turnVisibilityOn, 1000);
+    kleed.style.visibility = "visible";
+    spook.style.visibility = "visible";
+    badkuip.style.visibility = "visible";
+    borstel.style.visibility = "visible";
+    kikker.style.visibility = "visible";
 }
 
 function cardFlipBack(){
     document.querySelector('.vs__flip-card-inner').style.transform = 'rotateY(360deg)';
+    console.log(totalCards);
     decrementCardAmount();
     flipButton.disabled = false;
-    // flipButtonBack.disabled = true;
 }
 
 window.addEventListener('load', function() {
