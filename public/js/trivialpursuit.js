@@ -105,6 +105,14 @@ function beginGame(){
         players = data;    
     });
 
+    socket.on('game', function(data) {
+        if (data.game == false) {
+            socket.emit('game', { game: game, id: id });
+        } else {
+            console.log("Redirect to other game??", data);
+        }
+    });
+
     socket.on('tp_playerNames', function(data){
         console.log("playerNames", data);
         playernames = data;
