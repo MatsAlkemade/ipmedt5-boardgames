@@ -12,7 +12,8 @@ class VierOpEenRijController extends Controller
 {
 	public function index() {
 		// return view('games.fourinarow');
-		return 'index';
+		return view('games.fourinarowLobby');
+
 	}
 
     static public function place($websocket, $data) {
