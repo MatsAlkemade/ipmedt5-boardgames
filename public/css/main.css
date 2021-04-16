@@ -158,6 +158,65 @@ body {
     color: red;
     margin-bottom: .2rem;
 }
+/* ganzenbord */
+
+
+.gb__title{
+    margin-top:4rem;
+    margin-bottom:6rem;
+    text-align: center;
+}
+
+.gb__players {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    list-style: none;
+    column-gap: 2rem;
+    justify-content: center;  
+    max-width: 100%;
+    margin:1rem;
+    margin-top: 5rem;
+
+    
+}
+.gb__player {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+
+}
+
+.gb__players__figure > img {
+    position: relative;
+    border-radius: 1rem;
+    width: 100%;
+}
+
+.gb__player__goose {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    
+}
+
+.gb__players__goose__figure> figcaption {
+    position: relative;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 2rem;
+    display:grid;
+    margin-bottom: 4rem;
+}
+
+.gb__players__goose__figure > img {
+    position: relative;
+    border-radius: 1rem;
+    width: 100%;
+
+}
+
 
 .defaultGame {
     width: 100%;
@@ -198,7 +257,7 @@ body {
 }
 
 .defaultGame__footer {
-    height: 10%;
+    height: 7.5%;
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -207,7 +266,7 @@ body {
 .defaultGame__footer__list {
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .defaultGame__footer__list__item {
@@ -222,7 +281,6 @@ body {
 
 .defaultGame__footer__list__item:nth-of-type(2) {
     border-left: solid .2rem var(--bg);
-    border-right: solid .2rem var(--bg);
 }
 
 .defaultGame__footer__list__item:hover {
@@ -259,7 +317,7 @@ body {
     position: fixed;
     width: 100%;
     height: 60%;
-    bottom: 10%;
+    bottom: 7.5%;
 }
 
 .defaultGame__popups__popup {
@@ -320,118 +378,98 @@ body {
     }
 }
 
-.tsPos {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    margin-top: 2rem;
-}
-
-.tsPos__team {
+.lobby {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
 }
 
-.tsPos__team__title {
+.lobby__title {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.lobby__title > h1 {
+    font-size: 2.8rem;
+}
+
+.lobby__title > h2 {
     font-size: 2.4rem;
-    margin-bottom: 2rem;
 }
 
-.tsPos__team__img {
-    margin-bottom: 2rem;
-}
-
-.tsPos__team__pos {
+.lobby__users {
     display: flex;
-    justify-content: center;
     align-items: center;
-    background-color: white;
-    width: 10rem;
-    height: 10rem;
-    font-size: 4rem;
-    border: solid .2rem black;
-    border-radius: 1.5rem;
-}
-
-.ts {
-    height: 80%;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-.ts__cardWrapper {
-    margin-top: 12rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform-style: preserve-3d;
-    transition: all 2s;
-}
-
-.ts__card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30rem;
-    height: 20rem;
+    color: black;
     background-color: var(--secondary);
+    border: solid .1rem var(--primary);
+    padding: 1rem 0;
     border-radius: 1.5rem;
-    position: absolute;
+    margin: 1rem 2rem;
+    min-height: 22.32rem;
 }
 
-.ts__card__form {
+.lobby__users > h2 {
+    font-size: 2.4rem;
+    padding-bottom: 1rem;
+}
+
+.lobby__users__list {
     list-style: none;
 }
 
-.ts__card__form__item {
+.lobby__users__list__item {
+    padding: .5rem 3rem;
+    border-top: solid .1rem var(--primary);
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    color: black;
-    margin-bottom: 1.5rem;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
-.ts__card__form__item > input {
-    margin-left: 10rem;
+.lobby__users__list__item > p {
+    overflow-x: hidden;
+    grid-column: span 9;
+    padding-left: 1rem;
 }
 
-.ts__card__form__item:last-of-type{
-    margin-bottom: 0;
+.lobby__users__list__item > i {
+    padding: 0 .5rem;
+    margin-top: .2rem;
+    opacity: .5;
 }
 
-.ts__back {
-    z-index: -1;
-    transform: rotateY(180deg);
+.lobby__users__list__item > i:hover {
+    cursor: pointer;
+    opacity: 1;
 }
 
-.ts__timer {
-    margin-top: 12rem;
-    width: 30rem;
-    text-align: center;
+
+.lobby__users__list__item:last-of-type {
+    border-bottom: solid .1rem var(--primary);
 }
 
-.ts__timer__line {
-    width: 100%;
-    height: 1.5rem;
-    border: solid .1rem var(--primary);
+.fa-trash-alt {
+    color: gray;
 }
 
-.ts__timer__line > section {
-    background-color: var(--primary);
-    width: 100%;
-    height: 100%;
+.redFlag {
+    color: orangered;
 }
 
-.ts__timer__time {
-    margin-top: 1rem;
+.blueFlag {
+    color: cornflowerblue;
 }
 
-.ts__btns {
+.lobby__error > p {
+    opacity: 0;
+}
+
+.lobby__button {
     margin-top: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 6rem;
+}
+
+.lobby__button > button {
+    font-size: 1.8rem;
 }
 
 /* TRIVIAL PURSUIT */
@@ -672,6 +710,10 @@ body {
     outline: none;
 }
 
+.u-ul-style{
+    list-style: none;
+}
+
 .u-button-style:disabled {
     background-color: rgba(17,243,162, .5);
     cursor: default;
@@ -681,6 +723,9 @@ body {
 }
 
 
+.u-ul-style{
+    list-style: none;
+}
 /* Media queries */
 
 @media(min-width: 37.5rem){

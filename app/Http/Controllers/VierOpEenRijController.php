@@ -20,9 +20,6 @@ class VierOpEenRijController extends Controller
         if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
         if (!sessionExists($data['id'])) return var_dump("Session does not exist!");
 
-        var_dump("fiar_place");
-        var_dump($data);
-
     	$gameData = GameStateController::getData($data["id"]);
     	if (!array_key_exists("actions", $gameData)) {
     		$gameData["actions"] = [];
@@ -237,6 +234,7 @@ class VierOpEenRijController extends Controller
     		array_push($gameData["actions"], ["action" => 'game_start',"player" => $websocket->getUserId()]);
 			$websocket->to($data['game'] . '.' . $data['id'])->emit('game_start', [ 'start' => true ]);
             $gameData["started"] = true;
+
     		GameStateController::setData($data["id"], $gameData);
 
             $websocket->to('vieropeenrij.' . $data["id"])->emit('turn', ["turn" => GameStateController::nextTurn($data["id"])]);

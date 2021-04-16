@@ -3,9 +3,15 @@
     30 Seconds
 @endsection
 
-<?php
-    $r = mt_rand(0,1);
-?>
+@section('head-extra')
+    <script type="text/javascript">
+        let __u__ = "{{ auth()->user()->email }}";
+        let __p__ = "{{ auth()->user()->password }}";
+        let user_id = {{ auth()->user()->id }};
+    </script>
+    <script src="/js/thirtyseconds.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/thirtyseconds.css">
+@endsection
 
 @section('gamecontent')
     <article class="ts">
@@ -55,32 +61,12 @@
 @endsection
 
 @section('livechat')
-
+    <li class="livechat__item livechat__item--console">
+        <p class="livechat__item__username">30 Seconds</p>
+        <p class="livechat__item__message">Welkom bij 30 seconds! Dit is de chat.</p>
+    </li>
 @endsection
 
 @section('rules')
     <p>{{$ts->description}}</p>
-@endsection
-
-@section('position')
-    <section class="tsPos">
-        <section class="tsPos__team">
-            <p class="tsPos__team__title">Rood</p>
-            <figure class="tsPos__team__img">
-                <img src="/img/ts/ts_rood.png" alt="Logo Team Rood">
-            </figure>
-            <section class="tsPos__team__pos">
-                <p>0</p>
-            </section>
-        </section>
-        <section class="tsPos__team">
-            <p class="tsPos__team__title">Blauw</p>
-            <figure class="tsPos__team__img">
-                <img src="/img/ts/ts_blauw.png" alt="Logo Team Blauw">
-            </figure>
-            <section class="tsPos__team__pos">
-                <p>0</p>
-            </section>
-        </section>
-    </section>
 @endsection
