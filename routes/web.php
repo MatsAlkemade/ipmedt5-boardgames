@@ -29,7 +29,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/thirtyseconds/{id}', [\App\Http\Controllers\ThirtySecondsController::class, 'play']);
 
     Route::get('/trivialpursuit', [\App\Http\Controllers\TrivialPursuitController::class, 'index']);
-    Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'index']);
+    Route::get('/trivialpursuit/question/{id}', [\App\Http\Controllers\TrivialPursuitQuestionsController::class, 'index']);
+
+    Route::get('/trivialpursuit/create', [\App\Http\Controllers\TrivialPursuitController::class, 'create']);
+    Route::get('/trivialpursuit/{id}', [\App\Http\Controllers\TrivialPursuitController::class, 'play']);
 
     Route::get('/vieropeenrij', [VierOpEenRijController::class, 'index']);
     Route::get('/vieropeenrij/create', [VierOpEenRijController::class, 'create']);

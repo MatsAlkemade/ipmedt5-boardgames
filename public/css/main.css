@@ -749,9 +749,13 @@ body {
     background-color: var(--primary);
     color: var(--secondary) i;
     padding: 2rem;
-    margin: 4rem;
     border-radius: 0.8rem;
     text-align: center;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
 }
 
 .trivialpursuit__question{
@@ -778,6 +782,68 @@ body {
     color: var(--secondary) i !important;
     background-color: var(--bg) !important;
 }
+
+.trivialpursuit__pie_container{
+    width: 100%;
+    height: 100%;
+    display: none;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.trivialpursuit__pie{
+    height: 25rem;
+    width: 100%;
+    display: none;
+}
+
+.trivialpursuit__items{
+    width: 100%;
+    height: 6rem;
+    margin-top: 1rem;
+    opacity: 0.4;
+    color: var(--bg);
+    text-align: center;
+    line-height: 6rem;
+}
+
+.trivialpursuit__items[data-type-categorie="WetenschapNatuur"]{
+    background-color: lightblue;
+}
+
+.trivialpursuit__items[data-type-categorie="Sport"]{
+    background-color: orange;
+}
+
+.trivialpursuit__items[data-type-categorie="KunstLiteratuur"]{
+    background-color: plum;
+}
+
+.trivialpursuit__items[data-type-categorie="Geschiedenis"]{
+    background-color: red;
+}
+
+.trivialpursuit__items[data-type-categorie="Amusument"]{
+    background-color: hotpink;
+}
+
+.trivialpursuit__items[data-type-categorie="Aardrijkskunde"]{
+    background-color: green;
+}
+
+.tp_winner{
+    text-align: center;
+}
+
+.tp__start_btn{
+    font-size: 200%;
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%, -50%);
+}
+
 
 @media only screen and (max-width: 62.5rem){
     .trivialpursuit__article{
@@ -867,6 +933,10 @@ body {
 
 .u-button-style:focus {
     outline: none;
+}
+
+.u-button-style-absolute:active{
+    transform: translateY(.3rem) translateX(-50%);
 }
 
 .u-ul-style{

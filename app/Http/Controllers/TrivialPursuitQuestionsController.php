@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use SwooleTW\Http\Websocket\Facades\Websocket;
+use SwooleTW\Http\Websocket\Facades\Room;
+
 
 class TrivialPursuitQuestionsController extends Controller
 {
