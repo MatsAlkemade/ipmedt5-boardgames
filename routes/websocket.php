@@ -8,6 +8,7 @@ use App\Http\Controllers\VierOpEenRijController;
 use App\Http\Controllers\GanzenbordController;
 use App\Http\Controllers\ThirtySecondsController;
 use App\Http\Controllers\TrivialPursuitController;
+use App\Http\Controllers\VlotteGeestController;
 use App\Http\Controllers\GameStateController;
 
 use App\Models\User;
@@ -72,6 +73,9 @@ Websocket::on('example', function ($websocket, $data) {
 Websocket::on('ts_start', [ThirtySecondsController::class, 'gameStart']);
 Websocket::on('game_start', [GanzenbordController::class, 'gameStart']);
 // Websocket::on('game_start', [TrivialPursuitController::class, 'gameStart']);
+Websocket::on('game_start', [VierOpEenRijController::class, 'gameStart']);
+Websocket::on('game_start', [VlotteGeestController::class, 'gameStart']);
+Websocket::on('turnCards', [VlotteGeestController::class, 'turnCards']);
 
 /*
 	Game setup
@@ -91,7 +95,6 @@ Websocket::on('session', function($websocket) {
 
 	$websocket->emit('session', GameStateController::fc());
 });
-
 
 Websocket::on('join_session', function($websocket, $data) {
 	if (!authCheck($websocket)) return notLoggedInMsg($websocket); // NOT LOGGED IN
@@ -150,6 +153,11 @@ Websocket::on('tp_lopen', [TrivialPursuitController::class, 'lopen']);
 Websocket::on('tp_getPlaats', [TrivialPursuitController::class, 'getPlaats']);
 Websocket::on('tp_getWinner', [TrivialPursuitController::class, 'lopen']);
 
+// vlottegeest
+Websocket::on('vg_getUsers', [VlotteGeestController::class, 'getUsers']);
+Websocket::on('vg_playerNames', [VlotteGeestController::class, 'getUsers']);
+Websocket::on('objecten', [VlotteGeestController::class, 'objecten']);
+Websocket::on('vg_state', [VlotteGeestController::class, 'getState']);
 
 /* CHAT */
 Websocket::on('chat_msg', function($websocket, $data) {

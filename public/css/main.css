@@ -15,6 +15,7 @@
 html {
     box-sizing: inherit;
     font-size: 62.5%;
+    width: 100%;
 }
 
 body {
@@ -1009,30 +1010,6 @@ body {
     }
 }
 
-.vg__objects{
-    background-color: #11F3A2;
-    height: 100vh;
-    width: 100%;
-    display: grid;
-    grid-template-columns: minmax(20px, auto) 1fr 1fr 1fr;
-}
-
-
-.vg__section__list__item:nth-last-child(){
-
-    background-color: black;
-    height: 4rem;
-    width: 4rem;
-}
-
-.vg__section__list__item__image{
-
-    
-    max-width: 2rem;
-    height: 2rem;
-    width: 100%;
-}
-
 .fa-comment-alt.icon__badge {
     position: relative;
 }
@@ -1108,4 +1085,8 @@ body {
     box-sizing: border-box;
     width: 8.5rem;
     margin-right: 1rem;
+}
+
+#js--rules{
+    overflow-y: auto;
 }
