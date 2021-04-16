@@ -5,7 +5,8 @@
 
 @section('head-extra')
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<script src="//unpkg.com/string-similarity/umd/string-similarity.min.js">//dit zorgt ervoor dat de spellingCheck() werkt en volgens de Dice coefficient</script>
+<script src="//unpkg.com/string-similarity/umd/string-similarity.min.js"></script>
+<!-- dit zorgt ervoor dat de spellingCheck() werkt en volgens de Dice coefficient -->
 <script type="text/javascript">
     let __u__ = "{{ auth()->user()->email }}";
     let __p__ = "{{ auth()->user()->password }}";
@@ -62,7 +63,7 @@
 
         socket.on('tp_getPlaats', function(data) {
             plaats = data[{{$loggedId}}].plek;
-            console.log("__GET_PLAATS__", plaats);
+            console.log("__GET_PLAATS__", data);
         });
 
         socket.on('tp_getWinner', function(data) {

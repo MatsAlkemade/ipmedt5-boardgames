@@ -718,7 +718,7 @@ body {
     font-size: 120%;
     width: 25rem;
     height: 5rem;
-    color: var(--secondary) i !important;
+    color: var(--secondary) !important;
 }
 
 .trivialpursuit__btn[data-categorie="WetenschapNatuur"]{
@@ -749,7 +749,7 @@ body {
     width: 40vw;
     height: 60vh;
     background-color: var(--primary);
-    color: var(--secondary) i;
+    color: var(--secondary);
     padding: 2rem;
     border-radius: 0.8rem;
     text-align: center;
@@ -781,7 +781,7 @@ body {
     width: 50%;
     padding: 1rem;
     font-size: 120%;
-    color: var(--secondary) i !important;
+    color: var(--secondary) !important;
     background-color: var(--bg) !important;
 }
 
@@ -885,6 +885,10 @@ body {
 }
 
 @media only screen and (max-width: 25rem){
+    .trivialpursuit__question{
+        font-size: 150%;
+    }
+
     .trivialpursuit__categories{
         width: 100%;
     }
@@ -899,11 +903,11 @@ body {
 
     .trivialpursuit__article{
         width: 95vw;
-        margin: 2rem;
     }
 
     .trivialpursuit__answer{
         width: 90%;
+        margin-bottom: 3rem;
     }
 }
 

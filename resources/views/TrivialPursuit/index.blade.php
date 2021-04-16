@@ -1,16 +1,16 @@
-@extends('default')
-
+@extends('games.defaultGame')
 @section('title')
-    &#128126; &#127918; Ultimate Boardgames | {{$trivialpursuit->name}}
+&#128126; &#127918; Ultimate Boardgames | {{$trivialpursuit->name}}
 @endsection
-@section('content')
+
+@section('gamecontent')
 
 <header class="trivialpursuit__header">
     <h1 class="trivialpursuit__title">{{$trivialpursuit->name}}</h1>
     <h3 class="trivialpursuit__desc">{{$trivialpursuit->description}}</h3>
     <h2 class="trivialpursuit__home"><i class="far fa-arrow-left"></i> UBG</h2>
 </header>
-<main class="trivialpursuit">
+<article class="trivialpursuit">
     <section class="trivialpursuit__section">
         <h4 class="trivialpursuit__section__title">Spelregels</h4>
         <p class="trivialpursuit__section__text">Bij {{$trivialpursuit->name}} moet jij als eerst je taart vullen. Je kan de taart vullen door op de speciale vakje te komen en dan de vraag goed te beantwoorden. Als je de vraag goed hebt krijg je een punt.</p>
@@ -35,6 +35,5 @@
             <li class="trivialpursuit__categorie"><button data-categorie="Aardrijkskunde" class="u-button-style trivialpursuit__btn">Aardrijkskunde</button></li>
         </ul>
     </section>
-    <section></section>
-</main>
+</article>
 @endsection

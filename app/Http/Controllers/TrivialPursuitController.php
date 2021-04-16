@@ -59,9 +59,9 @@ class TrivialPursuitController extends Controller
 		}
         
         $plaats =  $gameData["positie"];
-
+        
+        $websocket->to('trivialpursuit.' . $data["id"])->emit('tp_getPlaats', $plaats);
         var_dump($plaats);
-        $websocket->emit('tp_getPlaats', $plaats);
     }
 
     static public function lopen($websocket, $data) {
