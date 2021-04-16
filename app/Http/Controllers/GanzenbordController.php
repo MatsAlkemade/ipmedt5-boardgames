@@ -188,6 +188,10 @@ class GanzenbordController extends Controller
 				var_dump("VIEROPEENRIJ");
 				return VierOpEenRijController::gameStart($websocket, $data);
 				break;
+			case 'trivialpursuit':
+				var_dump("TRIVIALPURSUIT");
+				return TrivialPursuitController::gameStart($websocket, $data);
+				break;
 		}
 		var_dump("after switch");
         // if ($data["game"] != "ganzenbord") return var_dump('not same!', $data["game"]);
