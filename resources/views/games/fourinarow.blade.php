@@ -33,3 +33,7 @@
 		</section>
 	</section>
 @endsection
+
+@section('rules')
+    <p class="gb__description">Deze versie van Vier Op Een Rij heeft 8 rijen en 8 colommen. </p>
+@endsection
