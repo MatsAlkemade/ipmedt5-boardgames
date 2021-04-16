@@ -29,28 +29,28 @@ function gameStart(data) {
 function clickObject(){
     kleed.addEventListener('click', function(){
         kleed.style.visibility = "hidden";
-        socket.emit('objecten', {object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
+        socket.emit('objecten', {object: "doekie",game: game, id: id, rondeNummer: rondeNummer });
     });
     
     spook.addEventListener('click', function(){
         spook.style.visibility = "hidden";
-        socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
+        socket.emit('objecten', { object: "spook",game: game, id: id, rondeNummer: rondeNummer });
     });
     
     badkuip.addEventListener('click', function(){
         badkuip.style.visibility = "hidden";
-        socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
+        socket.emit('objecten', { object: "bad",game: game, id: id, rondeNummer: rondeNummer });
 
     });
     
     borstel.addEventListener('click', function(){
         borstel.style.visibility = "hidden";
-        socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
+        socket.emit('objecten', { object: "borstel",game: game, id: id, rondeNummer: rondeNummer });
     });
     
     kikker.addEventListener('click', function(){
         kikker.style.visibility = "hidden";
-        socket.emit('objecten', { object: checkIfEqaul(this.dataset.value),rondeNummer: rondeNummer, game: game, id: id });
+        socket.emit('objecten', { object: "frogie",game: game, id: id, rondeNummer: rondeNummer });
     });
 }
 clickObject();
