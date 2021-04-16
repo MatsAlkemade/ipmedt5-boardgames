@@ -72,98 +72,71 @@ function setupChat() {
 
 window.addEventListener('load', setupChat);
 
+function beginGame(){
 
-let item;
-
-function updatePie() {
-    const piece = document.getElementsByClassName("trivialpursuit__items");
-    piece[item].style.opacity = "1";
-}
-
-let winner;
-
-function checkWinner() {
-    let piece = document.getElementsByClassName("trivialpursuit__items");
-
-    for (let index = 0; index < piece.length; index++) {
-
-        if(winner == 6){
-            console.log("gewonnen");
-            break;
-        }
-
-        else if(piece[index].style.opacity == 1){
-            winner = winner + 1;
-        }
-
-        else if(piece[index] == 6 || piece[index] == 12 || piece[index] == 18){
-            winner == 0;
-        }
-
-        else{
-            winner = 0;
-        }
-        
+    function tp_setup() {
+        console.log("__SETUP__");
+        document.getElementsByClassName("trivialpursuit__article")[0].style.display = "block";
+        document.getElementById('js--gewonnen').innerText = "Het spel is begonnen";
+        btn.style.display = "none";
     }
-}
 
-function tp_setup() {
-    console.log("SETUP");
-}
-
-function gameStart(data) {
-	console.log("START THE GAME", data);
-	if (data.start == true) {
-		const tp = document.querySelector('.trivialpursuit__pie_container');
-		tp.style.display = "grid";
-
-	}
-}
-
-socket.emit('tp_getUsers', { game: game, id: id });
-socket.emit('tp_playerNames', { game: game, id: id });
-socket.emit('tp_question', { game: game, id: id });
-socket.emit('tp_state', { game: game, id: id });
-
-
-
-let players;
-let playernames;
-let questionId;
-
-socket.on('tp_getUsers', function(data) {
-    console.log("tp_getUsers", data);
-    players = data;    
-});
-
-socket.on('tp_playerNames', function(data){
-    console.log("playerNames", data);
-    playernames = data;
-    tp_setup();
-});
-
-socket.on('tp_question', function(data) {
-    console.log("tp_question", data);
-    questionId = data;
-    createQuestion();
-});
-
-socket.on('connect', function(){
-    socket.emit('join_session', { game: game, id: id});
-});
-
-socket.on('game_start', function(data) {
-	gameStart(data);
-});
-
-socket.on('tp_state', function(data) {
-	console.log("STATE", data);
-    if (data.started == true){
-        gameStart({ start: true });
+    function gameStart(data) {
+        console.log("START THE GAME", data);
+        if (data.start == true) {
+            document.getElementsByClassName("trivialpursuit__article")[0].style.display = "block";
+            document.getElementById('js--gewonnen').innerText = "Het spel is begonnen";
+            btn.style.display = "none";
+        }
     }
-	playerPositions = data.playerPositions;
 
-	for (const userid in playerPositions) {
-		goto(getPlayer(userid), playerPositions[userid]);
-	}
-});
+    socket.emit('tp_getUsers', { game: game, id: id });
+    socket.emit('tp_playerNames', { game: game, id: id });
+    socket.emit('tp_question', { game: game, id: id });
+    socket.emit('tp_state', { game: game, id: id });
+
+
+
+    let players;
+    let playernames;
+    let questionId;
+
+    socket.on('tp_getUsers', function(data) {
+        console.log("tp_getUsers", data);
+        players = data;    
+    });
+
+    socket.on('tp_playerNames', function(data){
+        console.log("playerNames", data);
+        playernames = data;
+    });
+
+    socket.on('connect', function(){
+        socket.emit('join_session', { game: game, id: id});
+    });
+
+    socket.on('game_start', function(data) {
+        gameStart(data);
+    });
+
+    socket.on('tp_state', function(data) {
+        console.log("STATE", data);
+        if (data.started == true){
+            gameStart({ start: true });
+            tp_setup();
+        }
+        playerPositions = data.playerPositions;
+
+        for (const userid in playerPositions) {
+            goto(getPlayer(userid), playerPositions[userid]);
+        }
+    });
+
+    const btn = document.getElementById('js--tp__start');
+
+    function begin(){
+        socket.emit('game_start', {game: game, id: id});
+    }
+
+    btn.addEventListener('click', begin);
+}

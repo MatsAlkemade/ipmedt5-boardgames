@@ -13,89 +13,97 @@
 </script>
 <script src="/js/trivialpursuit.js"></script>
 <script>
-    let answer;
-    let question;
-    let correct_answer;
-    let plaats = 0;
-    let questions = <?= $questions ?>; //leest de php varibalen uit en zet het om naar een .json bestand
+    function load(){
+        let answer;
+        let question;
+        let correct_answer;
+        let plaats = 0;
+        let questions = <?= $questions ?>; //leest de php varibalen uit en zet het om naar een .json bestand
 
-    function spellingCheck() {
-        answer = document.getElementById('js--answer'); //pakt het ingevulde antwoord
-        socket.emit('tp_getPlaats', {game: game, id: id}); //pakt de huidige plek op het bord
-        console.log(plaats);
+        function spellingCheck() {
+            answer = document.getElementById('js--answer'); //pakt het ingevulde antwoord
+            socket.emit('tp_getPlaats', {game: game, id: id}); //pakt de huidige plek op het bord
+            console.log(plaats);
 
-        if(correct_answer.match(/^-?\d+$/)){ //kijkt of de vraag een int is
-            if(Object.is(answer.value, correct_answer)){
-                console.log("int goed");
-                plaats = plaats + 1;
-                socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
-                answer.style.backgroundColor = "green";
+            if(correct_answer.match(/^-?\d+$/)){ //kijkt of de vraag een int is
+                if(Object.is(answer.value, correct_answer)){
+                    console.log("int goed");
+                    plaats = plaats + 1;
+                    socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
+                    answer.style.backgroundColor = "green";
+                }
+                else{
+                    console.log("int fout");
+                    plaats = plaats - 1;
+                    socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
+                    answer.style.backgroundColor = "red";
+                }
             }
             else{
-                console.log("int fout");
-                plaats = plaats - 1;
-                socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
-                answer.style.backgroundColor = "red";
+                answer.value = answer.value.toLowerCase(); //zet de user input naar kleine letters want stringSimilarity is hoofdletter gevoelig
+                correct_answer = correct_answer.toLowerCase(); // zelfde als hierboven maar dan voort het antwoord
+                let spellingcheck = stringSimilarity.compareTwoStrings(correct_answer, answer.value); //voert de controlle uit en krijgt een getal tussen de 0 en 1 terug
+                if(spellingcheck >= 0.8){ //als de overeenkomst 80% is het goed anders fout
+                    console.log('String goed')
+                    plaats = plaats + 1;
+                    socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
+                    answer.style.backgroundColor = "green";
+                }
+                else{
+                    console.log('String fout')
+                    plaats = plaats - 1;
+                    socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
+                    answer.style.backgroundColor = "red";
+                }
             }
+            setTimeout(function() {
+                socket.emit('tp_question', { game: game, id: id }); //pakt een andere vraag
+            }, 1000);
         }
-        else{
-            answer.value = answer.value.toLowerCase(); //zet de user input naar kleine letters want stringSimilarity is hoofdletter gevoelig
-            correct_answer = correct_answer.toLowerCase(); // zelfde als hierboven maar dan voort het antwoord
-            let spellingcheck = stringSimilarity.compareTwoStrings(correct_answer, answer.value); //voert de controlle uit en krijgt een getal tussen de 0 en 1 terug
-            if(spellingcheck >= 0.8){ //als de overeenkomst 80% is het goed anders fout
-                console.log('String goed')
-                plaats = plaats + 1;
-                socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
-                answer.style.backgroundColor = "green";
-            }
-            else{
-                console.log('String fout')
-                plaats = plaats - 1;
-                socket.emit('tp_lopen', {plek: plaats, game: game, id: id });
-                answer.style.backgroundColor = "red";
-            }
-        }
-        setTimeout(function() {
-            socket.emit('tp_question', { game: game, id: id }); //pakt een andere vraag
-        }, 1000);
-    }
-    
-    window.addEventListener('load', function() {
+        
         question = document.getElementById('js--question');
         correct_answer = document.getElementById('js--correct-answer').value;
         document.getElementsByClassName('trivialpursuit__send')[0].addEventListener('click', spellingCheck);
-        socket.emit('tp_question', { game: game, id: id });
-    });
 
-    socket.on('tp_getPlaats', function(data) {
-        plaats = data[{{$loggedId}}].plek;
-        socket.emit('tp_getWinner', {plek: plaats, game: game, id: id });
+        socket.on('tp_getPlaats', function(data) {
+            plaats = data[{{$loggedId}}].plek;
+            socket.emit('tp_getWinner', {plek: plaats, game: game, id: id });
 
-    });
+        });
 
-    socket.on('tp_getWinner', function(data) {
-        document.getElementById('js--gewonnen').innerText = data[0] + " heeft gewonnen!";
-    });
+        socket.on('tp_getWinner', function(data) {
+            document.getElementById('js--gewonnen').innerText = data[0] + " heeft gewonnen!";
+        });
 
-    function createQuestion(){
-        answer = document.getElementById('js--answer');
-        answer.value = "";
-        answer.style.backgroundColor = "white";
-        question.innerText = questions[questionId].question;
-        correct_answer = questions[questionId].answer;
+        function createQuestion(){
+            answer = document.getElementById('js--answer');
+            answer.value = "";
+            answer.style.backgroundColor = "white";
+            question.innerText = questions[questionId].question;
+            correct_answer = questions[questionId].answer;
+        }
+
+        socket.on('tp_question', function(data) {
+            console.log("tp_question", data);
+            questionId = data;
+            createQuestion();
+        });
     }
-
+    window.addEventListener('load', load);
+    window.addEventListener('load', beginGame);
 </script>
 @endsection
 
 @section('gamecontent')
-    <h2 class="tp_winner" id="js--gewonnen">Er is nog geen winnaar</h2>
+    <h2 class="tp_winner" id="js--gewonnen">Het spel is nog niet begonnen</h2>
     <section class="trivialpursuit__article">
         <h2 id="js--question" class="trivialpursuit__question"></h2>
         <input id="js--answer" class="trivialpursuit__answer" type="text" placeholder="Antwoord">
         <input id="js--correct-answer" type="hidden" value="">
         <button class="trivialpursuit__send u-button-style">Antwoord verzenden</button>
     </section>
+
+    <button class="tp__start_btn u-button-style u-button-style-absolute" id='js--tp__start'>Begin game</button>
 @endsection
 
 @section('livechat')

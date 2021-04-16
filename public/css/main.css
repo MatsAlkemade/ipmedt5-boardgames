@@ -596,6 +596,7 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    display: none;
 }
 
 .trivialpursuit__question{
@@ -674,6 +675,14 @@ body {
 
 .tp_winner{
     text-align: center;
+}
+
+.tp__start_btn{
+    font-size: 200%;
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%, -50%);
 }
 
 
@@ -765,6 +774,10 @@ body {
 
 .u-button-style:focus {
     outline: none;
+}
+
+.u-button-style-absolute:active{
+    transform: translateY(.3rem) translateX(-50%);
 }
 
 .u-ul-style{
