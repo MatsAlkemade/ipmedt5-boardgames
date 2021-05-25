@@ -51,10 +51,8 @@
             if(plek == -1){
                 plek = 0;
             }
-            socket.emit('tp_question', { game: game, id: id }); //pakt een andere vraag
             socket.emit('tp_lopen', {plek: plek, game: game, id: id }); //update de plek op het bord
             socket.emit('tp_getPlaats', {game: game, id: id}); //pakt de nieuwe plek op het bord
-
         }
         
         question = document.getElementById('js--question');

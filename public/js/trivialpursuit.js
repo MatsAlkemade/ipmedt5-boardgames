@@ -105,6 +105,12 @@ function beginGame(){
         players = data;    
     });
 
+    socket.on('tp_turnCard', function(data) {
+        if (data == user_id){
+            socket.emit('tp_question', { game: game, id: id }); //pakt een andere vraag
+        }
+    });
+
     socket.on('game', function(data) {
         if (data.game == false) {
             socket.emit('game', { game: game, id: id });

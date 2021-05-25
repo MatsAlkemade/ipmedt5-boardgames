@@ -59,7 +59,7 @@ class TrivialPursuitController extends Controller
 		}
         
         $plaats =  $gameData["positie"];
-        
+
         $websocket->to('trivialpursuit.' . $data["id"])->emit('tp_getPlaats', $plaats);
         var_dump($plaats);
     }
@@ -80,6 +80,7 @@ class TrivialPursuitController extends Controller
         if (!array_key_exists($user_id, $gameData["positie"])) {
             $gameData["positie"][$user_id] = [
                 "plek" => 0,
+                "id" => $user_id,
             ];
         }
 
