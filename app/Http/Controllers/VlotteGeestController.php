@@ -10,7 +10,7 @@ use SwooleTW\Http\Websocket\Facades\Room;
 class VlotteGeestController extends Controller
 {
     public function index(){
-        return view('games.vlottegeest');
+        return view('games.vlotteGeest');
     }
 
     static public function turnCards($websocket, $data){
@@ -111,7 +111,7 @@ class VlotteGeestController extends Controller
           $userIds = GameStateController::session($id)["users"];
           $users = User::select('name')->whereIn('id', $userIds)->get();
           Websocket::broadcast()->to('vlottegeest.' . $id)->emit('users', $users);
-          return view('games.vlottegeest', [ 'gameCode' => $id, 'users' => $users ]);
+          return view('games.vlotteGeest', [ 'gameCode' => $id, 'users' => $users ]);
         }
 
         return "Game does not exist!";
