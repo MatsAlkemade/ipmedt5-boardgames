@@ -10,7 +10,7 @@ use SwooleTW\Http\Websocket\Facades\Room;
 class VlotteGeestController extends Controller
 {
     public function index(){
-        return view('games.vlottegeest');
+        return view('games.vlotteGeest');
     }
 
     static public function turnCards($websocket, $data){
