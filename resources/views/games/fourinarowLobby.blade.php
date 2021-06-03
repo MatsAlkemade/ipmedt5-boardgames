@@ -15,7 +15,7 @@
     <section class = "joinGame__buttons">
          <input class="u-button-style joinGame__buttonCreate" type="button" onclick="location.href='/vieropeenrij/create';" value="Start een Spel"/>
          <p class ="joinGame__text"> Vul hier de Gamecode in om het spel te joinen</p>
-         <input class="joinGame__input" id="gameInput" type="text" placeholder="123456"/>
+         <input class="joinGame__input" aria-label="Game code" id="gameInput" type="text" placeholder="123456"/>
          <input class="u-button-style joinGame__buttonJoin"  type="button" onclick="location.href='/vieropeenrij/' + document.getElementById('gameInput').value;" value="Join"/>
     </section>
 @endsection

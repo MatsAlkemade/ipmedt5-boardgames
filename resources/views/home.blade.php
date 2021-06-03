@@ -9,8 +9,8 @@
         <header class="home__title">
             <h1 class="home__title__text">Ultimate Boardgames</h1>
             <section class="home__nav" id="js--nav">
-                <button class="home__nav__button" id="js--navButton">
-                    <i class="fal fa-user-circle js--nc" id="js--navIcon"></i>
+                <button class="home__nav__button" id="js--navButton" aria-label="dropdown button">
+                    <i class="fal fa-user-circle js--nc" id="js--navIcon" aria-hidden="true"></i>
                 </button>
                 <div class="home__nav__dropdown" id="js--navDropdown">
                     <a class="js--nc" href="/logout">Log out</a>
