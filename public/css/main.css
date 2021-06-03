@@ -678,6 +678,7 @@ body {
 
 .trivialpursuit__section{
     background-color: var(--primary);
+    color: #353535;
     width: 60rem;
     margin: 2rem;
     padding: 1rem;
@@ -716,7 +717,7 @@ body {
     font-size: 120%;
     width: 25rem;
     height: 5rem;
-    color: var(--secondary) !important;
+    color: var(--bg) !important;
 }
 
 .trivialpursuit__btn[data-categorie="WetenschapNatuur"]{
