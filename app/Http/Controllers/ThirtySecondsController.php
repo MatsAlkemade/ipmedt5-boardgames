@@ -155,4 +155,8 @@ class ThirtySecondsController extends Controller
         $randomQuestions = $questions[$r];
         $websocket->emit('setQuestions', ['questions' => $randomQuestions]);
     }
+
+    static public function turnCard($websocket, $data){
+        $websocket->emit('turnCard', []);
+    }
 }

@@ -113,6 +113,14 @@ socket.on('setQuestions', function(data){
     }, 1000);
 });
 
+socket.on('turnCard', function(data){
+    if (myTurn == true) {
+        turnCard();
+    } else {
+        console.log("Het is niet jouw beurt");
+    }
+});
+
 function setupChat() {
     const liveChat = document.getElementById('js--liveChat');
     if (!liveChat) return;
@@ -190,6 +198,7 @@ function turnCard(){
     }, 600);
     tsCardSubmitBtn.removeAttribute("disabled");
     tsCardTurnBtn.setAttribute("disabled", "");
+    myTurn = false;
 }
 
 function tsSubmitForm(){
