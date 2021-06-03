@@ -198,6 +198,7 @@ function turnCard(){
     }, 600);
     tsCardSubmitBtn.removeAttribute("disabled");
     tsCardTurnBtn.setAttribute("disabled", "");
+    myTurn = false;
 }
 
 function tsSubmitForm(){
