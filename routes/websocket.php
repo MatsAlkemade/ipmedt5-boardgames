@@ -71,6 +71,7 @@ Websocket::on('example', function ($websocket, $data) {
 
 // Websocket::on('game_start', [VierOpEenRijController::class, 'gameStart']);
 Websocket::on('ts_start', [ThirtySecondsController::class, 'gameStart']);
+Websocket::on('ts_turncard', [ThirtySecondsController::class, 'turnCard']);
 Websocket::on('game_start', [GanzenbordController::class, 'gameStart']);
 // Websocket::on('game_start', [TrivialPursuitController::class, 'gameStart']);
 Websocket::on('game_start', [VierOpEenRijController::class, 'gameStart']);
