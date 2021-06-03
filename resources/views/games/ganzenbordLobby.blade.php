@@ -13,10 +13,10 @@
 
 @section('gamecontent')
     <section class = "joinGame__buttons">
-         <input class="u-button-style joinGame__buttonCreate" type="button" onclick="location.href='/ganzenbord/create';" value="Start een Spel"/>
+         <input aria-label="Start new game" class="u-button-style joinGame__buttonCreate" type="button" onclick="location.href='/ganzenbord/create';" value="Start een Spel"/>
          <p class ="joinGame__text"> Vul hier de Gamecode in om het spel te joinen</p>
-         <input class="joinGame__input" id="gameInput" type="text" placeholder="123456"/>
-         <input class="u-button-style joinGame__buttonJoin"  type="button" onclick="location.href='/ganzenbord/' + document.getElementById('gameInput').value;" value="Join"/>
+         <input aria-label="Game code" class="joinGame__input" id="gameInput" type="text" placeholder="123456"/>
+         <input aria-label="Join game" class="u-button-style joinGame__buttonJoin"  type="button" onclick="location.href='/ganzenbord/' + document.getElementById('gameInput').value;" value="Join"/>
     </section>
 @endsection
 

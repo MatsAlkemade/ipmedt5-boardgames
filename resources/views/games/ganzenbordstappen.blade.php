@@ -15,7 +15,7 @@
 @section('gamecontent')
 <section class="ganzenbord">
 <h2 class="gb__header"><span class="js--gb-turn js--gb-other"> </span></h2>
-<h2 class="gb__secondHeader"><span class="js--gb-dobbel"> </span></h2>
+<h2 class="gb__secondHeader" aria-label="Dobbelsteen resultaat"><span class="js--gb-dobbel" aria-hidden="true">Dobbelsteen resultaat</span></h2>
 <ul class="gb__players">
                 <li class="gb__players__goose">
                     <figure class="gb__players__goose__figure">
