@@ -735,7 +735,7 @@ body {
 }
 
 .trivialpursuit__btn[data-categorie="Geschiedenis"]{
-    background-color: red;
+    background-color: lightcoral;
 }
 
 .trivialpursuit__btn[data-categorie="Amusument"]{
@@ -743,7 +743,7 @@ body {
 }
 
 .trivialpursuit__btn[data-categorie="Aardrijkskunde"]{
-    background-color: green;
+    background-color: lightgreen;
 }
 
 .trivialpursuit__article{
